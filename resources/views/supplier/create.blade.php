@@ -21,7 +21,7 @@
                             </ul>
                         @endif
 
-                        <form method="POST" action="{{ url('/store') }}" class="form-horizontal">
+                        <form method="POST" action="{{ url('/supplier') }}" class="form-horizontal">
 
                         @include ('supplier.form', ['submitButtonText' => 'Registrar'])
 

@@ -1,30 +1,30 @@
 {!! csrf_field() !!}
-<div class="form-group {{ $errors->has('nombre') ? 'has-error' : ''}}">
-    <label name="nombre" class="col-md-4 control-label">Nombre</label>
+<div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
+    <label name="name" class="col-md-4 control-label">Nombre</label>
     <div class="col-md-6">
-        <input type="text" name="nombre" value="{{ isset($supplier)?$supplier->nombre:'' }}" class="form-control">
-        {!! $errors->first('nombre', '<p class="help-block">:message</p>') !!}
+        <input type="text" name="name" value="{{ isset($supplier)?$supplier->name:'' }}" class="form-control">
+        {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
-<div class="form-group {{ $errors->has('correo') ? 'has-error' : ''}}">
-    <label name="correo" class="col-md-4 control-label">Correo</label>
+<div class="form-group {{ $errors->has('email') ? 'has-error' : ''}}">
+    <label name="email" class="col-md-4 control-label">Correo</label>
     <div class="col-md-6">
-        <input type="email" name="correo" value="{{ isset($supplier)?$supplier->correo:'' }}" class="form-control">
-        {!! $errors->first('correo', '<p class="help-block">:message</p>') !!}
+        <input type="email" name="email" value="{{ isset($supplier)?$supplier->email:'' }}" class="form-control">
+        {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
-<div class="form-group {{ $errors->has('telefono') ? 'has-error' : ''}}">
-    <label name="telefono" class="col-md-4 control-label">Telefono</label>
+<div class="form-group {{ $errors->has('telephone') ? 'has-error' : ''}}">
+    <label name="telephone" class="col-md-4 control-label">Telefono</label>
     <div class="col-md-6">
-        <input type="text" name="telefono" value="{{ isset($supplier)?$supplier->telefono:'' }}" class="form-control">
-        {!! $errors->first('telefono', '<p class="help-block">:message</p>') !!}
+        <input type="text" name="telephone" value="{{ isset($supplier)?$supplier->telephone:'' }}" class="form-control">
+        {!! $errors->first('telephone', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
-<div class="form-group {{ $errors->has('direccion') ? 'has-error' : ''}}">
-    <label name="nombre" class="col-md-4 control-label">Direccion</label>
+<div class="form-group {{ $errors->has('address') ? 'has-error' : ''}}">
+    <label name="address" class="col-md-4 control-label">Direccion</label>
     <div class="col-md-6">
-        <input type="text" name="direccion" value="{{ isset($supplier)?$supplier->direccion:'' }}" class="form-control">
-        {!! $errors->first('direccion', '<p class="help-block">:message</p>') !!}
+        <input type="text" name="address" value="{{ isset($supplier)?$supplier->address:'' }}" class="form-control">
+        {!! $errors->first('address', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
 <div class="form-group">

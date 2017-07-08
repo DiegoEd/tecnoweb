@@ -22,10 +22,10 @@ class SupplierController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $supplier = Supplier::where('nombre', 'LIKE', "%$keyword%")
-				->orWhere('correo', 'LIKE', "%$keyword%")
-				->orWhere('telefono', 'LIKE', "%$keyword%")
-				->orWhere('direccion', 'LIKE', "%$keyword%")
+            $supplier = Supplier::where('name', 'LIKE', "%$keyword%")
+				->orWhere('email', 'LIKE', "%$keyword%")
+				->orWhere('telephone', 'LIKE', "%$keyword%")
+				->orWhere('address', 'LIKE', "%$keyword%")
 				->paginate($perPage);
         } else {
             $supplier = Supplier::paginate($perPage);
@@ -41,7 +41,6 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        dd("create");
         return view('supplier.create');
     }
 
@@ -57,7 +56,6 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        dd("store");
         $requestData = $request->all();
         //dd($requestData);
         Supplier::create($requestData);
@@ -90,7 +88,6 @@ class SupplierController extends Controller
      */
     public function edit($id)
     {
-        dd("edit");
         $supplier = Supplier::findOrFail($id);
 
         return view('supplier.edit', compact('supplier'));
@@ -106,7 +103,6 @@ class SupplierController extends Controller
      */
     public function update($id, Request $request)
     {
-        dd("update");
         $requestData = $request->all();
         $supplier = Supplier::findOrFail($id);
         $supplier->update($requestData);

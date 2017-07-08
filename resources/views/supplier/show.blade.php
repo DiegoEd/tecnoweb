@@ -26,7 +26,7 @@
                                     <tr>
                                         <th>ID</th><td>{{ $supplier->id }}</td>
                                     </tr>
-                                    <tr><th> Nombre </th><td> {{ $supplier->nombre }} </td></tr><tr><th> Correo </th><td> {{ $supplier->correo }} </td></tr><tr><th> Telefono </th><td> {{ $supplier->telefono }} </td></tr><tr><th> Direccion </th><td> {{ $supplier->direccion }} </td></tr>
+                                    <tr><th> Nombre </th><td> {{ $supplier->name }} </td></tr><tr><th> Correo </th><td> {{ $supplier->email }} </td></tr><tr><th> Telefono </th><td> {{ $supplier->telephone }} </td></tr><tr><th> Direccion </th><td> {{ $supplier->address }} </td></tr>
                                 </tbody>
                             </table>
                         </div>
