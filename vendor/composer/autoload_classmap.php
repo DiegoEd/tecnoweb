@@ -10,10 +10,13 @@ return array(
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Events\\Event' => $baseDir . '/app/Events/Event.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
-    'App\\Http\\Controllers\\Auth\\AuthController' => $baseDir . '/app/Http/Controllers/Auth/AuthController.php',
-    'App\\Http\\Controllers\\Auth\\PasswordController' => $baseDir . '/app/Http/Controllers/Auth/PasswordController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
+<<<<<<< HEAD
     'App\\Http\\Controllers\\SupplierController' => $baseDir . '/app/Http/Controllers/SupplierController.php',
+=======
+    'App\\Http\\Controllers\\ProductCategoriesController' => $baseDir . '/app/Http/Controllers/ProductCategoriesController.php',
+    'App\\Http\\Controllers\\ProductsController' => $baseDir . '/app/Http/Controllers/ProductsController.php',
+>>>>>>> efd83bbe16e867d16d571bcf9e87a177a85e6642
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',
     'App\\Http\\Middleware\\EncryptCookies' => $baseDir . '/app/Http/Middleware/EncryptCookies.php',
@@ -21,12 +24,17 @@ return array(
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Http\\Requests\\Request' => $baseDir . '/app/Http/Requests/Request.php',
     'App\\Jobs\\Job' => $baseDir . '/app/Jobs/Job.php',
+    'App\\Product' => $baseDir . '/app/Product.php',
+    'App\\ProductCategory' => $baseDir . '/app/ProductCategory.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',
     'App\\Providers\\EventServiceProvider' => $baseDir . '/app/Providers/EventServiceProvider.php',
     'App\\Providers\\RouteServiceProvider' => $baseDir . '/app/Providers/RouteServiceProvider.php',
+<<<<<<< HEAD
     'App\\Supplier' => $baseDir . '/app/Supplier.php',
     'App\\User' => $baseDir . '/app/User.php',
+=======
+>>>>>>> efd83bbe16e867d16d571bcf9e87a177a85e6642
     'Appzcoder\\CrudGenerator\\Commands\\CrudCommand' => $vendorDir . '/appzcoder/crud-generator/src/Commands/CrudCommand.php',
     'Appzcoder\\CrudGenerator\\Commands\\CrudControllerCommand' => $vendorDir . '/appzcoder/crud-generator/src/Commands/CrudControllerCommand.php',
     'Appzcoder\\CrudGenerator\\Commands\\CrudLangCommand' => $vendorDir . '/appzcoder/crud-generator/src/Commands/CrudLangCommand.php',
@@ -57,9 +65,14 @@ return array(
     'Collective\\Html\\HtmlBuilder' => $vendorDir . '/laravelcollective/html/src/HtmlBuilder.php',
     'Collective\\Html\\HtmlFacade' => $vendorDir . '/laravelcollective/html/src/HtmlFacade.php',
     'Collective\\Html\\HtmlServiceProvider' => $vendorDir . '/laravelcollective/html/src/HtmlServiceProvider.php',
+<<<<<<< HEAD
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreateSuppliersTable' => $baseDir . '/database/migrations/2017_07_08_024732_create_suppliers_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
+=======
+    'CreateProductCategoriesTable' => $baseDir . '/database/migrations/2017_07_08_134031_create_product_categories_table.php',
+    'CreateProductsTable' => $baseDir . '/database/migrations/2017_07_08_135831_create_products_table.php',
+>>>>>>> efd83bbe16e867d16d571bcf9e87a177a85e6642
     'Cron\\AbstractField' => $vendorDir . '/mtdowling/cron-expression/src/Cron/AbstractField.php',
     'Cron\\CronExpression' => $vendorDir . '/mtdowling/cron-expression/src/Cron/CronExpression.php',
     'Cron\\DayOfMonthField' => $vendorDir . '/mtdowling/cron-expression/src/Cron/DayOfMonthField.php',
