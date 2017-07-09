@@ -15,13 +15,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('supplier', 'SupplierController');
+
 Route::get('products/trash', 'ProductsController@trash');
 Route::patch('products/restore/{id}', 'ProductsController@restore');
+
 Route::get('product-categories/trash', 'ProductCategoriesController@trash');
 Route::patch('product-categories/restore/{id}', 'ProductCategoriesController@restore');
+
 Route::resource('product-categories', 'ProductCategoriesController');
 Route::resource('products', 'ProductsController');
-
 Route::resource('clients', 'ClientsController');
 Route::resource('users', 'UsersController');
+Route::resource('suppliers', 'SuppliersController');
+Route::resource('employees', 'EmployeesController');
+Route::resource('customizes', 'CustomizesController');

@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Supplier;
+use App\Customize;
 use Illuminate\Http\Request;
 use Session;
 
-class SupplierController extends Controller
+class CustomizesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,16 +22,15 @@ class SupplierController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $supplier = Supplier::where('nombre', 'LIKE', "%$keyword%")
-				->orWhere('correo', 'LIKE', "%$keyword%")
-				->orWhere('telefono', 'LIKE', "%$keyword%")
-				->orWhere('direccion', 'LIKE', "%$keyword%")
+            $customizes = Customize::where('color', 'LIKE', "%$keyword%")
+				->orWhere('font', 'LIKE', "%$keyword%")
+				->orWhere('imagepath', 'LIKE', "%$keyword%")
 				->paginate($perPage);
         } else {
-            $supplier = Supplier::paginate($perPage);
+            $customizes = Customize::paginate($perPage);
         }
 
-        return view('supplier.index', compact('supplier'));
+        return view('customizes.index', compact('customizes'));
     }
 
     /**
@@ -41,8 +40,8 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        dd("create");
-        return view('supplier.create');
+        $customizes = new Customize;
+        return view('customizes.create', compact('customizes'));
     }
 
     /**
@@ -51,20 +50,17 @@ class SupplierController extends Controller
      * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     *
-     * @Route("/supplier/store", name="supplier_store")
-     * @Method("POST")
      */
     public function store(Request $request)
     {
-        dd("store");
+        
         $requestData = $request->all();
-        //dd($requestData);
-        Supplier::create($requestData);
+        
+        Customize::create($requestData);
 
-        Session::flash('flash_message', 'Supplier added!');
+        Session::flash('flash_message', 'Customize added!');
 
-        return redirect('supplier');
+        return redirect('customizes');
     }
 
     /**
@@ -76,9 +72,9 @@ class SupplierController extends Controller
      */
     public function show($id)
     {
-        $supplier = Supplier::findOrFail($id);
+        $customize = Customize::findOrFail($id);
 
-        return view('supplier.show', compact('supplier'));
+        return view('customizes.show', compact('customize'));
     }
 
     /**
@@ -90,10 +86,9 @@ class SupplierController extends Controller
      */
     public function edit($id)
     {
-        dd("edit");
-        $supplier = Supplier::findOrFail($id);
+        $customizes = Customize::findOrFail($id);
 
-        return view('supplier.edit', compact('supplier'));
+        return view('customizes.edit', compact('customizes'));
     }
 
     /**
@@ -106,14 +101,15 @@ class SupplierController extends Controller
      */
     public function update($id, Request $request)
     {
-        dd("update");
+        
         $requestData = $request->all();
-        $supplier = Supplier::findOrFail($id);
-        $supplier->update($requestData);
+        
+        $customizes = Customize::findOrFail($id);
+        $customizes->update($requestData);
 
-        Session::flash('flash_message', 'Supplier updated!');
+        Session::flash('flash_message', 'Customize updated!');
 
-        return redirect('supplier');
+        return redirect('customizes');
     }
 
     /**
@@ -125,10 +121,10 @@ class SupplierController extends Controller
      */
     public function destroy($id)
     {
-        Supplier::destroy($id);
+        Customize::destroy($id);
 
-        Session::flash('flash_message', 'Supplier deleted!');
+        Session::flash('flash_message', 'Customize deleted!');
 
-        return redirect('supplier');
+        return redirect('customizes');
     }
 }
