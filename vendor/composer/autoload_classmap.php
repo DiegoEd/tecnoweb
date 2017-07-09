@@ -66,19 +66,13 @@ return array(
     'Collective\\Html\\HtmlBuilder' => $vendorDir . '/laravelcollective/html/src/HtmlBuilder.php',
     'Collective\\Html\\HtmlFacade' => $vendorDir . '/laravelcollective/html/src/HtmlFacade.php',
     'Collective\\Html\\HtmlServiceProvider' => $vendorDir . '/laravelcollective/html/src/HtmlServiceProvider.php',
-<<<<<<< HEAD
     'CreateClientsTable' => $baseDir . '/database/migrations/2017_07_09_145148_create_clients_table.php',
     'CreateProductCategoriesTable' => $baseDir . '/database/migrations/2017_07_08_134031_create_product_categories_table.php',
     'CreateProductsTable' => $baseDir . '/database/migrations/2017_07_08_135831_create_products_table.php',
     'CreateSuppliersTable' => $baseDir . '/database/migrations/2017_07_08_024732_create_suppliers_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2017_07_09_152205_create_users_table.php',
-=======
     'CreateCustomizesTable' => $baseDir . '/database/migrations/2017_07_09_155415_create_customizes_table.php',
     'CreateEmployeesTable' => $baseDir . '/database/migrations/2017_07_08_231749_create_employees_table.php',
-    'CreateProductCategoriesTable' => $baseDir . '/database/migrations/2017_07_08_134031_create_product_categories_table.php',
-    'CreateProductsTable' => $baseDir . '/database/migrations/2017_07_08_135831_create_products_table.php',
-    'CreateSuppliersTable' => $baseDir . '/database/migrations/2017_07_08_024732_create_suppliers_table.php',
->>>>>>> e2bf106b0abff7e678c93a85e12aa13f72e342c4
     'Cron\\AbstractField' => $vendorDir . '/mtdowling/cron-expression/src/Cron/AbstractField.php',
     'Cron\\CronExpression' => $vendorDir . '/mtdowling/cron-expression/src/Cron/CronExpression.php',
     'Cron\\DayOfMonthField' => $vendorDir . '/mtdowling/cron-expression/src/Cron/DayOfMonthField.php',
