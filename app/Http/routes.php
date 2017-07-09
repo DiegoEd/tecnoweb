@@ -19,3 +19,4 @@ Route::resource('suppliers', 'SuppliersController');
 Route::resource('product-categories', 'ProductCategoriesController');
 Route::resource('products', 'ProductsController');
 Route::resource('employees', 'EmployeesController');
+Route::resource('customizes', 'CustomizesController');
