@@ -27,9 +27,6 @@ class EmployeesController extends Controller
 				->orWhere('sex', 'LIKE', "%$keyword%")
 				->orWhere('age', 'LIKE', "%$keyword%")
 				->orWhere('career', 'LIKE', "%$keyword%")
-				->orWhere('username', 'LIKE', "%$keyword%")
-				->orWhere('password', 'LIKE', "%$keyword%")
-				->orWhere('email', 'LIKE', "%$keyword%")
 				->paginate($perPage);
         } else {
             $employees = Employee::paginate($perPage);

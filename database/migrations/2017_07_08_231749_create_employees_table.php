@@ -19,10 +19,6 @@ class CreateEmployeesTable extends Migration
             $table->string('sex');
             $table->integer('age');
             $table->string('career');
-            $table->string('username');
-            $table->string('password');
-            $table->string('email');
-            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -3,11 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Employee extends Model
 {
-    use SoftDeletes;
     /**
      * The database table used by the model.
      *
@@ -27,7 +25,7 @@ class Employee extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'lastname', 'sex', 'age', 'career', 'username', 'password', 'email'];
+    protected $fillable = ['name', 'lastname', 'sex', 'age', 'career'];
 
     public function maleSelected() {
         if (!is_null($this->sex) && $this->sex == "Masculino") {
