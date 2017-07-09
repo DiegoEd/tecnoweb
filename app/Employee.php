@@ -31,15 +31,8 @@ class Employee extends Model
      */
     protected $fillable = ['name', 'lastname', 'sex', 'age', 'career'];
 
-    public function maleSelected() {
-        if (!is_null($this->sex) && $this->sex == "Masculino") {
-            return "selected";
-        }
-        return "";
-    }
-
-    public function femaleSelected() {
-        if (!is_null($this->sex) && $this->sex == "Femenino") {
+    public function sexSelected($sex) {
+        if (!is_null($this->sex) && $this->sex == $sex) {
             return "selected";
         }
         return "";

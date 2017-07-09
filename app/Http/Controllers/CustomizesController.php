@@ -40,7 +40,8 @@ class CustomizesController extends Controller
      */
     public function create()
     {
-        return view('customizes.create');
+        $customizes = new Customize;
+        return view('customizes.create', compact('customizes'));
     }
 
     /**
@@ -85,9 +86,9 @@ class CustomizesController extends Controller
      */
     public function edit($id)
     {
-        $customize = Customize::findOrFail($id);
+        $customizes = Customize::findOrFail($id);
 
-        return view('customizes.edit', compact('customize'));
+        return view('customizes.edit', compact('customizes'));
     }
 
     /**
@@ -103,8 +104,8 @@ class CustomizesController extends Controller
         
         $requestData = $request->all();
         
-        $customize = Customize::findOrFail($id);
-        $customize->update($requestData);
+        $customizes = Customize::findOrFail($id);
+        $customizes->update($requestData);
 
         Session::flash('flash_message', 'Customize updated!');
 

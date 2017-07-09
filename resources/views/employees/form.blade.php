@@ -16,9 +16,9 @@
 <div class="form-group {{ $errors->has('sex') ? 'has-error' : ''}}">
     <label name="sex" class="col-md-4 control-label">Sexo</label>
     <div class="col-md-6">
-        <select name="sex" value="{{ $employees->sex }}" class="form-control">
-            <option value="Masculino" {{ $employees->maleSelected() }}>Masculino</option>
-            <option value="Femenino" {{ $employees->femaleSelected() }}>Femenino</option>
+        <select name="sex" class="form-control">
+            <option {{ $employees->sexSelected("Masculino") }}>Masculino</option>
+            <option {{ $employees->sexSelected("Femenino") }}>Femenino</option>
         </select>
         {!! $errors->first('sex', '<p class="help-block">:message</p>') !!}
     </div>

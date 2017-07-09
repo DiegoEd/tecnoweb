@@ -30,7 +30,27 @@ class Customize extends Model
      *
      * @var array
      */
-    protected $fillable = ['color', 'font', 'imagepath'];
+    protected $fillable = ['color', 'font', 'imagepath', 'employee_id'];
 
+    public function colorSelected($color) {
+        if (is_null($this->color) && $this->color == $color) {
+            return "selected";
+        }
+        return "";
+    }
+
+    public function fontSelected($font) {
+        if (is_null($this->font) && $this->font == $font) {
+            return "selected";
+        }
+        return "";
+    }
+
+    public function imagepathSelected($imagepath) {
+        if (is_null($this->imagepath) && $this->imagepath == $imagepath) {
+            return "checked";
+        }
+        return "";
+    }
     
 }
