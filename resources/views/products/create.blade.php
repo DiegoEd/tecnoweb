@@ -7,7 +7,7 @@
 
             <div class="col-md-9">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Create New Product</div>
+                    <div class="panel-heading">Crear nuevo producto</div>
                     <div class="panel-body">
                         <a href="{{ url('/products') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
@@ -21,11 +21,11 @@
                             </ul>
                         @endif
 
-                        {!! Form::open(['url' => '/products', 'class' => 'form-horizontal', 'files' => true]) !!}
+                        <form method="POST" action="{{ url('/products') }}" class="form-horizontal">
 
-                        @include ('products.form')
+                        @include ('products.form', ['submitButtonText' => 'Registrar'])
 
-                        {!! Form::close() !!}
+                        </form>
 
                     </div>
                 </div>

@@ -7,12 +7,14 @@
 
             <div class="col-md-9">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Products</div>
+                    <div class="panel-heading">Productos</div>
                     <div class="panel-body">
-                        <a href="{{ url('/products/create') }}" class="btn btn-success btn-sm" title="Add New Product">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
+                        <a href="{{ url('/products/create') }}" class="btn btn-success btn-sm" title="Nuevo producto">
+                            <i class="fa fa-plus" aria-hidden="true"></i> Nuevo
                         </a>
-
+                        <a href="{{ url('/products/trash') }}" class="btn btn-success btn-sm" title="Nuevo producto">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i> Papelera
+                        </a>
                         {!! Form::open(['method' => 'GET', 'url' => '/products', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}
                         <div class="input-group">
                             <input type="text" class="form-control" name="search" placeholder="Search...">
@@ -30,7 +32,7 @@
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>ID</th><th>Name</th><th>Price</th><th>Stock</th><th>Actions</th>
+                                        <th>Cod</th><th>Nombre</th><th>Precio</th><th>Stock</th><th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -41,18 +43,11 @@
                                         <td>
                                             <a href="{{ url('/products/' . $item->id) }}" title="View Product"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/products/' . $item->id . '/edit') }}" title="Edit Product"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-                                            {!! Form::open([
-                                                'method'=>'DELETE',
-                                                'url' => ['/products', $item->id],
-                                                'style' => 'display:inline'
-                                            ]) !!}
-                                                {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
-                                                        'type' => 'submit',
-                                                        'class' => 'btn btn-danger btn-xs',
-                                                        'title' => 'Delete Product',
-                                                        'onclick'=>'return confirm("Confirm delete?")'
-                                                )) !!}
-                                            {!! Form::close() !!}
+                                            <form method="POST" action="{{ url('/products/'. $item->id) }}" style="display:inline">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                {!! csrf_field() !!}
+                                                <button type="submit" class="btn btn-danger btn-xs" title="Delete Product" onclick="return confirm('Confirm delete?')"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

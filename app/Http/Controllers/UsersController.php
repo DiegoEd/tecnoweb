@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\ProductCategory;
 
-use App\Product;
+use App\User;
 use Illuminate\Http\Request;
 use Session;
 
-class ProductsController extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,15 +22,15 @@ class ProductsController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $products = Product::where('name', 'LIKE', "%$keyword%")
-				->orWhere('price', 'LIKE', "%$keyword%")
-				->orWhere('stock', 'LIKE', "%$keyword%")
+            $users = User::where('username', 'LIKE', "%$keyword%")
+				->orWhere('password', 'LIKE', "%$keyword%")
+				->orWhere('email', 'LIKE', "%$keyword%")
 				->paginate($perPage);
         } else {
-            $products = Product::paginate($perPage);
+            $users = User::paginate($perPage);
         }
 
-        return view('products.index', compact('products'));
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -41,9 +40,7 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        $productcategories = ProductCategory::all();
-        $product = new Product;
-        return view('products.create', compact('productcategories','product'));
+        return view('users.create');
     }
 
     /**
@@ -58,11 +55,11 @@ class ProductsController extends Controller
         
         $requestData = $request->all();
         
-        Product::create($requestData);
+        User::create($requestData);
 
-        Session::flash('flash_message', 'Product added!');
+        Session::flash('flash_message', 'User added!');
 
-        return redirect('products');
+        return redirect('users');
     }
 
     /**
@@ -74,9 +71,9 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        $product = Product::findOrFail($id);
+        $user = User::findOrFail($id);
 
-        return view('products.show', compact('product'));
+        return view('users.show', compact('user'));
     }
 
     /**
@@ -88,10 +85,9 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::findOrFail($id);
-        $productcategories = ProductCategory::all();
-        $selected='selected';
-        return view('products.edit', compact('product','productcategories','selected'));
+        $user = User::findOrFail($id);
+
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -107,25 +103,12 @@ class ProductsController extends Controller
         
         $requestData = $request->all();
         
-        $product = Product::findOrFail($id);
-        $product->update($requestData);
+        $user = User::findOrFail($id);
+        $user->update($requestData);
 
-        Session::flash('flash_message', 'Product updated!');
+        Session::flash('flash_message', 'User updated!');
 
-        return redirect('products');
-    }
-
-    public function trash()
-    {
-        $products = Product::intrash();
-        return view('products.trash', compact('products'));
-    }
-
-    public function restore($id)
-    {
-        $product = Product::withTrashed()->find($id);
-        $product->restore();
-        return redirect('products');
+        return redirect('users');
     }
 
     /**
@@ -137,10 +120,10 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        Product::destroy($id);
+        User::destroy($id);
 
-        Session::flash('flash_message', 'Product deleted!');
+        Session::flash('flash_message', 'User deleted!');
 
-        return redirect('products');
+        return redirect('users');
     }
 }

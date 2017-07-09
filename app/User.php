@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ProductCategory extends Model
+class User extends Model
 {
     use SoftDeletes;
     /**
@@ -13,18 +13,8 @@ class ProductCategory extends Model
      *
      * @var string
      */
-    protected $table = 'productcategories';
-
-    public function products()
-    {
-        return $this->hasMany(Product::class);
-    }
-
-    public static function intrash()
-    {
-        return ProductCategory::withTrashed()->whereNotNull('deleted_at')->get();
-    }
-
+    protected $table = 'users';
+    
     /**
     * The database primary key value.
     *
@@ -37,7 +27,7 @@ class ProductCategory extends Model
      *
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['username', 'password', 'email'];
 
     
 }

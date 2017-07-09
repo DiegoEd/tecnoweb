@@ -7,9 +7,9 @@
 
             <div class="col-md-9">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Editar Producto #{{ $product->id }}</div>
+                    <div class="panel-heading">Editar Cliente #{{ $client->id }}</div>
                     <div class="panel-body">
-                        <a href="{{ url('/products') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Atras</button></a>
+                        <a href="{{ url('/clients') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Atras</button></a>
                         <br />
                         <br />
 
@@ -20,10 +20,10 @@
                                 @endforeach
                             </ul>
                         @endif
-                        <form method="POST" action="{{ url('/products/'. $product->id) }}" class="form-horizontal">
+                        <form method="POST" action="{{ url('/clients/'. $client->id) }}" class="form-horizontal">
                             <input type="hidden" name="_method" value="PATCH">
 
-                        @include ('products.form', ['submitButtonText' => 'Update'])
+                        @include ('clients.form', ['submitButtonText' => 'Update'])
                         </form>
                     </div>
                 </div>
@@ -31,3 +31,4 @@
         </div>
     </div>
 @endsection
+

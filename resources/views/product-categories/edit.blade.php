@@ -7,7 +7,7 @@
 
             <div class="col-md-9">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Edit ProductCategory #{{ $productcategory->id }}</div>
+                    <div class="panel-heading">Editar Categoria de producto #{{ $productcategory->id }}</div>
                     <div class="panel-body">
                         <a href="{{ url('/product-categories') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
@@ -20,18 +20,11 @@
                                 @endforeach
                             </ul>
                         @endif
-
-                        {!! Form::model($productcategory, [
-                            'method' => 'PATCH',
-                            'url' => ['/product-categories', $productcategory->id],
-                            'class' => 'form-horizontal',
-                            'files' => true
-                        ]) !!}
+                        <form method="POST" action="{{ url('/product-categories/'. $productcategory->id) }}" class="form-horizontal">
+                            <input type="hidden" name="_method" value="PATCH">
 
                         @include ('product-categories.form', ['submitButtonText' => 'Update'])
-
-                        {!! Form::close() !!}
-
+                        </form>
                     </div>
                 </div>
             </div>

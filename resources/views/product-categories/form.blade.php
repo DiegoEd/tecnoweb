@@ -1,13 +1,14 @@
+{!! csrf_field() !!}
 <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
-    {!! Form::label('name', 'Name', ['class' => 'col-md-4 control-label']) !!}
+    <label name="name" class="col-md-4 control-label">Nombre</label>
     <div class="col-md-6">
-        {!! Form::text('name', null, ['class' => 'form-control']) !!}
+    	<input type="text" name="name" value="{{ $productcategory->name }}" class="form-control">
         {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
 
 <div class="form-group">
     <div class="col-md-offset-4 col-md-4">
-        {!! Form::submit(isset($submitButtonText) ? $submitButtonText : 'Create', ['class' => 'btn btn-primary']) !!}
+        <button type="submit" class="btn btn-primary">{{ $submitButtonText }}</button>
     </div>
 </div>

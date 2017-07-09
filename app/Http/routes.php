@@ -16,7 +16,12 @@ Route::get('/', function () {
 });
 
 Route::resource('supplier', 'SupplierController');
-Route::post('store', 'SupplierController@store');
-
+Route::get('products/trash', 'ProductsController@trash');
+Route::patch('products/restore/{id}', 'ProductsController@restore');
+Route::get('product-categories/trash', 'ProductCategoriesController@trash');
+Route::patch('product-categories/restore/{id}', 'ProductCategoriesController@restore');
 Route::resource('product-categories', 'ProductCategoriesController');
 Route::resource('products', 'ProductsController');
+
+Route::resource('clients', 'ClientsController');
+Route::resource('users', 'UsersController');

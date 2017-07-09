@@ -7,9 +7,9 @@
 
             <div class="col-md-9">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Editar Producto #{{ $product->id }}</div>
+                    <div class="panel-heading">Crear nuevo Usuario</div>
                     <div class="panel-body">
-                        <a href="{{ url('/products') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Atras</button></a>
+                        <a href="{{ url('/users') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
                         <br />
 
@@ -20,11 +20,13 @@
                                 @endforeach
                             </ul>
                         @endif
-                        <form method="POST" action="{{ url('/products/'. $product->id) }}" class="form-horizontal">
-                            <input type="hidden" name="_method" value="PATCH">
 
-                        @include ('products.form', ['submitButtonText' => 'Update'])
+                        <form method="POST" action="{{ url('/users') }}" class="form-horizontal">
+
+                        @include ('users.form', ['submitButtonText' => 'Registrar'])
+
                         </form>
+
                     </div>
                 </div>
             </div>

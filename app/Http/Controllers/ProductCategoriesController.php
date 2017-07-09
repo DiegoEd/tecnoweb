@@ -38,9 +38,9 @@ class ProductCategoriesController extends Controller
      */
     public function create()
     {
-        return view('product-categories.create');
+        $productcategory = new ProductCategory;
+        return view('product-categories.create',compact('productcategory'));
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -106,6 +106,19 @@ class ProductCategoriesController extends Controller
 
         Session::flash('flash_message', 'ProductCategory updated!');
 
+        return redirect('product-categories');
+    }
+
+    public function trash()
+    {
+        $productcategories = ProductCategory::intrash();
+        return view('product-categories.trash', compact('productcategories'));
+    }
+
+    public function restore($id)
+    {
+        $product = ProductCategory::withTrashed()->find($id);
+        $product->restore();
         return redirect('product-categories');
     }
 

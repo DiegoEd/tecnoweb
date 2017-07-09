@@ -12,18 +12,11 @@
 
                         <a href="{{ url('/product-categories') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <a href="{{ url('/product-categories/' . $productcategory->id . '/edit') }}" title="Edit ProductCategory"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-                        {!! Form::open([
-                            'method'=>'DELETE',
-                            'url' => ['productcategories', $productcategory->id],
-                            'style' => 'display:inline'
-                        ]) !!}
-                            {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
-                                    'type' => 'submit',
-                                    'class' => 'btn btn-danger btn-xs',
-                                    'title' => 'Delete ProductCategory',
-                                    'onclick'=>'return confirm("Confirm delete?")'
-                            ))!!}
-                        {!! Form::close() !!}
+                        <form method="POST" action="{{ url('/product-categories/'. $productcategory->id) }}" style="display:inline">
+                            <input type="hidden" name="_method" value="DELETE">
+                            {!! csrf_field() !!}
+                            <button type="submit" class="btn btn-danger btn-xs" title="Delete ProductCategory" onclick="return confirm('Confirm delete?')"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+                        </form>
                         <br/>
                         <br/>
 
