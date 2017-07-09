@@ -7,9 +7,9 @@
 
             <div class="col-md-9">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Edit Supplier #{{ $supplier->id }}</div>
+                    <div class="panel-heading">Create New Supplier</div>
                     <div class="panel-body">
-                        <a href="{{ url('/supplier') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/suppliers') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
                         <br />
 
@@ -21,10 +21,9 @@
                             </ul>
                         @endif
 
-                        <form method="POST" action="{{ url('/supplier/'. $supplier->id) }}" class="form-horizontal">
-                            <input type="hidden" name="_method" value="PATCH">
+                        <form method="POST" action="{{ url('/suppliers') }}" class="form-horizontal">
 
-                        @include ('supplier.form', ['submitButtonText' => 'Modificar'])
+                        @include ('suppliers.form', ['submitButtonText' => 'Registrar'])
 
                         </form>
 

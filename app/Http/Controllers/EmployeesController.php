@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Supplier;
+use App\Employee;
 use Illuminate\Http\Request;
 use Session;
 
-class SupplierController extends Controller
+class EmployeesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,16 +22,20 @@ class SupplierController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $supplier = Supplier::where('name', 'LIKE', "%$keyword%")
+            $employees = Employee::where('name', 'LIKE', "%$keyword%")
+				->orWhere('lastname', 'LIKE', "%$keyword%")
+				->orWhere('sex', 'LIKE', "%$keyword%")
+				->orWhere('age', 'LIKE', "%$keyword%")
+				->orWhere('career', 'LIKE', "%$keyword%")
+				->orWhere('username', 'LIKE', "%$keyword%")
+				->orWhere('password', 'LIKE', "%$keyword%")
 				->orWhere('email', 'LIKE', "%$keyword%")
-				->orWhere('telephone', 'LIKE', "%$keyword%")
-				->orWhere('address', 'LIKE', "%$keyword%")
 				->paginate($perPage);
         } else {
-            $supplier = Supplier::paginate($perPage);
+            $employees = Employee::paginate($perPage);
         }
 
-        return view('supplier.index', compact('supplier'));
+        return view('employees.index', compact('employees'));
     }
 
     /**
@@ -41,7 +45,8 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        return view('supplier.create');
+        $employees = new Employee;
+        return view('employees.create', compact('employees'));
     }
 
     /**
@@ -50,19 +55,17 @@ class SupplierController extends Controller
      * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     *
-     * @Route("/supplier/store", name="supplier_store")
-     * @Method("POST")
      */
     public function store(Request $request)
     {
+        
         $requestData = $request->all();
-        //dd($requestData);
-        Supplier::create($requestData);
+        
+        Employee::create($requestData);
 
-        Session::flash('flash_message', 'Supplier added!');
+        Session::flash('flash_message', 'Employee added!');
 
-        return redirect('supplier');
+        return redirect('employees');
     }
 
     /**
@@ -74,9 +77,9 @@ class SupplierController extends Controller
      */
     public function show($id)
     {
-        $supplier = Supplier::findOrFail($id);
+        $employees = Employee::findOrFail($id);
 
-        return view('supplier.show', compact('supplier'));
+        return view('employees.show', compact('employees'));
     }
 
     /**
@@ -88,9 +91,9 @@ class SupplierController extends Controller
      */
     public function edit($id)
     {
-        $supplier = Supplier::findOrFail($id);
+        $employees = Employee::findOrFail($id);
 
-        return view('supplier.edit', compact('supplier'));
+        return view('employees.edit', compact('employees'));
     }
 
     /**
@@ -103,13 +106,15 @@ class SupplierController extends Controller
      */
     public function update($id, Request $request)
     {
+        
         $requestData = $request->all();
-        $supplier = Supplier::findOrFail($id);
-        $supplier->update($requestData);
+        
+        $employees = Employee::findOrFail($id);
+        $employees->update($requestData);
 
-        Session::flash('flash_message', 'Supplier updated!');
+        Session::flash('flash_message', 'Employee updated!');
 
-        return redirect('supplier');
+        return redirect('employees');
     }
 
     /**
@@ -121,10 +126,10 @@ class SupplierController extends Controller
      */
     public function destroy($id)
     {
-        Supplier::destroy($id);
+        Employee::destroy($id);
 
-        Session::flash('flash_message', 'Supplier deleted!');
+        Session::flash('flash_message', 'Employee deleted!');
 
-        return redirect('supplier');
+        return redirect('employees');
     }
 }

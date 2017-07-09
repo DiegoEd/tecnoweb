@@ -15,8 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('supplier', 'SupplierController');
-Route::post('store', 'SupplierController@store');
-
+Route::resource('suppliers', 'SuppliersController');
 Route::resource('product-categories', 'ProductCategoriesController');
 Route::resource('products', 'ProductsController');
+Route::resource('employees', 'EmployeesController');
