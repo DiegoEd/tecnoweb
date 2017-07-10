@@ -21,7 +21,7 @@
                             </ul>
                         @endif
 
-                        <form method="POST" action="{{ url('/customizes/'. $customizes->id) }}" class="form-horizontal">
+                        <form method="POST" action="{{ url('/customizes/'. $customizes->id) }}" class="form-horizontal" enctype="multipart/form-data">
                             <input type="hidden" name="_method" value="PATCH">
 
                         @include ('customizes.form', ['submitButtonText' => 'Update'])

@@ -34,3 +34,4 @@ Route::resource('customizes', 'CustomizesController');
 Route::resource('modules', 'ModulesController');
 Route::resource('accions', 'AccionsController');
 Route::resource('roles', 'RolesController');
+Route::resource('session', 'SessionController');

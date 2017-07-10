@@ -19,6 +19,10 @@ class CreateEmployeesTable extends Migration
             $table->string('sex');
             $table->integer('age');
             $table->string('career');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->timestamps();
         });
     }

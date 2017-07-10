@@ -30,14 +30,14 @@
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>ID</th><th>Color</th><th>Font</th><th>Imagepath</th><th>Actions</th>
+                                        <th>ID</th><th>Theme</th><th>Imagepath</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($customizes as $item)
                                     <tr>
                                         <td>{{ $item->id }}</td>
-                                        <td>{{ $item->color }}</td><td>{{ $item->font }}</td><td>{{ $item->imagepath }}</td>
+                                        <td>{{ $item->theme }}</td><td>{{ $item->imagepath }}</td>
                                         <td>
                                             <a href="{{ url('/customizes/' . $item->id) }}" title="View Customize"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/customizes/' . $item->id . '/edit') }}" title="Edit Customize"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>

@@ -17,6 +17,10 @@ class Employee extends Model
         return $this->hasOne(Customize::class);
     }
 
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
     /**
     * The database primary key value.
     *
@@ -29,7 +33,7 @@ class Employee extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'lastname', 'sex', 'age', 'career'];
+    protected $fillable = ['name', 'lastname', 'sex', 'age', 'career', 'user_id'];
 
     public function sexSelected($sex) {
         if (!is_null($this->sex) && $this->sex == $sex) {
