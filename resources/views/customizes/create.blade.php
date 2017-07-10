@@ -21,7 +21,7 @@
                             </ul>
                         @endif
 
-                        <form method="POST" action="{{ url('/customizes') }}" class="form-horizontal">
+                        <form method="POST" action="{{ url('/customizes') }}" class="form-horizontal" enctype="multipart/form-data">
 
                         @include ('customizes.form', ['submitButtonText' => 'Registrar'])
 

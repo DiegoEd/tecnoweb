@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\User;
 
 use App\Employee;
 use Illuminate\Http\Request;
@@ -43,7 +44,15 @@ class EmployeesController extends Controller
     public function create()
     {
         $employees = new Employee;
-        return view('employees.create', compact('employees'));
+        $user = new User;
+        return view('employees.create', compact('employees', 'user'));
+    }
+
+    public function validatefields(Request $request)
+    {
+        $this->validate($request, [
+        'username' => 'required|unique:users'
+        ]);
     }
 
     /**
@@ -55,10 +64,21 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $this->validatefields($request);
         $requestData = $request->all();
-        
-        Employee::create($requestData);
+        $user = new User;
+        $user->username = $requestData['username'];
+        $user->password = $requestData['password'];
+        $user->email = $requestData['email'];
+        $user->save();
+        $employee = new Employee;
+        $employee->name = $requestData['name'];
+        $employee->lastname = $requestData['lastname'];
+        $employee->sex = $requestData['sex'];
+        $employee->age = $requestData['age'];
+        $employee->career = $requestData['career'];
+        $employee->user_id = $user->id;
+        $employee->save();
 
         Session::flash('flash_message', 'Employee added!');
 
@@ -75,8 +95,9 @@ class EmployeesController extends Controller
     public function show($id)
     {
         $employees = Employee::findOrFail($id);
+        $user = User::findOrFail($employees->user_id);
 
-        return view('employees.show', compact('employees'));
+        return view('employees.show', compact('employees', 'user'));
     }
 
     /**
@@ -89,8 +110,9 @@ class EmployeesController extends Controller
     public function edit($id)
     {
         $employees = Employee::findOrFail($id);
+        $user = User::findOrFail($employees->user_id);
 
-        return view('employees.edit', compact('employees'));
+        return view('employees.edit', compact('employees', 'user'));
     }
 
     /**
@@ -103,11 +125,13 @@ class EmployeesController extends Controller
      */
     public function update($id, Request $request)
     {
-        
+        $this->validatefields($request);
         $requestData = $request->all();
         
         $employees = Employee::findOrFail($id);
+        $user = User::findOrFail($employees->user_id);
         $employees->update($requestData);
+        $user->update($requestData);
 
         Session::flash('flash_message', 'Employee updated!');
 
@@ -123,7 +147,9 @@ class EmployeesController extends Controller
      */
     public function destroy($id)
     {
-        Employee::destroy($id);
+        $employee = Employee::findOrFail($id);
+        $employee->user->delete();
+        $employee->delete();
 
         Session::flash('flash_message', 'Employee deleted!');
 

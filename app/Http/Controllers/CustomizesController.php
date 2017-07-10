@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Customize;
 use Illuminate\Http\Request;
 use Session;
+use Intervention\Image\Facades\Image as Image;
 
 class CustomizesController extends Controller
 {
@@ -22,8 +23,7 @@ class CustomizesController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $customizes = Customize::where('color', 'LIKE', "%$keyword%")
-				->orWhere('font', 'LIKE', "%$keyword%")
+            $customizes = Customize::where('theme', 'LIKE', "%$keyword%")
 				->orWhere('imagepath', 'LIKE', "%$keyword%")
 				->paginate($perPage);
         } else {
@@ -53,8 +53,10 @@ class CustomizesController extends Controller
      */
     public function store(Request $request)
     {
+        $fileName = $this->postNewImage($request);
         
         $requestData = $request->all();
+        $requestData['imagepath'] = $fileName;
         
         Customize::create($requestData);
 
@@ -101,9 +103,15 @@ class CustomizesController extends Controller
      */
     public function update($id, Request $request)
     {
-        
         $requestData = $request->all();
-        
+        if (empty($requestData['imagepath'])) {
+            $requestData['imagepath'] = $requestData['filename'];
+        } else {
+            $fileName = $this->postNewImage($request);
+            $requestData['imagepath'] = $fileName;
+            unlink('img/users/'. $requestData['filename']);
+        }
+
         $customizes = Customize::findOrFail($id);
         $customizes->update($requestData);
 
@@ -126,5 +134,14 @@ class CustomizesController extends Controller
         Session::flash('flash_message', 'Customize deleted!');
 
         return redirect('customizes');
+    }
+
+    public function postNewImage(Request $request)
+    {
+        $this->validate($request, ['imagepath' => 'required|image']);
+        $fileName = $request->file('imagepath')->getClientOriginalName();
+        Image::make($request->file('imagepath'))->resize(144, 144)->save('img/users/'. $fileName);
+
+        return $fileName;
     }
 }

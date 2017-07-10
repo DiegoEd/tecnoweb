@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class User extends Model
 {
     use SoftDeletes;
+
+    public function employee() {
+        return $this->hasOne(Employee::class);
+    }
     /**
      * The database table used by the model.
      *

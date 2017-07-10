@@ -26,7 +26,7 @@
                                     <tr>
                                         <th>ID</th><td>{{ $employees->id }}</td>
                                     </tr>
-                                    <tr><th> Name </th><td> {{ $employees->name }} </td></tr><tr><th> Lastname </th><td> {{ $employees->lastname }} </td></tr><tr><th> Sexo </th><td> {{ $employees->sex }} </td></tr><tr><th> Edad </th><td> {{ $employees->age }} </td></tr><tr><th> Carrera </th><td> {{ $employees->career }} </td></tr>
+                                    <tr><th> User Name </th><td> {{ $user->username }} </td></tr><tr><th> Email </th><td> {{ $user->email }} </td></tr><tr><th> Name </th><td> {{ $employees->name }} </td></tr><tr><th> Lastname </th><td> {{ $employees->lastname }} </td></tr><tr><th> Sexo </th><td> {{ $employees->sex }} </td></tr><tr><th> Edad </th><td> {{ $employees->age }} </td></tr><tr><th> Carrera </th><td> {{ $employees->career }} </td></tr>
                                 </tbody>
                             </table>
                         </div>

@@ -14,8 +14,7 @@ class CreateCustomizesTable extends Migration
     {
         Schema::create('customizes', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('color');
-            $table->string('font');
+            $table->string('theme');
             $table->string('imagepath');
             $table->integer('employee_id');
             $table->timestamps();

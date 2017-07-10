@@ -1,4 +1,5 @@
 {!! csrf_field() !!}
+@include('users.form')
 <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
     <label name="name" class="col-md-4 control-label">Nombre</label>
     <div class="col-md-6">

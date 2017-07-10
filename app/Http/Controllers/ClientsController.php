@@ -124,7 +124,7 @@ class ClientsController extends Controller
      */
     public function update($id, Request $request)
     {
-        validatefields($request);
+        $this->validatefields($request);
         $requestData = $request->all();
         
         $client = Client::findOrFail($id);

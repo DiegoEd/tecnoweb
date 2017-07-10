@@ -7,7 +7,7 @@
 </div><div class="form-group {{ $errors->has('password') ? 'has-error' : ''}}">
     <label name="password" class="col-md-4 control-label">Contraseña</label>
     <div class="col-md-6">
-        <input type="text" name="password" value="{{ $user->password }}" class="form-control">
+        <input type="password" name="password" value="{{ $user->password }}" class="form-control">
         {!! $errors->first('password', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('email') ? 'has-error' : ''}}">

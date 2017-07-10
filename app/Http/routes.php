@@ -29,3 +29,6 @@ Route::resource('users', 'UsersController');
 Route::resource('suppliers', 'SuppliersController');
 Route::resource('employees', 'EmployeesController');
 Route::resource('customizes', 'CustomizesController');
+Route::resource('session', 'SessionController');
+
+//Route::get('session/inicio', 'SessionController@startSession');

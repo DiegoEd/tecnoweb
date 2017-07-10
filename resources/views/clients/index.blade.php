@@ -7,7 +7,7 @@
 
             <div class="col-md-9">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Clients</div>
+                    <div class="panel-heading">Clients {{ session('id') }}</div>
                     <div class="panel-body">
                         <a href="{{ url('/clients/create') }}" class="btn btn-success btn-sm" title="Add New Client">
                             <i class="fa fa-plus" aria-hidden="true"></i> Adicionar nuevo
