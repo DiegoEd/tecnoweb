@@ -13,6 +13,10 @@
                             <i class="fa fa-plus" aria-hidden="true"></i> Adicionar nuevo
                         </a>
 
+                        <a href="{{ url('/clients/trash') }}" class="btn btn-success btn-sm" title="Papelera cliente">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i> Papelera
+                        </a>
+
                         {!! Form::open(['method' => 'GET', 'url' => '/clients', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}
                         <div class="input-group">
                             <input type="text" class="form-control" name="search" placeholder="Search...">

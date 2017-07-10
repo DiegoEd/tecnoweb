@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Employee extends Model
 {
+    use SoftDeletes;
     /**
      * The database table used by the model.
      *
@@ -16,7 +18,10 @@ class Employee extends Model
     public function user() {
         return $this->belongsTo(User::class);
     }
-
+    public static function intrash()
+    {
+        return Employee::withTrashed()->whereNotNull('deleted_at')->get();
+    }
     /**
     * The database primary key value.
     *

@@ -32,6 +32,9 @@
                             </table>
                         </div>
 
+                        @foreach($accions as $accion)
+                             <li>Accion llamada:  <strong>{{ $accion->name }}</strong>, del modulo: <strong>{{ $accion->module->name }}</strong></li>
+                        @endforeach
                     </div>
                 </div>
             </div>

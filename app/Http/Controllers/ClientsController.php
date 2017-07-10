@@ -70,7 +70,21 @@ class ClientsController extends Controller
         'address' => 'required'
         ]);
     }
-    
+
+    public function trash()
+    {
+        $clients = Client::intrash();
+        return view('clients.trash', compact('clients'));
+    }
+
+    public function restore($id)
+    {
+        $client = Client::withTrashed()->find($id);
+        $client->restore();
+        User::withTrashed()->find($client->user_id)->restore();
+        return redirect('clients');
+    }
+
     public function store(Request $request)
     {
         $requestData = $request->all();

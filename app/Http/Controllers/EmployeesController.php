@@ -36,6 +36,20 @@ class EmployeesController extends Controller
         return view('employees.index', compact('employees'));
     }
 
+    public function trash()
+    {
+        $employees = Employee::intrash();
+        return view('employees.trash', compact('employees'));
+    }
+
+    public function restore($id)
+    {
+        $employee = Employee::withTrashed()->find($id);
+        $employee->restore();
+        User::withTrashed()->find($employee->user_id)->restore();
+        return redirect('employees');
+    }
+
     /**
      * Show the form for creating a new resource.
      *

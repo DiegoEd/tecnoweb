@@ -22,8 +22,16 @@ Route::patch('products/restore/{id}', 'ProductsController@restore');
 Route::get('product-categories/trash', 'ProductCategoriesController@trash');
 Route::patch('product-categories/restore/{id}', 'ProductCategoriesController@restore');
 
+Route::get('clients/trash', 'ClientsController@trash');
+Route::patch('clients/restore/{id}', 'ClientsController@restore');
+
+Route::get('employees/trash', 'EmployeesController@trash');
+Route::patch('employees/restore/{id}', 'EmployeesController@restore');
+
 Route::get('accions/create/{id}', 'AccionsController@create');
 Route::get('session/close', 'SessionController@shutdown');
+Route::get('roles/signup/{id}', 'RolesController@signup');
+Route::post('roles/commituser/', 'RolesController@commituser');
 
 Route::resource('product-categories', 'ProductCategoriesController');
 Route::resource('products', 'ProductsController');
