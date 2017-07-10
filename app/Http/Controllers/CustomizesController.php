@@ -19,7 +19,10 @@ class CustomizesController extends Controller
      */
     public function index(Request $request)
     {
-        $keyword = $request->get('search');
+        if (empty(session('id'))) {
+            return redirect('session');
+        }
+        /*$keyword = $request->get('search');
         $perPage = 25;
 
         if (!empty($keyword)) {
@@ -30,7 +33,13 @@ class CustomizesController extends Controller
             $customizes = Customize::paginate($perPage);
         }
 
-        return view('customizes.index', compact('customizes'));
+        return view('customizes.index', compact('customizes'));*/
+        if (!empty(session('customize_id'))) {
+            $customizes = Customize::findOrFail(session('customize_id'));
+            return view('customizes.edit', compact('customizes'));
+        }
+        $customizes = new Customize;
+        return view('customizes.create', compact('customizes'));
     }
 
     /**
@@ -53,12 +62,18 @@ class CustomizesController extends Controller
      */
     public function store(Request $request)
     {
-        $fileName = $this->postNewImage($request);
+        $filename = $this->postNewImage($request);
         
         $requestData = $request->all();
-        $requestData['imagepath'] = $fileName;
-        
-        Customize::create($requestData);
+        $requestData['imagepath'] = $filename;
+        $customize = new Customize;
+        $customize->theme = $requestData['theme'];
+        $customize->imagepath = $requestData['imagepath'];
+        $customize->user_id = $requestData['user_id'];
+        $customize->save();
+        $request->session()->put('customize_id', $customize->id);
+        $request->session()->put('theme', $customize->theme);
+        $request->session()->put('imagepath', $customize->imagepath);
 
         Session::flash('flash_message', 'Customize added!');
 
@@ -114,6 +129,8 @@ class CustomizesController extends Controller
 
         $customizes = Customize::findOrFail($id);
         $customizes->update($requestData);
+        $request->session()->put('theme', $customizes->theme);
+        $request->session()->put('imagepath', $customizes->imagepath);
 
         Session::flash('flash_message', 'Customize updated!');
 

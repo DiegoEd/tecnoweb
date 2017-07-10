@@ -1,0 +1,14 @@
+body {
+	background-image: url('../img/themes/fondovioleta.jpg');
+	background-attachment: fixed;
+	background-size: 100% 100%;
+}
+
+.panel-heading {
+	background-color: violet !important;
+	color: #761FC3 !important;
+}
+
+.panel-body {
+	background-color: #E60DFE !important;
+}

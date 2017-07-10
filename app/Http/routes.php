@@ -23,6 +23,7 @@ Route::get('product-categories/trash', 'ProductCategoriesController@trash');
 Route::patch('product-categories/restore/{id}', 'ProductCategoriesController@restore');
 
 Route::get('accions/create/{id}', 'AccionsController@create');
+Route::get('session/close', 'SessionController@shutdown');
 
 Route::resource('product-categories', 'ProductCategoriesController');
 Route::resource('products', 'ProductsController');

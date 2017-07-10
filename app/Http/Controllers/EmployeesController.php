@@ -48,13 +48,19 @@ class EmployeesController extends Controller
         return view('employees.create', compact('employees', 'user'));
     }
 
-    public function validatefields(Request $request)
+    public function requiretypes(Request $request)
     {
         $this->validate($request, [
-        'username' => 'required|unique:users'
+        'username' => 'required',
+        'email' => 'required',
+        'name'=>'required',
+        'lastname' => 'required',
+        'password' => 'required',
+        'sex' => 'required',
+        'age' => 'required',
+        'career' => 'required',
         ]);
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -64,8 +70,12 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validatefields($request);
         $requestData = $request->all();
+        $this->requiretypes($request);
+        if(!User::isusernameunique($requestData['username']))
+        {
+                return redirect()->back()->withErrors(array('username' => 'Nombre de usuario ya existe. Ingrese otro porfavor')); 
+        }
         $user = new User;
         $user->username = $requestData['username'];
         $user->password = $requestData['password'];
@@ -125,11 +135,14 @@ class EmployeesController extends Controller
      */
     public function update($id, Request $request)
     {
-        $this->validatefields($request);
         $requestData = $request->all();
-        
+        $this->requiretypes($request);
         $employees = Employee::findOrFail($id);
         $user = User::findOrFail($employees->user_id);
+        if(!$user->ismyusername($requestData['username']) && !User::isusernameunique($request['username']))
+        {
+                return redirect()->back()->withErrors(array('username' => 'Nombre de usuario ya existe. Ingrese otro porfavor')); 
+        }
         $employees->update($requestData);
         $user->update($requestData);
 

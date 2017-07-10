@@ -21,10 +21,9 @@
     </div>
 </div>
 <div class="form-group {{ $errors->has('imagepath') ? 'has-error' : ''}}">
-    <label name="employee_id" class="col-md-4 control-label">ID del Empleado</label>
     <div class="col-md-6">
-        <input type="text" name="employee_id" value="{{ $customizes->employee_id }}" class="form-control">
-        {!! $errors->first('employee_id', '<p class="help-block">:message</p>') !!}
+        <input type="hidden" name="user_id" value="{{ session('id') }}" class="form-control">
+        {!! $errors->first('user_id', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
 

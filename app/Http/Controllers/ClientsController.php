@@ -57,6 +57,7 @@ class ClientsController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
+    
     public function requiretypes(Request $request)
     {
         $this->validate($request, [
@@ -69,6 +70,7 @@ class ClientsController extends Controller
         'address' => 'required'
         ]);
     }
+    
     public function store(Request $request)
     {
         $requestData = $request->all();

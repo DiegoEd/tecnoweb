@@ -13,10 +13,6 @@ class Employee extends Model
      */
     protected $table = 'employees';
 
-    public function customize() {
-        return $this->hasOne(Customize::class);
-    }
-
     public function user() {
         return $this->belongsTo(User::class);
     }

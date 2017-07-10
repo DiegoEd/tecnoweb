@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\User;
+use App\Customize;
 
 class SessionController extends Controller
 {
@@ -18,8 +19,10 @@ class SessionController extends Controller
      */
     public function index(Request $request)
     {
+        
         if ($request->session()->has('id')) {
-            $request->session()->flush();
+
+            return redirect('clients');
         }
         return view('session.index');
     }
@@ -46,8 +49,22 @@ class SessionController extends Controller
         $users = User::where('email', 'LIKE', $requestData['email'])->where('password', 'LIKE', $requestData['password'])->get();
         if (count($users) > 0) {
             $user = $users->first();
+            $customizes = Customize::where('user_id', '=', $user->id);
+            $customize = $customizes->first();
             $request->session()->put('id', $user->id);
             $request->session()->put('username', $user->username);
+            if (is_null($customize)) {
+                $customize_id = '';
+                $theme = '';
+                $imagepath = '';
+            } else {
+                $customize_id = $customize->id;
+                $theme = $customize->theme;
+                $imagepath = $customize->imagepath;
+            }
+            $request->session()->put('customize_id', $customize_id);
+            $request->session()->put('theme', $theme);
+            $request->session()->put('imagepath', $imagepath);
         } else {
             return redirect()->back()->withErrors(array('username' => 'Credenciales inválidos.'));
         }
@@ -97,5 +114,17 @@ class SessionController extends Controller
     public function destroy()
     {
 
+    }
+
+    public function shutdown(Request $request) {
+        if ($request->session()->has('id')) {
+
+            $request->session()->forget('id');
+            $request->session()->forget('username');
+            $request->session()->forget('customize_id');
+            $request->session()->forget('theme');
+            $request->session()->forget('imagepath');
+        }
+        return redirect('session');
     }
 }

@@ -13,9 +13,9 @@ class Customize extends Model
      */
     protected $table = 'customizes';
 
-    public function employee()
+    public function user()
     {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -30,7 +30,7 @@ class Customize extends Model
      *
      * @var array
      */
-    protected $fillable = ['theme', 'imagepath', 'employee_id'];
+    protected $fillable = ['theme', 'imagepath', 'user_id'];
 
     public function themeSelected($theme) {
         if (!is_null($this->theme) && $this->theme == $theme) {

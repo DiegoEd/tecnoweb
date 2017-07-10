@@ -16,9 +16,9 @@ class CreateCustomizesTable extends Migration
             $table->increments('id');
             $table->string('theme');
             $table->string('imagepath');
-            $table->integer('employee_id');
+            $table->integer('user_id');
             $table->timestamps();
-            $table->foreign('employee_id')->references('id')->on('employees')
+            $table->foreign('user_id')->references('id')->on('users')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
