@@ -21,16 +21,11 @@
                             </ul>
                         @endif
 
-                        {!! Form::model($user, [
-                            'method' => 'PATCH',
-                            'url' => ['/users', $user->id],
-                            'class' => 'form-horizontal',
-                            'files' => true
-                        ]) !!}
+                        <form method="POST" action="{{ url('/users/'. $user->id) }}" class="form-horizontal">
+                            <input type="hidden" name="_method" value="PATCH">
 
                         @include ('users.form', ['submitButtonText' => 'Update'])
-
-                        {!! Form::close() !!}
+                        </form>
 
                     </div>
                 </div>

@@ -17,8 +17,12 @@ class CreateUsersTable extends Migration
             $table->string('username');
             $table->string('password');
             $table->string('email');
+            $table->integer('role_id')->nullable()->unsigned();
             $table->softDeletes();
             $table->timestamps();
+            $table->foreign('role_id')->references('id')->on('roles')
+                ->onDelete('set null')
+                ->onUpdate('cascade');            
         });
     }
 

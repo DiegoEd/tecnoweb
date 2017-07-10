@@ -18,6 +18,7 @@ class CreateClientsTable extends Migration
             $table->integer('nit');
             $table->integer('number');
             $table->text('address');
+            $table->softDeletes();            
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')
                 ->onDelete('cascade')

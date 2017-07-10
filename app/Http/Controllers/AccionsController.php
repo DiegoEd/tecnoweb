@@ -9,6 +9,7 @@ use App\Accion;
 use App\Module;
 use Illuminate\Http\Request;
 use Session;
+use DB;
 
 class AccionsController extends Controller
 {
@@ -126,6 +127,7 @@ class AccionsController extends Controller
     {
         $accion = Accion::findOrFail($id);
         $module = Module::findOrFail($accion->module_id);
+        DB::table('accion_role')->where('accion_id',$accion->id)->delete();
         $accion->delete();
         Session::flash('flash_message', 'Accion deleted!');
         return view('modules.show', compact('module'));

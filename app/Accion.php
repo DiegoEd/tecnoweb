@@ -18,7 +18,7 @@ class Accion extends Model
     }
     public function module()
     {
-        return $this->belongsTo(Accion::class);
+        return $this->belongsTo(Module::class);
     }
     protected $table = 'accions';
 

@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Client extends Model
 {
+    use SoftDeletes;
     /**
      * The database table used by the model.
      *
@@ -16,6 +18,11 @@ class Client extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public static function intrash()
+    {
+        return Client::withTrashed()->whereNotNull('deleted_at')->get();
     }
 
     /**

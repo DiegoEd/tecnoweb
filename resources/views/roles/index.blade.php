@@ -39,13 +39,19 @@
                                         <td>{{ $item->id }}</td>
                                         <td>{{ $item->role }}</td><td>{{ $item->description }}</td>
                                         <td>
-                                            <a href="{{ url('/roles/' . $item->id) }}" title="View Role"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ url('/roles/' . $item->id . '/edit') }}" title="Edit Role"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                                            <a href="{{ url('/roles/' . $item->id) }}" title="View Role">
+                                            <button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> Mirar</button>
+                                            </a>
+                                            <a href="{{ url('/roles/' . $item->id . '/edit') }}" title="Edit Role">
+                                            <button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</button></a>
                                             <form method="POST" action="{{ url('/roles/'. $item->id) }}" style="display:inline">
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 {!! csrf_field() !!}
                                                 <button type="submit" class="btn btn-danger btn-xs" title="Delete Product" onclick="return confirm('Confirm delete?')"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
                                             </form>
+                                            <a href="{{ url('/roles/signup/' . $item->id) }}" title="View Role">
+                                            <button class="btn btn-info btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Asignar</button>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

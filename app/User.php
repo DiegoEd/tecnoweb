@@ -12,6 +12,11 @@ class User extends Model
     public function employee() {
         return $this->hasOne(Employee::class);
     }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
     /**
      * The database table used by the model.
      *
@@ -19,6 +24,15 @@ class User extends Model
      */
     protected $table = 'users';
     
+
+    public function inrole($id)
+    {
+            if($this->role_id == $id)
+            {
+                return ' checked ';
+            }
+        return ' ';
+    }
     /**
     * The database primary key value.
     *
@@ -41,7 +55,7 @@ class User extends Model
      *
      * @var array
      */
-    protected $fillable = ['username', 'password', 'email'];
+    protected $fillable = ['username', 'password', 'email','role_id'];
 
     
 }
