@@ -4,19 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Client extends Model
+class AccionRole extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'clients';
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    protected $table = 'accion_role';
 
     /**
     * The database primary key value.
@@ -30,7 +26,6 @@ class Client extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','nit', 'number', 'address'];
-
-    
+    protected $fillable = ['accion_id', 'role_id'];
 }
+    

@@ -7,9 +7,8 @@
 
             <div class="col-md-9">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Crear nuevo cliente</div>
+                    <div class="panel-heading">Edit Accion #{{ $accion->id }}</div>
                     <div class="panel-body">
-                        <a href="{{ url('/clients') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Atras</button></a>
                         <br />
                         <br />
 
@@ -21,12 +20,11 @@
                             </ul>
                         @endif
 
+                        <form method="POST" action="{{ url('/accions/'. $accion->id) }}" class="form-horizontal">
+                            <input type="hidden" name="_method" value="PATCH">
 
-                        {!! Form::open(['url' => '/clients', 'class' => 'form-horizontal', 'files' => true]) !!}
-
-                        @include ('clients.form')
-
-                        {!! Form::close() !!}
+                        @include ('accions.form', ['submitButtonText' => 'Update'])
+                        </form>
 
                     </div>
                 </div>

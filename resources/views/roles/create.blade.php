@@ -7,9 +7,9 @@
 
             <div class="col-md-9">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Crear nuevo cliente</div>
+                    <div class="panel-heading">Create New Role</div>
                     <div class="panel-body">
-                        <a href="{{ url('/clients') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Atras</button></a>
+                        <a href="{{ url('/roles') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
                         <br />
 
@@ -21,12 +21,11 @@
                             </ul>
                         @endif
 
+                        <form method="POST" action="{{ url('/roles') }}" class="form-horizontal">
 
-                        {!! Form::open(['url' => '/clients', 'class' => 'form-horizontal', 'files' => true]) !!}
+                        @include ('roles.form', ['submitButtonText' => 'Registrar'])
 
-                        @include ('clients.form')
-
-                        {!! Form::close() !!}
+                        </form>
 
                     </div>
                 </div>

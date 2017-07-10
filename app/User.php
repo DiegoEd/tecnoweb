@@ -22,6 +22,16 @@ class User extends Model
     */
     protected $primaryKey = 'id';
 
+    public static function isusernameunique($username)
+    {
+        return  User::where('username', $username)->count() == 0 ;
+    }
+
+    public function ismyusername($username)
+    {
+        return $this->username == $username;
+    }
+
     /**
      * Attributes that should be mass-assignable.
      *

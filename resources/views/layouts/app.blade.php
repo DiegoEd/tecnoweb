@@ -11,7 +11,11 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
+    <link href="/vis4/dist/vis.css" rel="stylesheet">
+    <link href="/vis4/dist/vis-timeline-graph2d.min.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
+    <script src="/vis4/dist/vis.js"></script>
+    <script src="/vis4/dist/vis-timeline-graph2d.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Scripts -->
@@ -26,19 +30,8 @@
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
-
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
+                    @include('layouts.css')
+                    @include('layouts.modules')
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -83,6 +76,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="/js/app.js"></script>
+    
+
 </body>
 </html>
