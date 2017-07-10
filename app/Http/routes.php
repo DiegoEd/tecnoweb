@@ -22,6 +22,8 @@ Route::patch('products/restore/{id}', 'ProductsController@restore');
 Route::get('product-categories/trash', 'ProductCategoriesController@trash');
 Route::patch('product-categories/restore/{id}', 'ProductCategoriesController@restore');
 
+Route::get('accions/create/{id}', 'AccionsController@create');
+
 Route::resource('product-categories', 'ProductCategoriesController');
 Route::resource('products', 'ProductsController');
 Route::resource('clients', 'ClientsController');
@@ -29,4 +31,7 @@ Route::resource('users', 'UsersController');
 Route::resource('suppliers', 'SuppliersController');
 Route::resource('employees', 'EmployeesController');
 Route::resource('customizes', 'CustomizesController');
+Route::resource('modules', 'ModulesController');
+Route::resource('accions', 'AccionsController');
+Route::resource('roles', 'RolesController');
 Route::resource('session', 'SessionController');

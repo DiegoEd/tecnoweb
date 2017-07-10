@@ -57,16 +57,28 @@ class ClientsController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-     public function validatefields(Request $request)
+    public function requiretypes(Request $request)
     {
         $this->validate($request, [
-        'username' => 'required|unique:users'
+        'username' => 'required',
+        'email' => 'required',
+        'name'=>'required',
+        'number' => 'required',
+        'password' => 'required',
+        'nit' => 'required',
+        'address' => 'required'
         ]);
     }
     public function store(Request $request)
     {
-        $this->validatefields($request);
         $requestData = $request->all();
+        $this->requiretypes($request);
+        if(!User::isusernameunique($requestData['username']))
+        {
+
+                return redirect()->back()->withErrors(array('username' => 'Nombre de usuario ya existe. Ingrese otro porfavor')); 
+        }
+
         $user = new User;
         $user->username = $requestData['username'];
         $user->password = $requestData['password']; 
@@ -127,11 +139,14 @@ class ClientsController extends Controller
      */
     public function update($id, Request $request)
     {
-        $this->validatefields($request);
         $requestData = $request->all();
-        
+        $this->requiretypes($request);
         $client = Client::findOrFail($id);
         $user = User::findOrFail($client->user_id);
+        if(!$user->ismyusername($requestData['username']) && !User::isusernameunique($request['username']))
+        {
+                return redirect()->back()->withErrors(array('username' => 'Nombre de usuario ya existe. Ingrese otro porfavor')); 
+        }
         $client->update($requestData);
         $user->update($requestData);
 
