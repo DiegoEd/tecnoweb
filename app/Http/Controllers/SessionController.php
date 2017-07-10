@@ -16,9 +16,11 @@ class SessionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->session()->has('id')) {
+            $request->session()->flush();
+        }
         return view('session.index');
     }
 
@@ -43,9 +45,6 @@ class SessionController extends Controller
         $requestData = $request->all();
         $users = User::where('email', 'LIKE', $requestData['email'])->where('password', 'LIKE', $requestData['password'])->get();
         if (count($users) > 0) {
-            if (session_id() == "") {
-                session_start();
-            }
             $user = $users->first();
             $request->session()->put('id', $user->id);
             $request->session()->put('username', $user->username);
@@ -95,12 +94,8 @@ class SessionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
-        //
-    }
 
-    public function startSession() {
-        return view('session.index');
     }
 }

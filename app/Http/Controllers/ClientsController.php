@@ -19,6 +19,9 @@ class ClientsController extends Controller
      */
     public function index(Request $request)
     {
+        if (empty(session('id'))) {
+            return redirect('session');
+        }
         $keyword = $request->get('search');
         $perPage = 25;
 
