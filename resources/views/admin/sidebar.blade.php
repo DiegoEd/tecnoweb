@@ -5,13 +5,14 @@
         </div>
 
         <div class="panel-body">
-            <ul class="nav" role="tablist">
+            <!--ul class="nav" role="tablist">
                 <li role="presentation">
                     <a href="{{ url('/admin') }}">
                         Dashboard
                     </a>
                 </li>
-            </ul>
+            </ul-->
+            <img src="../../../img/users/{{ session('imagepath') }}">
         </div>
     </div>
 </div>

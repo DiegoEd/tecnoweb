@@ -18,6 +18,15 @@ class Employee extends Model
     public function user() {
         return $this->belongsTo(User::class);
     }
+
+    public function salesbills() {
+        return $this->hasMany(SalesBill::class);
+    }
+
+    public function purchasesbills() {
+        return $this->hasMany(PurchasesBill::class);
+    }
+
     public static function intrash()
     {
         return Employee::withTrashed()->whereNotNull('deleted_at')->get();

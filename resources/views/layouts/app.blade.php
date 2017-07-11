@@ -25,6 +25,13 @@
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
+    <script>
+        function myFunction() {
+            var x = document.getElementById("select");
+            var i = x.selectedIndex;
+            document.getElementById("price").value = x.options[i + 1].text;
+        }
+    </script>
 </head>
 <body>
     <div id="app">

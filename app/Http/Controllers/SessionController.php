@@ -8,6 +8,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\User;
+use App\Client;
+use App\Employee;
 use App\Customize;
 
 class SessionController extends Controller
@@ -51,6 +53,13 @@ class SessionController extends Controller
             $user = $users->first();
             $customizes = Customize::where('user_id', '=', $user->id);
             $customize = $customizes->first();
+
+            $clients = Client::where('user_id', '=', $user->id);
+            $client = $clients->first();
+
+            $employees = Employee::where('user_id', '=', $user->id);
+            $employee = $employees->first();
+
             $request->session()->put('id', $user->id);
             $request->session()->put('username', $user->username);
             if (is_null($customize)) {
@@ -65,6 +74,15 @@ class SessionController extends Controller
             $request->session()->put('customize_id', $customize_id);
             $request->session()->put('theme', $theme);
             $request->session()->put('imagepath', $imagepath);
+
+            if (!is_null($client)) {
+                $person_id = $client->id;
+            } else if (!is_null($employee)) {
+                $person_id = $employee->id;
+            } else {
+                $person_id = '';
+            }
+            $request->session()->put('person_id', $person_id);
         } else {
             return redirect()->back()->withErrors(array('username' => 'Credenciales inválidos.'));
         }
@@ -124,6 +142,7 @@ class SessionController extends Controller
             $request->session()->forget('customize_id');
             $request->session()->forget('theme');
             $request->session()->forget('imagepath');
+            $request->session()->forget('person_id');
         }
         return redirect('session');
     }

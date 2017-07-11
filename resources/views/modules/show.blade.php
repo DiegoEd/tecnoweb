@@ -35,7 +35,7 @@
                             </table>
                         </div>
                     </div>
-                     @include('accions.index')
+                    @include('accions.index')
                 </div>
             </div>
         </div>

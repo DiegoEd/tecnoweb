@@ -4,18 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Supplier extends Model
+class PurchasesBillDetail extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'suppliers';
-
-    public function purchasesbills() {
-        return $this->hasMany(PurchasesBill::class);
-    }
+    protected $table = 'purchases_bill_details';
 
     /**
     * The database primary key value.
@@ -29,7 +25,7 @@ class Supplier extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'telephone', 'address'];
+    protected $fillable = ['price', 'amount'];
 
     
 }

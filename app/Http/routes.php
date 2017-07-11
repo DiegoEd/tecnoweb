@@ -29,6 +29,7 @@ Route::get('employees/trash', 'EmployeesController@trash');
 Route::patch('employees/restore/{id}', 'EmployeesController@restore');
 
 Route::get('accions/create/{id}', 'AccionsController@create');
+Route::get('sale-bill-details/create/{id}', 'SaleBillDetailsController@create');
 Route::get('session/close', 'SessionController@shutdown');
 Route::get('roles/signup/{id}', 'RolesController@signup');
 Route::post('roles/commituser/', 'RolesController@commituser');
@@ -44,3 +45,8 @@ Route::resource('modules', 'ModulesController');
 Route::resource('accions', 'AccionsController');
 Route::resource('roles', 'RolesController');
 Route::resource('session', 'SessionController');
+
+Route::resource('sales-bills', 'SalesBillsController');
+Route::resource('sale-bill-details', 'SaleBillDetailsController');
+Route::resource('purchases-bills', 'PurchasesBillsController');
+Route::resource('purchases-bill-details', 'PurchasesBillDetailsController');

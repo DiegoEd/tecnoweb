@@ -20,6 +20,10 @@ class Product extends Model
         return $this->belongsTo(ProductCategory::class);
     }
 
+    public function salebilldetails() {
+        return $this->hasMany(SaleBillDetails::class);
+    }
+
     public static function intrash()
     {
         return Product::withTrashed()->whereNotNull('deleted_at')->get();
