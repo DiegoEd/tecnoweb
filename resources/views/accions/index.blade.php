@@ -4,11 +4,6 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Acciones</div>
                     <div class="panel-body">
-                        <a href="{{ url('/accions/create/'. $module->id) }}" class="btn btn-success btn-sm" title="Add New Accion">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Adicionar Acciones
-                        </a>
-                        <br/>
-                        <br/>
                         <div class="table-responsive">
                             <table class="table table-borderless">
                                 <thead>

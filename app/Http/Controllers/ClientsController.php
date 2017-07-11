@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
+use Illuminate\Support\Facades\Redirect;
 
 use App\Client;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class ClientsController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index($accion,Request $request)
     {
         if (empty(session('id'))) {
             return redirect('session');
@@ -35,7 +36,7 @@ class ClientsController extends Controller
             $clients = Client::paginate($perPage);
         }
 
-        return view('clients.index', compact('clients'));
+        return view('clients.'.$accion, compact('clients'));
     }
 
     /**
@@ -110,7 +111,7 @@ class ClientsController extends Controller
 
         Session::flash('flash_message', 'Client added!');
 
-        return redirect('clients');
+        return redirect('clients/index/index');
     }
 
 
@@ -168,7 +169,7 @@ class ClientsController extends Controller
 
         Session::flash('flash_message', 'Client updated!');
 
-        return redirect('clients');
+        return redirect('clients/index/indexedit');
     }
 
     /**
@@ -186,6 +187,6 @@ class ClientsController extends Controller
 
         Session::flash('flash_message', 'Client deleted!');
 
-        return redirect('clients');
+        return Redirect::back();
     }
 }

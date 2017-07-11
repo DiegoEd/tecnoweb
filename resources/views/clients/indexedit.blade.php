@@ -7,12 +7,12 @@
 
             <div class="col-md-9">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Clientes</div>
+                    <div class="panel-heading">Modificar clientes</div>
                     <div class="panel-body">
 
 
 
-                        {!! Form::open(['method' => 'GET', 'url' => '/clients', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}
+                        {!! Form::open(['method' => 'GET', 'url' => '/clients/index/indexedit', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}
                         <div class="input-group">
                             <input type="text" class="form-control" name="search" placeholder="Search...">
                             <span class="input-group-btn">
@@ -30,7 +30,7 @@
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>ID</th><th>Nombre</th><th>Nit</th>
+                                        <th>Codigo</th><th>Nombre</th><th>Nit</th><th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -38,6 +38,9 @@
                                     <tr>
                                         <td>{{ $item->id }}</td>
                                         <td>{{ $item->name }}</td><td>{{ $item->nit }}</td>
+                                        <td>
+                                            <a href="{{ url('/clients/' . $item->id . '/edit') }}" title="Editar Cliente"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</button></a>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>

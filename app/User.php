@@ -50,6 +50,42 @@ class User extends Model
         return $this->username == $username;
     }
 
+    public function getRoles()
+    {
+        $modulesadded = array();
+        $role = $this->role;
+        if(is_null($role))
+        {
+            return array();
+        }
+        $accions = $role->accions;
+        $results =  array();
+
+        foreach ($accions as $accion) {
+            if(!array_key_exists($accion->module_id,$modulesadded))
+            {
+                $moduleArray =array();
+                $accionArray =array();
+
+                $modulesadded[$accion->module_id] = $accion->module_id;
+                $module = $accion->module;
+                
+                array_push($moduleArray, $module->name);
+                array_push($moduleArray, $module->description);
+                array_push($accionArray, $accion->id);
+                array_push($moduleArray, $accionArray);
+
+                $results[$accion->module_id] = $moduleArray;
+            }else
+            {
+                $accionArray = ($results[$accion->module_id])[2];
+                array_push($accionArray, $accion->id);
+                ($results[$accion->module_id])[2]=$accionArray;
+            }
+        }
+        return $results;
+    }
+
     /**
      * Attributes that should be mass-assignable.
      *

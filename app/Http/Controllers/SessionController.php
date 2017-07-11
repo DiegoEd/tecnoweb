@@ -53,6 +53,8 @@ class SessionController extends Controller
             $customize = $customizes->first();
             $request->session()->put('id', $user->id);
             $request->session()->put('username', $user->username);
+            $roles = $user->getRoles();
+            $request->session()->push('roles',$roles);
             if (is_null($customize)) {
                 $customize_id = '';
                 $theme = '';
@@ -68,7 +70,7 @@ class SessionController extends Controller
         } else {
             return redirect()->back()->withErrors(array('username' => 'Credenciales inválidos.'));
         }
-        return redirect('clients');
+        return redirect('/');
     }
 
     /**
@@ -124,6 +126,7 @@ class SessionController extends Controller
             $request->session()->forget('customize_id');
             $request->session()->forget('theme');
             $request->session()->forget('imagepath');
+            $request->session()->forget('roles');
         }
         return redirect('session');
     }

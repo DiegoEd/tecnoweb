@@ -12,7 +12,7 @@
                         <a href="{{ url('/products/create') }}" class="btn btn-success btn-sm" title="Nuevo producto">
                             <i class="fa fa-plus" aria-hidden="true"></i> Nuevo
                         </a>
-                        <a href="{{ url('/products/trash') }}" class="btn btn-success btn-sm" title="Nuevo producto">
+                        <a href="{{ url('/products/trash') }}" class="btn btn-success btn-sm" title="Papelera">
                             <i class="fa fa-trash-o" aria-hidden="true"></i> Papelera
                         </a>
                         {!! Form::open(['method' => 'GET', 'url' => '/products', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}

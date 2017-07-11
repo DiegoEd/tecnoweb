@@ -35,6 +35,8 @@ class AccionsController extends Controller
         return view('accions.index', compact('accions'));
     }
 
+
+
     /**
      * Show the form for creating a new resource.
      *

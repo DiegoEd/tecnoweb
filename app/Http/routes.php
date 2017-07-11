@@ -33,14 +33,26 @@ Route::get('session/close', 'SessionController@shutdown');
 Route::get('roles/signup/{id}', 'RolesController@signup');
 Route::post('roles/commituser/', 'RolesController@commituser');
 
+
+Route::get('clients/index/{accion}', 'ClientsController@index');
+Route::get('clients/indexedit/{accion}', 'ClientsController@index');
+Route::get('clients/indexdelete/{accion}', 'ClientsController@index');
+
+
+##acciones descontinuadas
+/*Route::get('modules/signup/{id}', 'ModulesController@signup');
+Route::post('modules/commitaccions/', 'ModulesController@commitaccions');*/
+
+
+Route::get('module/generateview/{id}', 'ModulesController@generateview');
+
 Route::resource('product-categories', 'ProductCategoriesController');
 Route::resource('products', 'ProductsController');
-Route::resource('clients', 'ClientsController');
-Route::resource('users', 'UsersController');
+Route::resource('clients', 'ClientsController', ['except' => ['index']]);
 Route::resource('suppliers', 'SuppliersController');
 Route::resource('employees', 'EmployeesController');
 Route::resource('customizes', 'CustomizesController');
-Route::resource('modules', 'ModulesController');
-Route::resource('accions', 'AccionsController');
+Route::resource('modules', 'ModulesController', ['except' => ['create']]);
+Route::resource('accions', 'AccionsController', ['except' => ['create']]);
 Route::resource('roles', 'RolesController');
 Route::resource('session', 'SessionController');

@@ -33,7 +33,12 @@ class ModulesController extends Controller
 
         return view('modules.index', compact('modules'));
     }
-
+    public function generateview($id,Request $request)
+    {
+        $roless = $request->session()->get('roles');
+        $accions = Accion::whereIn('id', (($roless[0])[$id])[2] )->get();
+        return view('modules.generateview',compact('accions'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -62,6 +67,43 @@ class ModulesController extends Controller
         Session::flash('flash_message', 'Module added!');
 
         return redirect('modules');
+    }
+    ##funcion descontinuada
+    public function signup($id)
+    {
+        $module = Module::findOrFail($id);
+        $accions = Accion::all();
+        return view('roles.signup', compact('accions','module'));
+    }
+    ##funcion descontinuada
+    public function commitaccions(Request $request)
+    {
+        $requestData = $request->all();
+        $role = Role::findOrFail($requestData['id']);
+
+        if(!isset($requestData['users']))
+        {
+            $users = $role->users;
+            foreach ($users as $user) {
+               $user->role_id = null;
+               $user->save();
+            }
+        }else{
+            $users_role = $requestData['users'];
+            if(count($role->users)>0)
+            {
+                User::where('role_id', $role->id)->update(array('role_id' => null));
+            }
+
+            foreach ($users_role as $user_role) {
+                   $user = User::findOrFail($user_role);
+                   $user->role_id = $role->id;
+                   $user->save();
+            }
+        }
+        $perPage = 20;
+        $roles = Role::paginate($perPage);
+        return view('roles.index', compact('roles'));
     }
 
     /**
