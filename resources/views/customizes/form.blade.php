@@ -20,13 +20,7 @@
         <input type="hidden" name="filename" value="{{ $customizes->imagepath }}">
     </div>
 </div>
-<div class="form-group {{ $errors->has('imagepath') ? 'has-error' : ''}}">
-    <div class="col-md-6">
-        <input type="hidden" name="user_id" value="{{ session('id') }}" class="form-control">
-        {!! $errors->first('user_id', '<p class="help-block">:message</p>') !!}
-    </div>
-</div>
-
+<input type="hidden" name="user_id" value="{{ session('id') }}" class="form-control">
 <div class="form-group">
     <div class="col-md-offset-4 col-md-4">
         <button type="submit" class="btn btn-primary">{{ $submitButtonText }}</button>

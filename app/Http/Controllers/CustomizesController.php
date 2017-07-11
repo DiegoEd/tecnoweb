@@ -156,9 +156,9 @@ class CustomizesController extends Controller
     public function postNewImage(Request $request)
     {
         $this->validate($request, ['imagepath' => 'required|image']);
-        $fileName = $request->file('imagepath')->getClientOriginalName();
-        Image::make($request->file('imagepath'))->resize(144, 144)->save('img/users/'. $fileName);
+        $filename = session('id'). $request->file('imagepath')->getClientOriginalName();
+        Image::make($request->file('imagepath'))->resize(200, 200)->save('img/users/'. $filename);
 
-        return $fileName;
+        return $filename;
     }
 }

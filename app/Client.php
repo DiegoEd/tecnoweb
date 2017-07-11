@@ -20,6 +20,10 @@ class Client extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function salesbills() {
+        return $this->hasMany(SalesBill::class);
+    }
+
     public static function intrash()
     {
         return Client::withTrashed()->whereNotNull('deleted_at')->get();
