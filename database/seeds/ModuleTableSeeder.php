@@ -29,6 +29,7 @@ class ModuleTableSeeder extends Seeder
         $gcliente->visitcount = 0;
         $gcliente->save();
         ##Acciones de gestionar cliente
+        		#Accion crear cliente	
 		        $ccliente = new Accion;
 		        $ccliente ->name= 'Crear cliente';
 		        $counterpage = new CounterPage;

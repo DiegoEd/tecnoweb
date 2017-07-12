@@ -22,6 +22,10 @@ class PurchasesBillsController extends Controller
      */
     public function index($accion,Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $keyword = $request->get('search');
         $perPage = 25;
         $cant = $this->contarindex($accion); 
@@ -68,6 +72,10 @@ class PurchasesBillsController extends Controller
      */
     public function create()
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $suppliers = Supplier::all();
         $purchasesbill = new PurchasesBill;
         $cant = $this->contarfuncion('create');
@@ -83,6 +91,10 @@ class PurchasesBillsController extends Controller
      */
     public function store(Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         $purchasesbill = new PurchasesBill;
         $purchasesbill->purchasedate = $requestData['purchasedate'];
@@ -106,6 +118,10 @@ class PurchasesBillsController extends Controller
      */
     public function show($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $purchasesbill = PurchasesBill::findOrFail($id);
 
         return view('purchases-bills.show', compact('purchasesbill','show'));
@@ -120,6 +136,10 @@ class PurchasesBillsController extends Controller
      */
     public function edit($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $purchasesbill = PurchasesBill::findOrFail($id);
         return view('purchases-bills.edit', compact('purchasesbill','cant'));
     }
@@ -134,7 +154,10 @@ class PurchasesBillsController extends Controller
      */
     public function update($id, Request $request)
     {
-        
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         
         $purchasesbill = PurchasesBill::findOrFail($id);
@@ -154,6 +177,10 @@ class PurchasesBillsController extends Controller
      */
     public function destroy($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $purchasesbill = PurchasesBill::findOrFail($id);
         $purchasesbilldetails = $purchasesbill->purchasesbilldetails;
         for ($i = 0; $i < count($purchasesbilldetails); $i++) { 

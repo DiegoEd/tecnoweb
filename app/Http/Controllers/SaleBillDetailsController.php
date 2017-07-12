@@ -22,6 +22,10 @@ class SaleBillDetailsController extends Controller
      */
     public function index(Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $keyword = $request->get('search');
         $perPage = 25;
 
@@ -57,6 +61,10 @@ class SaleBillDetailsController extends Controller
      */
     public function create($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $salebilldetail = new SaleBillDetail;
         $salebilldetail->sales_bill_id = $id;
         $products = Product::all();
@@ -73,7 +81,10 @@ class SaleBillDetailsController extends Controller
      */
     public function store(Request $request)
     {
-        
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         
         $product = Product::findOrFail($requestData['product_id']);
@@ -103,6 +114,10 @@ class SaleBillDetailsController extends Controller
      */
     public function show($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $salebilldetail = SaleBillDetail::findOrFail($id);
 
         return view('sale-bill-details.show', compact('salebilldetail'));
@@ -117,6 +132,10 @@ class SaleBillDetailsController extends Controller
      */
     public function edit($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $salebilldetail = SaleBillDetail::findOrFail($id);
         $products = Product::all();
         return view('sale-bill-details.edit', compact('salebilldetail', 'products'));
@@ -132,7 +151,10 @@ class SaleBillDetailsController extends Controller
      */
     public function update($id, Request $request)
     {
-        
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         $salebilldetail = SaleBillDetail::findOrFail($id);
         $salebilldetail->update($requestData);
@@ -151,6 +173,10 @@ class SaleBillDetailsController extends Controller
      */
     public function destroy($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         SaleBillDetail::destroy($id);
 
         Session::flash('flash_message', 'SaleBillDetail deleted!');

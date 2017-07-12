@@ -24,7 +24,10 @@ class RolesController extends Controller
      */
     public function index($accion,Request $request)
     {
-
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $keyword = $request->get('search');
         $perPage = 25;
 
@@ -57,6 +60,10 @@ class RolesController extends Controller
      */
     public function create()
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $role = new Role;
         $modules = Module::with('accions')->get();
         $cant = $this->contarfuncion('/roles/create');
@@ -72,7 +79,10 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
-        
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         $role = new Role;
         $role->role = $requestData['role'];
@@ -104,7 +114,10 @@ class RolesController extends Controller
      */
     public function update($id, Request $request)
     {
-        
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         
         $role = Role::findOrFail($id);
@@ -120,6 +133,15 @@ class RolesController extends Controller
                 $accion_role->save();
             }            
         }
+
+        $user = User::findOrFail($request->session()->get('id'));
+
+        if($user->role->id == $role->id)
+        {
+            $request->session()->forget('roles');
+             $roles = $user->getRoles();
+            $request->session()->push('roles',$roles);
+        }
         Session::flash('flash_message', 'Role updated!');
 
         return redirect('roles/index/indexedit');
@@ -127,6 +149,10 @@ class RolesController extends Controller
 
     public function commituser(Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         $role = Role::findOrFail($requestData['id']);
 

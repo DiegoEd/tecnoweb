@@ -22,6 +22,10 @@ class SalesBillsController extends Controller
      */
     public function index($accion,Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $keyword = $request->get('search');
         $perPage = 25;
 
@@ -68,6 +72,10 @@ class SalesBillsController extends Controller
      */
     public function create()
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $cant = $this->contarfuncion('create');
         $clients = Client::all();
         $salesbill = new SalesBill;
@@ -84,7 +92,10 @@ class SalesBillsController extends Controller
     public function store(Request $request)
     {
 
-        
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         $salesbill = new SalesBill;
         $salesbill->salesdate = $requestData['salesdate'];
@@ -106,6 +117,10 @@ class SalesBillsController extends Controller
      */
     public function show($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $salesbill = SalesBill::findOrFail($id);
         return view('sales-bills.show', compact('salesbill','show'));
     }
@@ -119,6 +134,10 @@ class SalesBillsController extends Controller
      */
     public function edit($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $clients = Client::all();
         $salesbill = SalesBill::findOrFail($id);
 
@@ -135,7 +154,10 @@ class SalesBillsController extends Controller
      */
     public function update($id, Request $request)
     {
-        
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }   
         $requestData = $request->all();
         
         $salesbill = SalesBill::findOrFail($id);
@@ -154,6 +176,10 @@ class SalesBillsController extends Controller
      */
     public function destroy($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $salesbill = SalesBill::findOrFail($id);
         $salebilldetails = $salesbill->salebilldetails;
         for ($i = 0; $i < count($salebilldetails); $i++) { 
@@ -166,5 +192,30 @@ class SalesBillsController extends Controller
         Session::flash('flash_message', 'SalesBill deleted!');
 
         return Redirect::back();
+    }
+
+    public function statistics() {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
+        $salesbills = SalesBill::all();
+        $all = "";
+        $array = array();
+        for ($i = 0; $i < count($salesbills); $i++) {
+            if (!in_array($salesbills[$i]->salesdate, $array)) {               
+                $sales = $salesbills[$i]->salesdate;
+                $array[] = $sales;
+                $cantidad = $salesbills[$i]->totalamount;
+                for ($j =$i + 1; $j < count($salesbills); $j++) { 
+                    $aux = $salesbills[$j]->salesdate;
+                    if ($sales === $aux) {
+                        $cantidad = $cantidad + $salesbills[$j]->totalamount;
+                    }
+                }
+                $all .= "{x: '". $salesbills[$i]->salesdate. "', y: ". $cantidad. "}," ;
+            }
+        }
+        return view('sales-bills.statistics', compact('all'));
     }
 }

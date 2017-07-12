@@ -20,6 +20,10 @@ class ProductCategoriesController extends Controller
      */
     public function index($accion,Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $keyword = $request->get('search');
         $perPage = 25;
         $cant = $this->contarindex($accion); 
@@ -64,6 +68,10 @@ class ProductCategoriesController extends Controller
      */
     public function create()
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $productcategory = new ProductCategory;
         $cant = $this->contarfuncion('create');        
         return view('product-categories.create',compact('productcategory','cant'));
@@ -77,7 +85,10 @@ class ProductCategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         
         ProductCategory::create($requestData);
@@ -95,6 +106,10 @@ class ProductCategoriesController extends Controller
      */
     public function show($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $productcategory = ProductCategory::findOrFail($id);
 
         return view('product-categories.show', compact('productcategory'));
@@ -109,6 +124,10 @@ class ProductCategoriesController extends Controller
      */
     public function edit($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $productcategory = ProductCategory::findOrFail($id);
         $cant = $this->contarfuncion('edit');
         return view('product-categories.edit', compact('productcategory','cant'));
@@ -124,7 +143,10 @@ class ProductCategoriesController extends Controller
      */
     public function update($id, Request $request)
     {
-        
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         
         $productcategory = ProductCategory::findOrFail($id);
@@ -137,6 +159,10 @@ class ProductCategoriesController extends Controller
 
     public function trash()
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $productcategories = ProductCategory::intrash();
         $cant = $this->contarfuncion('trash');        
         return view('product-categories.trash', compact('productcategories','cant'));
@@ -144,6 +170,10 @@ class ProductCategoriesController extends Controller
 
     public function restore($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $product = ProductCategory::withTrashed()->find($id);
         $product->restore();
         return redirect('product-categories/trash');
@@ -158,6 +188,10 @@ class ProductCategoriesController extends Controller
      */
     public function destroy($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         ProductCategory::destroy($id);
 
         Session::flash('flash_message', 'ProductCategory deleted!');

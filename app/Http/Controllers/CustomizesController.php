@@ -21,6 +21,10 @@ class CustomizesController extends Controller
      */
     public function index(Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         if (empty(session('id'))) {
             return redirect('session');
         }
@@ -65,6 +69,10 @@ class CustomizesController extends Controller
      */
     public function create()
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $customizes = new Customize;
         return view('customizes.create', compact('customizes'));
     }
@@ -78,6 +86,10 @@ class CustomizesController extends Controller
      */
     public function store(Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $filename = $this->postNewImage($request);
         
         $requestData = $request->all();
@@ -105,6 +117,10 @@ class CustomizesController extends Controller
      */
     public function show($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $customize = Customize::findOrFail($id);
 
         return view('customizes.show', compact('customize'));
@@ -119,6 +135,10 @@ class CustomizesController extends Controller
      */
     public function edit($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $customizes = Customize::findOrFail($id);
 
         return view('customizes.edit', compact('customizes'));
@@ -134,6 +154,10 @@ class CustomizesController extends Controller
      */
     public function update($id, Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         if (empty($requestData['imagepath'])) {
             $requestData['imagepath'] = $requestData['filename'];
@@ -162,6 +186,10 @@ class CustomizesController extends Controller
      */
     public function destroy($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         Customize::destroy($id);
 
         Session::flash('flash_message', 'Customize deleted!');
@@ -171,6 +199,10 @@ class CustomizesController extends Controller
 
     public function postNewImage(Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $this->validate($request, ['imagepath' => 'required|image']);
         $filename = session('id'). $request->file('imagepath')->getClientOriginalName();
         Image::make($request->file('imagepath'))->resize(200, 200)->save('img/users/'. $filename);

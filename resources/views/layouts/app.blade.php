@@ -33,13 +33,36 @@
         }
     </script>
 </head>
+<style>
+    html{
+      position:relative; 
+      min-height: 100%;
+    }
+
+    #app{
+      margin-bottom:80px;
+    }
+
+    .footer{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        background:#ccc;
+    }
+</style>
 <body>
     <div id="app">
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
+                    @if (!empty(session('id')))
                     @include('layouts.css')
                     @include('layouts.modules')
+                    @else
+                    <a href="{{ url('/main') }}" class="navbar-brand">Hinolux</a>
+                    @endif
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -51,29 +74,12 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ url('/session/close') }}">Login</a></li>
+                        @if (empty(session('id')))
+                            <li><a href="{{ url('/session') }}">Iniciar sesión</a></li>
                             <li><a href="{{ url('/register') }}">Register</a></li>
                         @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="{{ url('/logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
-
-                                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
+                            <li><a href="{{ url('/customizes') }}">Personalización</a></li>
+                            <li><a href="{{ url('/session/close') }}">Cerrar sesión</a></li>
                         @endif
                     </ul>
                 </div>
@@ -84,7 +90,17 @@
     </div>
 
     <!-- Scripts -->
-    <div class="navbar navbar-default navbar-fixed-bottom">
+
+    <!--div class="navbar navbar-default navbar-fixed-bottom" height="10">
+        <div class="container" style="height:10px">
+              <p class="navbar-text pull-left">© 2014 - Site Built By Mr. M.
+                   <a href="http://tinyurl.com/tbvalid" target="_blank" >HTML 5 Validation</a>
+              </p>
+              
+              <a href="https://www.facebook.com/Hinolux-SRL-259362990924047/" class="navbar-btn btn-danger btn pull-right">Únete a nuestra página de Facebook</a>
+        </div>
+    </div-->
+    <div class="footer">
         <div class="container">
               <p class="navbar-text pull-left">Hinolux Soluciones funcionales sofisticadas
                    
@@ -95,7 +111,6 @@
               </p>
         </div>
     </div>
-
-
+    
 </body>
 </html>

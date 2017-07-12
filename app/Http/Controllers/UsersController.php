@@ -19,6 +19,10 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $keyword = $request->get('search');
         $perPage = 25;
 
@@ -41,6 +45,10 @@ class UsersController extends Controller
      */
     public function create()
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         return view('users.create');
     }
 
@@ -53,7 +61,10 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         
         User::create($requestData);
@@ -72,6 +83,10 @@ class UsersController extends Controller
      */
     public function show($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $user = User::findOrFail($id);
 
         return view('users.show', compact('user'));
@@ -86,6 +101,10 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $user = User::findOrFail($id);
 
         return view('users.edit', compact('user'));
@@ -101,6 +120,10 @@ class UsersController extends Controller
      */
     public function update($id, Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         
         $requestData = $request->all();
         
@@ -121,6 +144,10 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         User::destroy($id);
 
         Session::flash('flash_message', 'User deleted!');

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
-use App\Accion;
+
 use DB;
 use Illuminate\Support\Facades\Redirect;
 
@@ -24,10 +24,12 @@ class ClientsController extends Controller
     ##index,store,update,restore,destroy
     public function index($accion,Request $request)
     {
-        $cant = $this->contarindex($accion);
-        if (empty(session('id'))) {
-            return redirect('session');
+        $idind = $this->idindex($accion);
+        if(!$this->islogged() || !$this->tienepermiso($idind,1))
+        {
+            return redirect('main');
         }
+        $cant = $this->contarindex($accion);
         $keyword = $request->get('search');
         $perPage = 25;
 
@@ -41,6 +43,18 @@ class ClientsController extends Controller
             $clients = Client::paginate($perPage);
         }
         return view('clients.'.$accion, compact('clients','cant'));
+    }
+
+    public function idindex($accion)
+    {
+        if($accion == 'index'){
+            return 3;
+        }elseif($accion == 'indexedit'){
+            return 4;
+        }elseif($accion == 'indexdelete'){
+            return 5;
+        }
+        return 23424;
     }
 
     public function contarindex($accion)
@@ -75,6 +89,10 @@ class ClientsController extends Controller
      */
     public function create()
     {
+        if(!$this->islogged() || !$this->tienepermiso(1,1))
+        {
+            return redirect('main');
+        }
         $cant = $this->contarfuncion('create');
         $client = new Client;
         $user = new User;
@@ -104,6 +122,10 @@ class ClientsController extends Controller
 
     public function trash()
     {
+        if(!$this->islogged() || !$this->tienepermiso(2,1))
+        {
+            return redirect('main');
+        }
         $clients = Client::intrash();
         $cant = $this->contarfuncion('trash');
         return view('clients.trash', compact('clients','cant'));
@@ -111,6 +133,10 @@ class ClientsController extends Controller
 
     public function restore($id)
     {
+        if(!$this->islogged() || !$this->tienepermiso(2,1))
+        {
+            return redirect('main');
+        }
         $client = Client::withTrashed()->find($id);
         $client->restore();
         User::withTrashed()->find($client->user_id)->restore();
@@ -119,6 +145,10 @@ class ClientsController extends Controller
 
     public function store(Request $request)
     {
+        if(!$this->islogged() || !$this->tienepermiso(1,1))
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         $this->requiretypes($request);
         if(!User::isusernameunique($requestData['username']))
@@ -156,6 +186,10 @@ class ClientsController extends Controller
      */
     public function show($id)
     {
+        if(!$this->islogged() || !$this->tienepermiso(3,1))
+        {
+            return redirect('main');
+        }
         $client = Client::findOrFail($id);
         $user = User::findOrFail($client->user_id);
         return view('clients.show', compact('client','user'));
@@ -170,6 +204,10 @@ class ClientsController extends Controller
      */
     public function edit($id)
     {
+        if(!$this->islogged() || !$this->tienepermiso(4,1))
+        {
+            return redirect('main');
+        }
         $cant = $this->contarfuncion('edit');
         $client = Client::findOrFail($id);
         $user = User::findOrFail($client->user_id);
@@ -187,6 +225,10 @@ class ClientsController extends Controller
      */
     public function update($id, Request $request)
     {
+        if(!$this->islogged() || !$this->tienepermiso(4,1))
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         $this->requiretypes($request);
         $client = Client::findOrFail($id);
@@ -212,6 +254,10 @@ class ClientsController extends Controller
      */
     public function destroy($id)
     {
+        if(!$this->islogged() || !$this->tienepermiso(5,1))
+        {
+            return redirect('main');
+        }
         $client = Client::findOrFail($id);
         $client->user->delete();
         $client->delete();

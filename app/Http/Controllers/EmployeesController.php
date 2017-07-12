@@ -21,6 +21,10 @@ class EmployeesController extends Controller
      */
     public function index($accion,Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $cant = $this->contarindex($accion);        
         $keyword = $request->get('search');
         $perPage = 25;
@@ -52,6 +56,7 @@ class EmployeesController extends Controller
 
     public function contarfuncion($funcion)
     {
+
         $rutinga = '/employees/'.$funcion;
         $accions = CounterPage::where('pageroute',$rutinga)->get();
         $accion = $accions->first();
@@ -65,6 +70,10 @@ class EmployeesController extends Controller
 
     public function trash()
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $employees = Employee::intrash();
         $cant = $this->contarfuncion('trash');
         return view('employees.trash', compact('employees','cant'));
@@ -72,6 +81,10 @@ class EmployeesController extends Controller
 
     public function restore($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $employee = Employee::withTrashed()->find($id);
         $employee->restore();
         User::withTrashed()->find($employee->user_id)->restore();
@@ -85,6 +98,10 @@ class EmployeesController extends Controller
      */
     public function create()
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $employees = new Employee;
         $user = new User;
         $cant = $this->contarfuncion('create');
@@ -113,6 +130,10 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         $this->requiretypes($request);
         if(!User::isusernameunique($requestData['username']))
@@ -146,6 +167,10 @@ class EmployeesController extends Controller
      */
     public function show($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $employees = Employee::findOrFail($id);
         $user = User::findOrFail($employees->user_id);
 
@@ -161,6 +186,11 @@ class EmployeesController extends Controller
      */
     public function edit($id)
     {
+
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $cant = $this->contarfuncion('edit');        
         $employees = Employee::findOrFail($id);
         $user = User::findOrFail($employees->user_id);
@@ -178,6 +208,10 @@ class EmployeesController extends Controller
      */
     public function update($id, Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         $this->requiretypes($request);
         $employees = Employee::findOrFail($id);
@@ -202,6 +236,10 @@ class EmployeesController extends Controller
      */
     public function destroy($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $employee = Employee::findOrFail($id);
         $employee->user->delete();
         $employee->delete();

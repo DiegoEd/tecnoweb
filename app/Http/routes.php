@@ -37,6 +37,7 @@ Route::post('roles/commituser/', 'RolesController@commituser');
 Route::get('/main', function () {
 	return view('main');
 });
+Route::get('sales-bills/statistics', 'SalesBillsController@statistics');
 
 
 Route::get('clients/index/{accion}', 'ClientsController@index');

@@ -20,6 +20,10 @@ class SuppliersController extends Controller
      */
     public function index($accion,Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $keyword = $request->get('search');
         $perPage = 25;
         $cant = $this->contarindex($accion);  
@@ -68,6 +72,10 @@ class SuppliersController extends Controller
      */
     public function create()
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $suppliers = new Supplier;
         $cant = $this->contarfuncion('create');
         return view('suppliers.create', compact('suppliers','user','cant'));
@@ -85,6 +93,10 @@ class SuppliersController extends Controller
      */
     public function store(Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         //dd($requestData);
         Supplier::create($requestData);
@@ -104,6 +116,10 @@ class SuppliersController extends Controller
      */
     public function show($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $suppliers = Supplier::findOrFail($id);
         return view('suppliers.show', compact('suppliers','user'));
     }
@@ -117,6 +133,10 @@ class SuppliersController extends Controller
      */
     public function edit($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $suppliers = Supplier::findOrFail($id);
         $cant = $this->contarfuncion('edit');
         return view('suppliers.edit', compact('suppliers','user','cant'));
@@ -132,6 +152,10 @@ class SuppliersController extends Controller
      */
     public function update($id, Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         $suppliers = Supplier::findOrFail($id);
         $suppliers->update($requestData);
@@ -149,6 +173,10 @@ class SuppliersController extends Controller
      */
     public function destroy($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         Supplier::destroy($id);
 
         Session::flash('flash_message', 'Supplier deleted!');
