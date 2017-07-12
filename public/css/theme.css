@@ -1,0 +1,57 @@
+.main-page {
+	background-image: url('../img/others/hinolux.jpg');
+	background-size: 100% 100%;
+	height: 380px;
+	margin-top: -20px;
+}
+
+.banner {
+	background-color: rgba(255, 255, 255, 0.5);
+	color: #006666;
+	font-family: sans-serif;
+}
+
+.btn-danger {
+	background-color: blue;
+}
+
+nav {
+	background-color: #00FFCC !important;
+}
+
+.navbar-brand:link, .navbar-brand:visited {
+	color: white;
+	text-shadow: 1px 1px 0#444;
+}
+
+.navbar-brand:hover, .navbar-brand:active {
+	color: black;
+	text-shadow: 1px 1px 0#444;
+}
+
+.office {
+	background-image: url('../img/others/oficina.jpg');
+	background-size: 100% 100%;
+	height: 280px;
+	margin-top: -30px;
+}
+
+.offert {
+	background-image: url('../img/others/oferta.jpg');
+	background-size: 100% 100%;
+	height: 280px;
+	margin-top: -30px;
+}
+
+.furniture {
+	background-image: url('../img/others/mueble1.jpg');
+	background-size: 100% 100%;
+	height: 280px;
+	margin-top: -30px;
+}
+
+.footer {
+	margin-top: 100px;
+	color: white;
+	background-color: rgba(0, 0, 0, 0.5);
+}

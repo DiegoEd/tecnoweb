@@ -138,4 +138,25 @@ class SalesBillsController extends Controller
 
         return redirect('sales-bills');
     }
+
+    public function statistics() {
+        $salesbills = SalesBill::all();
+        $all = "";
+        $array = array();
+        for ($i = 0; $i < count($salesbills); $i++) {
+            if (!in_array($salesbills[$i]->salesdate, $array)) {               
+                $sales = $salesbills[$i]->salesdate;
+                $array[] = $sales;
+                $cantidad = $salesbills[$i]->totalamount;
+                for ($j =$i + 1; $j < count($salesbills); $j++) { 
+                    $aux = $salesbills[$j]->salesdate;
+                    if ($sales === $aux) {
+                        $cantidad = $cantidad + $salesbills[$j]->totalamount;
+                    }
+                }
+                $all .= "{x: '". $salesbills[$i]->salesdate. "', y: ". $cantidad. "}," ;
+            }
+        }
+        return view('sales-bills.statistics', compact('all'));
+    }
 }

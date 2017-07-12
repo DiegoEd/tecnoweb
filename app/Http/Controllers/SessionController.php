@@ -88,7 +88,7 @@ class SessionController extends Controller
         } else {
             return redirect()->back()->withErrors(array('username' => 'Credenciales inválidos.'));
         }
-        return redirect('/');
+        return redirect('/main');
     }
 
     /**

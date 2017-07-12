@@ -5,14 +5,11 @@
         </div>
 
         <div class="panel-body">
-            <!--ul class="nav" role="tablist">
-                <li role="presentation">
-                    <a href="{{ url('/admin') }}">
-                        Dashboard
-                    </a>
-                </li>
-            </ul-->
+            @if (empty(session('imagepath')))
+            <img src="../../../img/users/default.jpg" height="100" width="100">
+            @else
             <img src="../../../img/users/{{ session('imagepath') }}">
+            @endif
         </div>
     </div>
 </div>
