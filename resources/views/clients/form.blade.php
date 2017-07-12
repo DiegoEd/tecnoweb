@@ -10,13 +10,13 @@
 <div class="form-group {{ $errors->has('nit') ? 'has-error' : ''}}">
     <label name="nit" class="col-md-4 control-label">Nit</label>
     <div class="col-md-6">
-        <input type="number"  name="nit" value="{{ $client->nit }}" class="form-control">
+        <input type="number"  name="nit" value="{{ $client->nit }}" class="form-control" pattern="^[0-9]+$">
         {!! $errors->first('nit', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('number') ? 'has-error' : ''}}">
     <label name="number" class="col-md-4 control-label">Numero</label>
     <div class="col-md-6">
-        <input type="number"  name="number" value="{{ $client->number }}" class="form-control">
+        <input type="number"  name="number" value="{{ $client->number }}" class="form-control" pattern="^[0-9]+$">
         {!! $errors->first('number', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('address') ? 'has-error' : ''}}">
