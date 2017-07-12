@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
 
 use App\ProductCategory;
 use Illuminate\Http\Request;
@@ -16,7 +18,7 @@ class ProductCategoriesController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index($accion,Request $request)
     {
         $keyword = $request->get('search');
         $perPage = 25;
@@ -27,8 +29,7 @@ class ProductCategoriesController extends Controller
         } else {
             $productcategories = ProductCategory::paginate($perPage);
         }
-
-        return view('product-categories.index', compact('productcategories'));
+        return view('product-categories.'.$accion, compact('productcategories'));
     }
 
     /**
@@ -56,8 +57,7 @@ class ProductCategoriesController extends Controller
         ProductCategory::create($requestData);
 
         Session::flash('flash_message', 'ProductCategory added!');
-
-        return redirect('product-categories');
+        return redirect('product-categories/index/index');
     }
 
     /**
@@ -105,8 +105,8 @@ class ProductCategoriesController extends Controller
         $productcategory->update($requestData);
 
         Session::flash('flash_message', 'ProductCategory updated!');
-
-        return redirect('product-categories');
+        
+        return redirect('product-categories/index/indexedit');
     }
 
     public function trash()
@@ -119,7 +119,7 @@ class ProductCategoriesController extends Controller
     {
         $product = ProductCategory::withTrashed()->find($id);
         $product->restore();
-        return redirect('product-categories');
+        return redirect('product-categories/trash');
     }
 
     /**
@@ -135,6 +135,6 @@ class ProductCategoriesController extends Controller
 
         Session::flash('flash_message', 'ProductCategory deleted!');
 
-        return redirect('product-categories');
+        return Redirect::back();
     }
 }

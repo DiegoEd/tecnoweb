@@ -7,10 +7,12 @@
 
             <div class="col-md-9">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Productos</div>
+                    <div class="panel-heading">Modificar Productos</div>
                     <div class="panel-body">
 
-                        {!! Form::open(['method' => 'GET', 'url' => '/products', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}
+
+
+                        {!! Form::open(['method' => 'GET', 'url' => '/products/index/indexedit', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}
                         <div class="input-group">
                             <input type="text" class="form-control" name="search" placeholder="Search...">
                             <span class="input-group-btn">
@@ -23,18 +25,24 @@
 
                         <br/>
                         <br/>
+
                         <div class="table-responsive">
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>Cod</th><th>Nombre</th><th>Precio</th><th>Stock</th>
+                                        <th>Codigo</th><th>Nombre</th><th>Precio</th><th>Stock</th><th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($products as $item)
                                     <tr>
                                         <td>{{ $item->id }}</td>
-                                        <td>{{ $item->name }}</td><td>{{ $item->price }}</td><td>{{ $item->stock }}</td>
+                                        <td>{{ $item->name }}</td>
+                                        <td>{{ $item->price }}</td>
+                                        <td>{{ $item->stock }}</td>
+                                        <td>
+                                            <a href="{{ url('/products/' . $item->id . '/edit') }}" title="Editar Productos"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</button></a>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>

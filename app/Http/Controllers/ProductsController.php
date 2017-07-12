@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\ProductCategory;
+use Illuminate\Support\Facades\Redirect;
 
 use App\Product;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index($accion,Request $request)
     {
         $keyword = $request->get('search');
         $perPage = 25;
@@ -31,7 +32,7 @@ class ProductsController extends Controller
             $products = Product::paginate($perPage);
         }
 
-        return view('products.index', compact('products'));
+        return view('products.'.$accion, compact('products'));
     }
 
     /**
@@ -62,7 +63,7 @@ class ProductsController extends Controller
 
         Session::flash('flash_message', 'Product added!');
 
-        return redirect('products');
+        return redirect('products/index/index');
     }
 
     /**
@@ -112,7 +113,7 @@ class ProductsController extends Controller
 
         Session::flash('flash_message', 'Product updated!');
 
-        return redirect('products');
+        return redirect('products/index/indexedit');
     }
 
     public function trash()
@@ -125,7 +126,7 @@ class ProductsController extends Controller
     {
         $product = Product::withTrashed()->find($id);
         $product->restore();
-        return redirect('products');
+        return redirect('products/trash');
     }
 
     /**
@@ -141,6 +142,6 @@ class ProductsController extends Controller
 
         Session::flash('flash_message', 'Product deleted!');
 
-        return redirect('products');
+        return Redirect::back();
     }
 }

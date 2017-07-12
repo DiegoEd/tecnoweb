@@ -39,6 +39,22 @@ Route::get('clients/index/{accion}', 'ClientsController@index');
 Route::get('clients/indexedit/{accion}', 'ClientsController@index');
 Route::get('clients/indexdelete/{accion}', 'ClientsController@index');
 
+Route::get('products/index/{accion}', 'ProductsController@index');
+Route::get('products/indexedit/{accion}', 'ProductsController@index');
+Route::get('products/indexdelete/{accion}', 'ProductsController@index');
+
+Route::get('product-categories/index/{accion}', 'ProductCategoriesController@index');
+Route::get('product-categories/indexedit/{accion}', 'ProductCategoriesController@index');
+Route::get('product-categories/indexdelete/{accion}', 'ProductCategoriesController@index');
+
+Route::get('suppliers/index/{accion}', 'SuppliersController@index');
+Route::get('suppliers/indexedit/{accion}', 'SuppliersController@index');
+Route::get('suppliers/indexdelete/{accion}', 'SuppliersController@index');
+
+Route::get('employees/index/{accion}', 'EmployeesController@index');
+Route::get('employees/indexedit/{accion}', 'EmployeesController@index');
+Route::get('employees/indexdelete/{accion}', 'EmployeesController@index');
+
 
 ##acciones descontinuadas
 /*Route::get('modules/signup/{id}', 'ModulesController@signup');

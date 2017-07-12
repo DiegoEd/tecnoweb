@@ -7,11 +7,7 @@
 
             <div class="col-md-9">
                 <div class="panel panel-default">
-<<<<<<< HEAD
                     <div class="panel-heading">Clientes</div>
-=======
-                    <div class="panel-heading">Clients </div>
->>>>>>> cd20063dc418ec3c97835ec86925d815d4b3a3f1
                     <div class="panel-body">
 
 

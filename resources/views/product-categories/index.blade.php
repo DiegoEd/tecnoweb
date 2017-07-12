@@ -9,12 +9,6 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Categorias de productos</div>
                     <div class="panel-body">
-                        <a href="{{ url('/product-categories/create') }}" class="btn btn-success btn-sm" title="Nueva Categoria de producto">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Nuevo
-                        </a>
-                        <a href="{{ url('/product-categories/trash') }}" class="btn btn-success btn-sm" title="Nuevo producto">
-                            <i class="fa fa-trash-o" aria-hidden="true"></i> Papelera
-                        </a>
                         {!! Form::open(['method' => 'GET', 'url' => '/product-categories', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}
                         <div class="input-group">
                             <input type="text" class="form-control" name="search" placeholder="Search...">
@@ -32,7 +26,7 @@
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>Cod</th><th>Nombre</th><th>Acciones</th>
+                                        <th>Cod</th><th>Nombre</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -40,22 +34,6 @@
                                     <tr>
                                         <td>{{ $item->id }}</td>
                                         <td>{{ $item->name }}</td>
-                                        <td>
-                                            <a href="{{ url('/product-categories/' . $item->id) }}" title="View ProductCategory"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ url('/product-categories/' . $item->id . '/edit') }}" title="Edit ProductCategory"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-                                            {!! Form::open([
-                                                'method'=>'DELETE',
-                                                'url' => ['/product-categories', $item->id],
-                                                'style' => 'display:inline'
-                                            ]) !!}
-                                                {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
-                                                        'type' => 'submit',
-                                                        'class' => 'btn btn-danger btn-xs',
-                                                        'title' => 'Delete ProductCategory',
-                                                        'onclick'=>'return confirm("Confirm delete?")'
-                                                )) !!}
-                                            {!! Form::close() !!}
-                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
