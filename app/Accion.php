@@ -34,7 +34,7 @@ class Accion extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'pageroute', 'visitcount','module_id'];
+    protected $fillable = ['name', 'pageroute','module_id'];
 
     
 }

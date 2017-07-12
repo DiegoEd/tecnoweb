@@ -10,7 +10,7 @@
                     <div class="panel-heading">Role {{ $role->id }}</div>
                     <div class="panel-body">
 
-                        <a href="{{ url('/roles') }}" title="Back">
+                        <a href="{{ url('/roles/index/signups') }}" title="Back">
                         <button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Atras</button>
                         </a>
                         <form method="POST" action="{{ url('/roles/commituser/') }}" class="form-horizontal">

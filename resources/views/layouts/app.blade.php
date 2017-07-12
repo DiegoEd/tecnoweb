@@ -86,11 +86,13 @@
     <!-- Scripts -->
     <div class="navbar navbar-default navbar-fixed-bottom">
         <div class="container">
-              <p class="navbar-text pull-left">© 2014 - Site Built By Mr. M.
-                   <a href="http://tinyurl.com/tbvalid" target="_blank" >HTML 5 Validation</a>
+              <p class="navbar-text pull-left">Hinolux Soluciones funcionales sofisticadas
+                   
               </p>
-              
-              <a href="http://youtu.be/zJahlKPCL9g" class="navbar-btn btn-danger btn pull-right">Subscribe on YouTube</a>
+
+                <p class="navbar-text  btn pull-right" >Visitas Pagina Actual: {{isset($cant)? $cant : 'No contabilizado'}}
+                   
+              </p>
         </div>
     </div>
 

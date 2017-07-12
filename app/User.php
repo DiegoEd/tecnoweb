@@ -69,7 +69,7 @@ class User extends Model
 
                 $modulesadded[$accion->module_id] = $accion->module_id;
                 $module = $accion->module;
-                
+                array_push($moduleArray, $module->id);
                 array_push($moduleArray, $module->name);
                 array_push($moduleArray, $module->description);
                 array_push($accionArray, $accion->id);
@@ -78,9 +78,9 @@ class User extends Model
                 $results[$accion->module_id] = $moduleArray;
             }else
             {
-                $accionArray = ($results[$accion->module_id])[2];
+                $accionArray = ($results[$accion->module_id])[3];
                 array_push($accionArray, $accion->id);
-                ($results[$accion->module_id])[2]=$accionArray;
+                ($results[$accion->module_id])[3]=$accionArray;
             }
         }
         return $results;

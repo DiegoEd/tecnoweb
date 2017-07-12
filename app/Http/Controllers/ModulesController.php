@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 
 use App\Module;
 use App\Accion;
+use App\CounterPage;
 use Illuminate\Http\Request;
 use Session;
 use DB;
@@ -31,14 +32,33 @@ class ModulesController extends Controller
         } else {
             $modules = Module::with('accions')->paginate($perPage);
         }
+        $cant = $this->contarfuncion('/modules');
 
-        return view('modules.index', compact('modules'));
+        return view('modules.index', compact('modules','cant'));
+    }
+
+    public function contarfuncion($funcion)
+    {
+        $accions = CounterPage::where('pageroute',$funcion)->get();
+        $accion = $accions->first();
+        $cant = $accion->visitcount;
+        $cant++;
+        $accion->visitcount = $cant;
+        $accion->save();
+        return $cant;
+
     }
     public function generateview($id,Request $request)
     {
         $roless = $request->session()->get('roles');
-        $accions = Accion::whereIn('id', (($roless[0])[$id])[2] )->get();
-        return view('modules.generateview',compact('accions'));
+        $accions = Accion::whereIn('id', (($roless[0])[$id])[3] )->get();
+        $modules =  Module::where('id',(($roless[0])[$id])[0] )->get();
+        $module = $modules->first();
+        $cant = $module->visitcount;
+        $cant++;
+        $module->visitcount = $cant;
+        $module->save();
+        return view('modules.generateview',compact('accions','cant'));
     }
     /**
      * Show the form for creating a new resource.
@@ -117,8 +137,8 @@ class ModulesController extends Controller
     public function show($id)
     {
         $module = Module::findOrFail($id);
-
-        return view('modules.show', compact('module'));
+        $cant = $this->contarfuncion('/modules/show');
+        return view('modules.show', compact('module','cant'));
     }
 
     /**

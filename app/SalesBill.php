@@ -42,7 +42,7 @@ class SalesBill extends Model
      *
      * @var array
      */
-    protected $fillable = ['salesdate', 'totalamount', 'employee_id', 'client_id'];
+    protected $fillable = ['salesdate', 'totalamount','confirmed', 'employee_id', 'client_id'];
 
     
 }

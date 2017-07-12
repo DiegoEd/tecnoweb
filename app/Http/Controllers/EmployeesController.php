@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\User;
 
 use App\Employee;
+use App\CounterPage;
 use Illuminate\Http\Request;
 use Session;
 
@@ -20,6 +21,7 @@ class EmployeesController extends Controller
      */
     public function index($accion,Request $request)
     {
+        $cant = $this->contarindex($accion);        
         $keyword = $request->get('search');
         $perPage = 25;
 
@@ -33,13 +35,39 @@ class EmployeesController extends Controller
         } else {
             $employees = Employee::paginate($perPage);
         }
-        return view('employees.'.$accion, compact('employees'));
+        return view('employees.'.$accion, compact('employees','cant'));
+    }
+
+    public function contarindex($accion)
+    {
+        $cant = 0;
+        $accions = CounterPage::where('pageroute','/employees/index/'.$accion)->get();
+        $accion = $accions->first();
+        $cant = $accion->visitcount;
+        $cant++;
+        $accion->visitcount = $cant;
+        $accion->save();
+        return $cant;
+    }
+
+    public function contarfuncion($funcion)
+    {
+        $rutinga = '/employees/'.$funcion;
+        $accions = CounterPage::where('pageroute',$rutinga)->get();
+        $accion = $accions->first();
+        $cant = $accion->visitcount;
+        $cant++;
+        $accion->visitcount = $cant;
+        $accion->save();
+        return $cant;
+
     }
 
     public function trash()
     {
         $employees = Employee::intrash();
-        return view('employees.trash', compact('employees'));
+        $cant = $this->contarfuncion('trash');
+        return view('employees.trash', compact('employees','cant'));
     }
 
     public function restore($id)
@@ -59,7 +87,8 @@ class EmployeesController extends Controller
     {
         $employees = new Employee;
         $user = new User;
-        return view('employees.create', compact('employees', 'user'));
+        $cant = $this->contarfuncion('create');
+        return view('employees.create', compact('employees', 'user','cant'));
     }
 
     public function requiretypes(Request $request)
@@ -132,10 +161,11 @@ class EmployeesController extends Controller
      */
     public function edit($id)
     {
+        $cant = $this->contarfuncion('edit');        
         $employees = Employee::findOrFail($id);
         $user = User::findOrFail($employees->user_id);
 
-        return view('employees.edit', compact('employees', 'user'));
+        return view('employees.edit', compact('employees', 'user','cant'));
     }
 
     /**

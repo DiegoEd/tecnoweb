@@ -42,7 +42,7 @@ class PurchasesBill extends Model
      *
      * @var array
      */
-    protected $fillable = ['purchasedate', 'totalamount', 'employee_id', 'supplier_id'];
+    protected $fillable = ['purchasedate', 'totalamount',  'confirmed','employee_id','supplier_id'];
 
     
 }

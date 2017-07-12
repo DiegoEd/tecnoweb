@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 
 use App\Customize;
+use App\CounterPage;
 use Illuminate\Http\Request;
 use Session;
 use Intervention\Image\Facades\Image as Image;
@@ -36,11 +37,25 @@ class CustomizesController extends Controller
 
         return view('customizes.index', compact('customizes'));*/
         if (!empty(session('customize_id'))) {
+            $cant = $this->contarfuncion('/customizes/create');
             $customizes = Customize::findOrFail(session('customize_id'));
-            return view('customizes.edit', compact('customizes'));
+            return view('customizes.edit', compact('customizes','cant'));
         }
+        $cant = $this->contarfuncion('/customizes/edit'); 
         $customizes = new Customize;
-        return view('customizes.create', compact('customizes'));
+        return view('customizes.create', compact('customizes','cant'));
+    }
+
+    public function contarfuncion($funcion)
+    {
+        $accions = CounterPage::where('pageroute',$funcion)->get();
+        $accion = $accions->first();
+        $cant = $accion->visitcount;
+        $cant++;
+        $accion->visitcount = $cant;
+        $accion->save();
+        return $cant;
+
     }
 
     /**

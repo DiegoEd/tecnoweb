@@ -7,15 +7,14 @@
 
             <div class="col-md-9">
                 <div class="panel panel-default">
-                    <div class="panel-heading">SalesBill {{ $salesbill->id }}</div>
+                    <div class="panel-heading">Venta {{ $salesbill->id }}</div>
                     <div class="panel-body">
 
-                        <a href="{{ url('/sales-bills') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <a href="{{ url('/sales-bills/' . $salesbill->id . '/edit') }}" title="Edit SalesBill"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                        <a href="{{ url('/sales-bills') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Confirmar</button></a>
                         <form method="POST" action="{{ url('/sales-bills/'. $salesbill->id) }}" style="display:inline">
                             <input type="hidden" name="_method" value="DELETE">
                             {!! csrf_field() !!}
-                            <button type="submit" class="btn btn-danger btn-xs" title="Delete Supplier" onclick="return confirm('Confirm delete?')"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+                            <button type="submit" class="btn btn-danger btn-xs" title="Delete Supplier" onclick="return confirm('Confirm delete?')"><i class="fa fa-trash-o" aria-hidden="true"></i> Cancelar</button>
                         </form>
                         <br/>
                         <br/>
@@ -24,9 +23,9 @@
                             <table class="table table-borderless">
                                 <tbody>
                                     <tr>
-                                        <th>ID</th><td>{{ $salesbill->id }}</td>
+                                        <th>Cod</th><td>{{ $salesbill->id }}</td>
                                     </tr>
-                                    <tr><th> Salesdate </th><td> {{ $salesbill->salesdate }} </td></tr><tr><th> Totalamount </th><td> {{ $salesbill->totalamount }} </td></tr>
+                                    <tr><th> Fecha de venta</th><td> {{ $salesbill->salesdate }} </td></tr><tr><th> Total </th><td> {{ $salesbill->totalamount }} </td></tr>
                                 </tbody>
                             </table>
                         </div>

@@ -16,6 +16,7 @@ class CreatePurchasesBillsTable extends Migration
             $table->increments('id');
             $table->date('purchasedate');
             $table->decimal('totalamount');
+            $table->boolean('confirmed');
             $table->integer('employee_id');
             $table->integer('supplier_id');
             $table->timestamps();

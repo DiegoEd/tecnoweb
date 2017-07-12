@@ -3,7 +3,7 @@
       {{! $modules = Session('roles') }}
       @if(isset($modules))
 	      @foreach($modules[0] as $llave => $valor)
-	      	<a href="{{url('module/generateview/'.$llave)}}">{{ $valor[0] }}</a>
+	      	<a href="{{url('module/generateview/'.$llave)}}">{{ $valor[1] }}</a>
 	      @endforeach
 	  @endif    
 

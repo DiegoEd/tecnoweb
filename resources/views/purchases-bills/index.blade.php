@@ -7,12 +7,8 @@
 
             <div class="col-md-9">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Purchasesbills</div>
+                    <div class="panel-heading">Bienvenido a la seccion de compras</div>
                     <div class="panel-body">
-                        <a href="{{ url('/purchases-bills/create') }}" class="btn btn-success btn-sm" title="Add New PurchasesBill">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
-                        </a>
-
                         {!! Form::open(['method' => 'GET', 'url' => '/purchases-bills', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}
                         <div class="input-group">
                             <input type="text" class="form-control" name="search" placeholder="Search...">
@@ -30,23 +26,16 @@
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>ID</th><th>Purchasedate</th><th>Totalamount</th><th>Actions</th>
+                                        <th>Codigo</th><th>Fecha de compra</th><th>Total</th><th>Confirmada</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($purchasesbills as $item)
                                     <tr>
                                         <td>{{ $item->id }}</td>
-                                        <td>{{ $item->purchasedate }}</td><td>{{ $item->totalamount }}</td>
-                                        <td>
-                                            <a href="{{ url('/purchases-bills/' . $item->id) }}" title="View PurchasesBill"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ url('/purchases-bills/' . $item->id . '/edit') }}" title="Edit PurchasesBill"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-                                            <form method="POST" action="{{ url('/purchases-bills/'. $item->id) }}" style="display:inline">
-                                                <input type="hidden" name="_method" value="DELETE">
-                                                {!! csrf_field() !!}
-                                                <button type="submit" class="btn btn-danger btn-xs" title="Delete Supplier" onclick="return confirm('Confirm delete?')"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                                            </form>
-                                        </td>
+                                        <td>{{ $item->purchasedate }}</td>
+                                        <td>{{ $item->totalamount }}</td>
+                                        <td>{{ $item->confirmed ? 'Si': 'No' }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

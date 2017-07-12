@@ -10,6 +10,7 @@ use App\Product;
 use App\PurchasesBill;
 use App\PurchasesBillDetail;
 use Illuminate\Http\Request;
+use App\CounterPage;
 use Session;
 
 class PurchasesBillDetailsController extends Controller
@@ -35,6 +36,17 @@ class PurchasesBillDetailsController extends Controller
         return view('purchases-bill-details.index', compact('purchasesbilldetails'));
     }
 
+    public function contarfuncion($funcion)
+    {
+        $accions = CounterPage::where('pageroute',$funcion)->get();
+        $accion = $accions->first();
+        $cant = $accion->visitcount;
+        $cant++;
+        $accion->visitcount = $cant;
+        $accion->save();
+        return $cant;
+
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -45,7 +57,8 @@ class PurchasesBillDetailsController extends Controller
         $purchasesbilldetail = new PurchasesBillDetail;
         $purchasesbilldetail->purchases_bill_id = $id;
         $products = Product::all();
-        return view('purchases-bill-details.create', compact('purchasesbilldetail', 'products'));
+        $cant = $this->contarfuncion('/purchases-bills-details/create');
+        return view('purchases-bill-details.create', compact('purchasesbilldetail', 'products','cant'));
     }
 
     /**
@@ -70,8 +83,8 @@ class PurchasesBillDetailsController extends Controller
         PurchasesBillDetail::create($requestData);
 
         Session::flash('flash_message', 'PurchasesBillDetail added!');
-
-        return view('purchases-bills.show', compact('purchasesbill'));
+        $cant = $this->contarfuncion('/purchases-bills/show');
+        return view('purchases-bills.show', compact('purchasesbill','cant'));
     }
 
     /**

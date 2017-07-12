@@ -27,7 +27,6 @@ class AccionsController extends Controller
         if (!empty($keyword)) {
             $accions = Accion::where('name', 'LIKE', "%$keyword%")
 				->orWhere('pageroute', 'LIKE', "%$keyword%")
-				->orWhere('visitcount', 'LIKE', "%$keyword%")
 				->paginate($perPage);
         } else {
             $accions = Accion::paginate($perPage);
@@ -46,7 +45,6 @@ class AccionsController extends Controller
     public function create($id)
     {
         $accion = new Accion;
-        $accion->visitcount = 0;
         $accion->module_id = $id;
         return view('accions.create',compact('accion'));
     }

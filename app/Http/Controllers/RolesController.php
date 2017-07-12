@@ -10,6 +10,7 @@ use App\Role;
 use App\Module;
 use App\AccionRole;
 use App\User;
+use App\CounterPage;
 use Illuminate\Http\Request;
 use Session;
 use DB;
@@ -21,8 +22,9 @@ class RolesController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index($accion,Request $request)
     {
+
         $keyword = $request->get('search');
         $perPage = 25;
 
@@ -33,8 +35,19 @@ class RolesController extends Controller
         } else {
             $roles = Role::paginate($perPage);
         }
+        $cant = $this->contarfuncion('/roles/index/'.$accion);  
+        return view('roles.'.$accion, compact('roles','cant'));
+    }
+    public function contarfuncion($funcion)
+    {
+        $accions = CounterPage::where('pageroute',$funcion)->get();
+        $accion = $accions->first();
+        $cant = $accion->visitcount;
+        $cant++;
+        $accion->visitcount = $cant;
+        $accion->save();
+        return $cant;
 
-        return view('roles.index', compact('roles'));
     }
 
     /**
@@ -46,7 +59,8 @@ class RolesController extends Controller
     {
         $role = new Role;
         $modules = Module::with('accions')->get();
-        return view('roles.create',compact('role','modules'));
+        $cant = $this->contarfuncion('/roles/create');
+        return view('roles.create',compact('role','modules','cant'));
     }
 
     /**
@@ -77,7 +91,7 @@ class RolesController extends Controller
         }
         Session::flash('flash_message', 'Role added!');
 
-        return redirect('roles');
+        return redirect('roles/index/index');
     }
 
     /**
@@ -108,7 +122,7 @@ class RolesController extends Controller
         }
         Session::flash('flash_message', 'Role updated!');
 
-        return redirect('roles');
+        return redirect('roles/index/indexedit');
     }
 
     public function commituser(Request $request)
@@ -154,7 +168,8 @@ class RolesController extends Controller
     {
         $role = Role::findOrFail($id);
         $accions = $role->accions;
-        return view('roles.show', compact('role','accions'));
+        $cant = $this->contarfuncion('/roles/show');
+        return view('roles.show', compact('role','accions','cant'));
     }
 
     /**
@@ -168,7 +183,8 @@ class RolesController extends Controller
     {
         $role = Role::findOrFail($id);
         $modules = Module::with('accions')->get();
-        return view('roles.edit', compact('role','modules'));
+        $cant = $this->contarfuncion('/roles/edit');
+        return view('roles.edit', compact('role','modules','cant'));
     }
 
     public function signup($id)
@@ -177,7 +193,8 @@ class RolesController extends Controller
         $usersNull = User::where('role_id',null)->get();
         $usersMine = User::where('role_id',$id)->get();
         $users = $usersMine->merge($usersNull);
-        return view('roles.signup', compact('role','users'));
+        $cant = $this->contarfuncion('/roles/signup');
+        return view('roles.signup', compact('role','users','cant'));
     }
 
 
@@ -195,7 +212,6 @@ class RolesController extends Controller
         Role::destroy($id);
 
         Session::flash('flash_message', 'Role deleted!');
-
-        return redirect('roles');
+        return Redirect::back();
     }
 }

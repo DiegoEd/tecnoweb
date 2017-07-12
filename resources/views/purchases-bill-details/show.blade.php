@@ -7,7 +7,7 @@
 
             <div class="col-md-9">
                 <div class="panel panel-default">
-                    <div class="panel-heading">PurchasesBillDetail {{ $purchasesbilldetail->id }}</div>
+                    <div class="panel-heading">Detalle de compra</div>
                     <div class="panel-body">
 
                         <a href="{{ url('/purchases-bill-details') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>

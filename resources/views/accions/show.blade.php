@@ -24,7 +24,7 @@
                                     <tr>
                                         <th>ID</th><td>{{ $accion->id }}</td>
                                     </tr>
-                                    <tr><th> Name </th><td> {{ $accion->name }} </td></tr><tr><th> Pageroute </th><td> {{ $accion->pageroute }} </td></tr><tr><th> Visitcount </th><td> {{ $accion->visitcount }} </td></tr>
+                                    <tr><th> Name </th><td> {{ $accion->name }} </td></tr><tr><th> Pageroute </th><td> {{ $accion->pageroute }} </td></tr><tr></tr>
                                 </tbody>
                             </table>
                         </div>

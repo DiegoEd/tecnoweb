@@ -37,7 +37,9 @@
                                 @foreach($suppliers as $item)
                                     <tr>
                                         <td>{{ $item->id }}</td>
-                                        <td>{{ $item->name }}</td><td>{{ $item->nit }}</td>
+                                        <td>{{ $item->name }}</td>
+                                        <td>{{ $item->email }}</td>
+                                        <td>{{ $item->telephone }}</td>
                                         <td>
                                             <form method="POST" action="{{ url('/suppliers/'. $item->id) }}" style="display:inline">
                                                 <input type="hidden" name="_method" value="DELETE">

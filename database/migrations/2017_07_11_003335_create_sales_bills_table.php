@@ -16,6 +16,7 @@ class CreateSalesBillsTable extends Migration
             $table->increments('id');
             $table->date('salesdate');
             $table->decimal('totalamount');
+            $table->boolean('confirmed');
             $table->integer('employee_id');
             $table->integer('client_id');
             $table->timestamps();

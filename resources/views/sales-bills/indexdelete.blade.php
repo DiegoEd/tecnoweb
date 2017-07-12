@@ -7,12 +7,12 @@
 
             <div class="col-md-9">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Modificar Proveedores</div>
+                    <div class="panel-heading">Bienvenido a la seccion de ventas</div>
                     <div class="panel-body">
 
 
 
-                        {!! Form::open(['method' => 'GET', 'url' => '/suppliers/index/indexedit', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}
+                        {!! Form::open(['method' => 'GET', 'url' => '/sales-bills/', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}
                         <div class="input-group">
                             <input type="text" class="form-control" name="search" placeholder="Search...">
                             <span class="input-group-btn">
@@ -30,24 +30,28 @@
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>ID</th><th>Nombre</th><th>Correo</th><th>Telefono</th><th>Direccion</th><th>Accion</th>
+                                        <th>Cod</th><th>Fecha de Venta</th><th>Total</th><th>Confirmada</th><th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($suppliers as $item)
+                                @foreach($salesbills as $item)
                                     <tr>
                                         <td>{{ $item->id }}</td>
-                                        <td>{{ $item->name }}</td><td>{{ $item->email }}</td>
-                                        <td>{{ $item->telephone }}</td>
-                                        <td>{{ $item->address }}</td>
+                                        <td>{{ $item->salesdate }}</td>
+                                        <td>{{ $item->totalamount }}</td>
+                                        <td>{{ $item->confirmed ? 'Si': 'No' }}</td>
                                         <td>
-                                            <a href="{{ url('/suppliers/' . $item->id . '/edit') }}" title="Editar Proveedor"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</button></a>
+                                            <form method="POST" action="{{ url('/sales-bills/'. $item->id) }}" style="display:inline">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                {!! csrf_field() !!}
+                                                <button type="submit" class="btn btn-danger btn-xs" title="Delete Cliente" onclick="return confirm('Confirm delete?')"><i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
-                            <div class="pagination-wrapper"> {!! $suppliers->appends(['search' => Request::get('search')])->render() !!} </div>
+                            <div class="pagination-wrapper"> {!! $salesbills->appends(['search' => Request::get('search')])->render() !!} </div>
                         </div>
 
                     </div>

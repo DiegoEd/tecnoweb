@@ -10,6 +10,7 @@ use DB;
 use Illuminate\Support\Facades\Redirect;
 
 use App\Client;
+use App\CounterPage;
 use Illuminate\Http\Request;
 use Session;
 
@@ -23,6 +24,7 @@ class ClientsController extends Controller
     ##index,store,update,restore,destroy
     public function index($accion,Request $request)
     {
+        $cant = $this->contarindex($accion);
         if (empty(session('id'))) {
             return redirect('session');
         }
@@ -38,7 +40,32 @@ class ClientsController extends Controller
         } else {
             $clients = Client::paginate($perPage);
         }
-        return view('clients.'.$accion, compact('clients'));
+        return view('clients.'.$accion, compact('clients','cant'));
+    }
+
+    public function contarindex($accion)
+    {
+        $cant = 0;
+        $accions = CounterPage::where('pageroute','/clients/index/'.$accion)->get();
+        $accion = $accions->first();
+        $cant = $accion->visitcount;
+        $cant++;
+        $accion->visitcount = $cant;
+        $accion->save();
+        return $cant;
+    }
+
+    public function contarfuncion($funcion)
+    {
+        $rutinga = '/clients/'.$funcion;
+        $accions = CounterPage::where('pageroute',$rutinga)->get();
+        $accion = $accions->first();
+        $cant = $accion->visitcount;
+        $cant++;
+        $accion->visitcount = $cant;
+        $accion->save();
+        return $cant;
+
     }
 
     /**
@@ -48,9 +75,10 @@ class ClientsController extends Controller
      */
     public function create()
     {
+        $cant = $this->contarfuncion('create');
         $client = new Client;
         $user = new User;
-        return view('clients.create',compact('client','user'));
+        return view('clients.create',compact('client','user','cant'));
     }
 
     /**
@@ -77,7 +105,8 @@ class ClientsController extends Controller
     public function trash()
     {
         $clients = Client::intrash();
-        return view('clients.trash', compact('clients'));
+        $cant = $this->contarfuncion('trash');
+        return view('clients.trash', compact('clients','cant'));
     }
 
     public function restore($id)
@@ -129,7 +158,6 @@ class ClientsController extends Controller
     {
         $client = Client::findOrFail($id);
         $user = User::findOrFail($client->user_id);
-
         return view('clients.show', compact('client','user'));
     }
 
@@ -142,10 +170,11 @@ class ClientsController extends Controller
      */
     public function edit($id)
     {
+        $cant = $this->contarfuncion('edit');
         $client = Client::findOrFail($id);
         $user = User::findOrFail($client->user_id);
 
-        return view('clients.edit', compact('client','user'));
+        return view('clients.edit', compact('client','user','cant'));
     }
 
     /**

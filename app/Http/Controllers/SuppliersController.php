@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 
 use App\Supplier;
+use App\CounterPage;
 use Illuminate\Http\Request;
 use Session;
 
@@ -21,7 +22,7 @@ class SuppliersController extends Controller
     {
         $keyword = $request->get('search');
         $perPage = 25;
-
+        $cant = $this->contarindex($accion);  
         if (!empty($keyword)) {
             $suppliers = Supplier::where('name', 'LIKE', "%$keyword%")
 				->orWhere('email', 'LIKE', "%$keyword%")
@@ -32,7 +33,32 @@ class SuppliersController extends Controller
             $suppliers = Supplier::paginate($perPage);
         }
 
-        return view('suppliers.'.$accion, compact('suppliers'));
+        return view('suppliers.'.$accion, compact('suppliers','cant'));
+    }
+
+    public function contarindex($accion)
+    {
+        $cant = 0;
+        $accions = CounterPage::where('pageroute','/suppliers/index/'.$accion)->get();
+        $accion = $accions->first();
+        $cant = $accion->visitcount;
+        $cant++;
+        $accion->visitcount = $cant;
+        $accion->save();
+        return $cant;
+    }
+
+    public function contarfuncion($funcion)
+    {
+        $rutinga = '/suppliers/'.$funcion;
+        $accions = CounterPage::where('pageroute',$rutinga)->get();
+        $accion = $accions->first();
+        $cant = $accion->visitcount;
+        $cant++;
+        $accion->visitcount = $cant;
+        $accion->save();
+        return $cant;
+
     }
 
     /**
@@ -43,7 +69,8 @@ class SuppliersController extends Controller
     public function create()
     {
         $suppliers = new Supplier;
-        return view('suppliers.create', compact('suppliers','user'));
+        $cant = $this->contarfuncion('create');
+        return view('suppliers.create', compact('suppliers','user','cant'));
     }
 
     /**
@@ -91,7 +118,8 @@ class SuppliersController extends Controller
     public function edit($id)
     {
         $suppliers = Supplier::findOrFail($id);
-        return view('suppliers.edit', compact('suppliers','user'));
+        $cant = $this->contarfuncion('edit');
+        return view('suppliers.edit', compact('suppliers','user','cant'));
     }
 
     /**

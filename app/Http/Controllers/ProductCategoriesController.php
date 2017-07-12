@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Redirect;
 
 use App\ProductCategory;
+use App\CounterPage;
 use Illuminate\Http\Request;
 use Session;
 
@@ -22,14 +22,39 @@ class ProductCategoriesController extends Controller
     {
         $keyword = $request->get('search');
         $perPage = 25;
-
+        $cant = $this->contarindex($accion); 
         if (!empty($keyword)) {
             $productcategories = ProductCategory::where('name', 'LIKE', "%$keyword%")
 				->paginate($perPage);
         } else {
             $productcategories = ProductCategory::paginate($perPage);
         }
-        return view('product-categories.'.$accion, compact('productcategories'));
+        return view('product-categories.'.$accion, compact('productcategories','cant'));
+    }
+
+    public function contarindex($accion)
+    {
+        $cant = 0;
+        $accions = CounterPage::where('pageroute','/product-categories/index/'.$accion)->get();
+        $accion = $accions->first();
+        $cant = $accion->visitcount;
+        $cant++;
+        $accion->visitcount = $cant;
+        $accion->save();
+        return $cant;
+    }
+
+    public function contarfuncion($funcion)
+    {
+        $rutinga = '/product-categories/'.$funcion;
+        $accions = CounterPage::where('pageroute',$rutinga)->get();
+        $accion = $accions->first();
+        $cant = $accion->visitcount;
+        $cant++;
+        $accion->visitcount = $cant;
+        $accion->save();
+        return $cant;
+
     }
 
     /**
@@ -40,7 +65,8 @@ class ProductCategoriesController extends Controller
     public function create()
     {
         $productcategory = new ProductCategory;
-        return view('product-categories.create',compact('productcategory'));
+        $cant = $this->contarfuncion('create');        
+        return view('product-categories.create',compact('productcategory','cant'));
     }
     /**
      * Store a newly created resource in storage.
@@ -84,8 +110,8 @@ class ProductCategoriesController extends Controller
     public function edit($id)
     {
         $productcategory = ProductCategory::findOrFail($id);
-
-        return view('product-categories.edit', compact('productcategory'));
+        $cant = $this->contarfuncion('edit');
+        return view('product-categories.edit', compact('productcategory','cant'));
     }
 
     /**
@@ -112,7 +138,8 @@ class ProductCategoriesController extends Controller
     public function trash()
     {
         $productcategories = ProductCategory::intrash();
-        return view('product-categories.trash', compact('productcategories'));
+        $cant = $this->contarfuncion('trash');        
+        return view('product-categories.trash', compact('productcategories','cant'));
     }
 
     public function restore($id)

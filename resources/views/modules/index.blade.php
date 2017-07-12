@@ -27,23 +27,17 @@
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>ID</th><th>Name</th><th>Description</th><th>Actions</th>
+                                        <th>Codigo</th><th>Nombre</th><th>Descripción</th><th>Accion</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($modules as $item)
                                     <tr>
                                         <td>{{ $item->id }}</td>
-                                        <td>{{ $item->name }}</td><td>{{ $item->description }}</td>
+                                        <td>{{ $item->name }}</td>
+                                        <td>{{ $item->description }}</td>
                                         <td>
-                                            <a href="{{ url('/modules/' . $item->id) }}" title="View Module"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ url('/modules/' . $item->id . '/edit') }}" title="Edit Module"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-                                            <form method="POST" action="{{ url('/modules/'. $item->id) }}" style="display:inline">
-                                                <input type="hidden" name="_method" value="DELETE">
-                                                {!! csrf_field() !!}
-                                                <button type="submit" class="btn btn-danger btn-xs" title="Delete Product" onclick="return confirm('Se eliminaran todas las acciones y algunos roles perderan los respectivos privilegios. Seguro ?')"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                                            </form>
-                                        </td>
+                                            <a href="{{ url('/modules/' . $item->id) }}" title="View Module"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> Mostrar</button></a>
                                     </tr>
                                 @endforeach
                                 </tbody>

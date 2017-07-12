@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Product;
 use App\SalesBill;
 use App\SaleBillDetail;
+use App\CounterPage;
 use Illuminate\Http\Request;
 use Session;
 
@@ -35,6 +36,20 @@ class SaleBillDetailsController extends Controller
         return view('sale-bill-details.index', compact('salebilldetails'));
     }
 
+
+
+    public function contarfuncion($funcion)
+    {
+        $accions = CounterPage::where('pageroute',$funcion)->get();
+        $accion = $accions->first();
+        $cant = $accion->visitcount;
+        $cant++;
+        $accion->visitcount = $cant;
+        $accion->save();
+        return $cant;
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -45,7 +60,8 @@ class SaleBillDetailsController extends Controller
         $salebilldetail = new SaleBillDetail;
         $salebilldetail->sales_bill_id = $id;
         $products = Product::all();
-        return view('sale-bill-details.create', compact('salebilldetail', 'products'));
+        $cant = $this->contarfuncion('/sales-bills-details/create');
+        return view('sale-bill-details.create', compact('salebilldetail', 'products','cant'));
     }
 
     /**
@@ -73,7 +89,9 @@ class SaleBillDetailsController extends Controller
 
         Session::flash('flash_message', 'SaleBillDetail added!');
 
-        return view('sales-bills.show', compact('salesbill'));
+        $cant = $this->contarfuncion('/sales-bills/show');
+
+        return view('sales-bills.show', compact('salesbill','cant'));
     }
 
     /**
