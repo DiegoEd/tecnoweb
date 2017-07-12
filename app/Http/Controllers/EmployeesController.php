@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
 use App\User;
 
 use App\Employee;
@@ -17,7 +18,7 @@ class EmployeesController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index($accion,Request $request)
     {
         $keyword = $request->get('search');
         $perPage = 25;
@@ -32,8 +33,7 @@ class EmployeesController extends Controller
         } else {
             $employees = Employee::paginate($perPage);
         }
-
-        return view('employees.index', compact('employees'));
+        return view('employees.'.$accion, compact('employees'));
     }
 
     public function trash()
@@ -47,7 +47,7 @@ class EmployeesController extends Controller
         $employee = Employee::withTrashed()->find($id);
         $employee->restore();
         User::withTrashed()->find($employee->user_id)->restore();
-        return redirect('employees');
+        return redirect('employees/trash');
     }
 
     /**
@@ -105,8 +105,7 @@ class EmployeesController extends Controller
         $employee->save();
 
         Session::flash('flash_message', 'Employee added!');
-
-        return redirect('employees');
+        return redirect('employees/index/index');
     }
 
     /**
@@ -161,8 +160,7 @@ class EmployeesController extends Controller
         $user->update($requestData);
 
         Session::flash('flash_message', 'Employee updated!');
-
-        return redirect('employees');
+        return redirect('employees/index/indexedit');
     }
 
     /**
@@ -180,6 +178,6 @@ class EmployeesController extends Controller
 
         Session::flash('flash_message', 'Employee deleted!');
 
-        return redirect('employees');
+        return Redirect::back();
     }
 }

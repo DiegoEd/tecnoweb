@@ -175,12 +175,6 @@ class ModuleTableSeeder extends Seeder
 		        $accion->module_id = $module->id;
 		        $accion->save();
 		        $accion = new Accion;
-		        $accion->name= 'Papelera de reciclaje';
-		        $accion->pageroute ='/suppliers/trash';
-		        $accion->visitcount = 0;
-		        $accion->module_id = $module->id;
-		        $accion->save();
-		        $accion = new Accion;
 		        $accion->name= 'Mostrar proveedor';
 		        $accion->pageroute ='/suppliers/index/index';
 		        $accion->visitcount = 0;
@@ -198,10 +192,5 @@ class ModuleTableSeeder extends Seeder
 		        $accion->visitcount = 0;
 		        $accion->module_id = $module->id;
 		        $accion->save();
-		        
-
-
-
-
     }
 }

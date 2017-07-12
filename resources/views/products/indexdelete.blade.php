@@ -7,10 +7,12 @@
 
             <div class="col-md-9">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Productos</div>
+                    <div class="panel-heading">Eliminar Productos</div>
                     <div class="panel-body">
 
-                        {!! Form::open(['method' => 'GET', 'url' => '/products', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}
+
+
+                        {!! Form::open(['method' => 'GET', 'url' => '/products/index/indexdelete', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}
                         <div class="input-group">
                             <input type="text" class="form-control" name="search" placeholder="Search...">
                             <span class="input-group-btn">
@@ -23,18 +25,28 @@
 
                         <br/>
                         <br/>
+
                         <div class="table-responsive">
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>Cod</th><th>Nombre</th><th>Precio</th><th>Stock</th>
+                                        <th>Codigo</th><th>Nombre</th><th>Precio</th><th>Costo</th><th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($products as $item)
                                     <tr>
                                         <td>{{ $item->id }}</td>
-                                        <td>{{ $item->name }}</td><td>{{ $item->price }}</td><td>{{ $item->stock }}</td>
+                                        <td>{{ $item->name }}</td>
+                                        <td>{{ $item->price }}</td>
+                                        <td>{{ $item->stock }}</td>
+                                        <td>
+                                            <form method="POST" action="{{ url('/products/'. $item->id) }}" style="display:inline">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                {!! csrf_field() !!}
+                                                <button type="submit" class="btn btn-danger btn-xs" title="Delete Producto" onclick="return confirm('Confirm delete?')"><i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar</button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>

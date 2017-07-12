@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
 
 use App\Supplier;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class SuppliersController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index($accion,Request $request)
     {
         $keyword = $request->get('search');
         $perPage = 25;
@@ -31,7 +32,7 @@ class SuppliersController extends Controller
             $suppliers = Supplier::paginate($perPage);
         }
 
-        return view('suppliers.index', compact('suppliers'));
+        return view('suppliers.'.$accion, compact('suppliers'));
     }
 
     /**
@@ -42,7 +43,7 @@ class SuppliersController extends Controller
     public function create()
     {
         $suppliers = new Supplier;
-        return view('suppliers.create', compact('suppliers'));
+        return view('suppliers.create', compact('suppliers','user'));
     }
 
     /**
@@ -63,7 +64,8 @@ class SuppliersController extends Controller
 
         Session::flash('flash_message', 'Supplier added!');
 
-        return redirect('suppliers');
+
+        return redirect('suppliers/index/index');
     }
 
     /**
@@ -76,8 +78,7 @@ class SuppliersController extends Controller
     public function show($id)
     {
         $suppliers = Supplier::findOrFail($id);
-
-        return view('suppliers.show', compact('suppliers'));
+        return view('suppliers.show', compact('suppliers','user'));
     }
 
     /**
@@ -90,8 +91,7 @@ class SuppliersController extends Controller
     public function edit($id)
     {
         $suppliers = Supplier::findOrFail($id);
-
-        return view('suppliers.edit', compact('suppliers'));
+        return view('suppliers.edit', compact('suppliers','user'));
     }
 
     /**
@@ -109,8 +109,7 @@ class SuppliersController extends Controller
         $suppliers->update($requestData);
 
         Session::flash('flash_message', 'Supplier updated!');
-
-        return redirect('suppliers');
+        return redirect('suppliers/index/indexedit');
     }
 
     /**
@@ -125,7 +124,6 @@ class SuppliersController extends Controller
         Supplier::destroy($id);
 
         Session::flash('flash_message', 'Supplier deleted!');
-
-        return redirect('suppliers');
+        return redirect::back();
     }
 }

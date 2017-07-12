@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Accion;
+use DB;
 use Illuminate\Support\Facades\Redirect;
 
 use App\Client;
@@ -18,6 +20,7 @@ class ClientsController extends Controller
      *
      * @return \Illuminate\View\View
      */
+    ##index,store,update,restore,destroy
     public function index($accion,Request $request)
     {
         if (empty(session('id'))) {
@@ -35,7 +38,6 @@ class ClientsController extends Controller
         } else {
             $clients = Client::paginate($perPage);
         }
-
         return view('clients.'.$accion, compact('clients'));
     }
 
@@ -83,7 +85,7 @@ class ClientsController extends Controller
         $client = Client::withTrashed()->find($id);
         $client->restore();
         User::withTrashed()->find($client->user_id)->restore();
-        return redirect('clients');
+        return redirect('clients/trash');
     }
 
     public function store(Request $request)
