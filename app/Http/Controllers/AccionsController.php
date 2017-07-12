@@ -21,13 +21,16 @@ class AccionsController extends Controller
      */
     public function index(Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $keyword = $request->get('search');
         $perPage = 25;
 
         if (!empty($keyword)) {
             $accions = Accion::where('name', 'LIKE', "%$keyword%")
 				->orWhere('pageroute', 'LIKE', "%$keyword%")
-				->orWhere('visitcount', 'LIKE', "%$keyword%")
 				->paginate($perPage);
         } else {
             $accions = Accion::paginate($perPage);
@@ -45,8 +48,11 @@ class AccionsController extends Controller
      */
     public function create($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $accion = new Accion;
-        $accion->visitcount = 0;
         $accion->module_id = $id;
         return view('accions.create',compact('accion'));
     }
@@ -60,7 +66,10 @@ class AccionsController extends Controller
      */
     public function store(Request $request)
     {
-        
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         $module = Module::findOrFail($requestData['module_id']);
         Accion::create($requestData);
@@ -79,6 +88,10 @@ class AccionsController extends Controller
      */
     public function show($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $accion = Accion::findOrFail($id);
 
         return view('accions.show', compact('accion'));
@@ -93,6 +106,10 @@ class AccionsController extends Controller
      */
     public function edit($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $accion = Accion::findOrFail($id);
 
         return view('accions.edit', compact('accion'));
@@ -108,7 +125,10 @@ class AccionsController extends Controller
      */
     public function update($id, Request $request)
     {
-        
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         
         $accion = Accion::findOrFail($id);
@@ -128,6 +148,10 @@ class AccionsController extends Controller
      */
     public function destroy($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $accion = Accion::findOrFail($id);
         $module = Module::findOrFail($accion->module_id);
         DB::table('accion_role')->where('accion_id',$accion->id)->delete();

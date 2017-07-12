@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Product;
 use App\SalesBill;
 use App\SaleBillDetail;
+use App\CounterPage;
 use Illuminate\Http\Request;
 use Session;
 
@@ -21,6 +22,10 @@ class SaleBillDetailsController extends Controller
      */
     public function index(Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $keyword = $request->get('search');
         $perPage = 25;
 
@@ -35,6 +40,20 @@ class SaleBillDetailsController extends Controller
         return view('sale-bill-details.index', compact('salebilldetails'));
     }
 
+
+
+    public function contarfuncion($funcion)
+    {
+        $accions = CounterPage::where('pageroute',$funcion)->get();
+        $accion = $accions->first();
+        $cant = $accion->visitcount;
+        $cant++;
+        $accion->visitcount = $cant;
+        $accion->save();
+        return $cant;
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -42,10 +61,15 @@ class SaleBillDetailsController extends Controller
      */
     public function create($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $salebilldetail = new SaleBillDetail;
         $salebilldetail->sales_bill_id = $id;
         $products = Product::all();
-        return view('sale-bill-details.create', compact('salebilldetail', 'products'));
+        $cant = $this->contarfuncion('/sales-bills-details/create');
+        return view('sale-bill-details.create', compact('salebilldetail', 'products','cant'));
     }
 
     /**
@@ -57,7 +81,10 @@ class SaleBillDetailsController extends Controller
      */
     public function store(Request $request)
     {
-        
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         
         $product = Product::findOrFail($requestData['product_id']);
@@ -73,7 +100,9 @@ class SaleBillDetailsController extends Controller
 
         Session::flash('flash_message', 'SaleBillDetail added!');
 
-        return view('sales-bills.show', compact('salesbill'));
+        $cant = $this->contarfuncion('/sales-bills/show');
+
+        return view('sales-bills.show', compact('salesbill','cant'));
     }
 
     /**
@@ -85,6 +114,10 @@ class SaleBillDetailsController extends Controller
      */
     public function show($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $salebilldetail = SaleBillDetail::findOrFail($id);
 
         return view('sale-bill-details.show', compact('salebilldetail'));
@@ -99,6 +132,10 @@ class SaleBillDetailsController extends Controller
      */
     public function edit($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $salebilldetail = SaleBillDetail::findOrFail($id);
         $products = Product::all();
         return view('sale-bill-details.edit', compact('salebilldetail', 'products'));
@@ -114,7 +151,10 @@ class SaleBillDetailsController extends Controller
      */
     public function update($id, Request $request)
     {
-        
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         $salebilldetail = SaleBillDetail::findOrFail($id);
         $salebilldetail->update($requestData);
@@ -133,6 +173,10 @@ class SaleBillDetailsController extends Controller
      */
     public function destroy($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         SaleBillDetail::destroy($id);
 
         Session::flash('flash_message', 'SaleBillDetail deleted!');

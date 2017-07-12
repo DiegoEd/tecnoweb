@@ -2,10 +2,10 @@
         <div class="row">
             <div class="col-md-9">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Salebilldetails</div>
+                    <div class="panel-heading">Detalle de venta</div>
                     <div class="panel-body">
                         <a href="{{ url('/sale-bill-details/create/'. $salesbill->id) }}" class="btn btn-success btn-sm" title="Add New SaleBillDetail">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
+                            <i class="fa fa-plus" aria-hidden="true"></i> Nuevo detalle
                         </a>
                         <br/>
                         <br/>
@@ -13,7 +13,7 @@
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>ID</th><th>Price</th><th>Amount</th><th>Actions</th>
+                                        <th>Cod</th><th>Precio</th><th>Total</th><th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -22,12 +22,11 @@
                                         <td>{{ $item->id }}</td>
                                         <td>{{ $item->price }}</td><td>{{ $item->amount }}</td>
                                         <td>
-                                            <a href="{{ url('/sale-bill-details/' . $item->id) }}" title="View SaleBillDetail"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ url('/sale-bill-details/' . $item->id . '/edit') }}" title="Edit SaleBillDetail"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                                            <a href="{{ url('/sale-bill-details/' . $item->id . '/edit') }}" title="Edit SaleBillDetail"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</button></a>
                                             <form method="POST" action="{{ url('/sale-bill-details/'. $item->id) }}" style="display:inline">
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 {!! csrf_field() !!}
-                                                <button type="submit" class="btn btn-danger btn-xs" title="Delete Product" onclick="return confirm('Confirm delete?')"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+                                                <button type="submit" class="btn btn-danger btn-xs" title="Delete Product" onclick="return confirm('Confirm delete?')"><i class="fa fa-trash-o" aria-hidden="true"></i> Cancelar</button>
                                             </form>
                                         </td>
                                     </tr>

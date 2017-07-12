@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Client;
 use App\Product;
 use App\SalesBill;
+use App\CounterPage;
 use Illuminate\Http\Request;
 use Session;
 
@@ -19,8 +20,12 @@ class SalesBillsController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index($accion,Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $keyword = $request->get('search');
         $perPage = 25;
 
@@ -32,7 +37,32 @@ class SalesBillsController extends Controller
             $salesbills = SalesBill::paginate($perPage);
         }
 
-        return view('sales-bills.index', compact('salesbills'));
+        return view('sales-bills.'.$accion, compact('salesbills'));
+    }
+
+    public function contarindex($accion)
+    {
+        $cant = 0;
+        $accions = CounterPage::where('pageroute','/sales-bills/index/'.$accion)->get();
+        $accion = $accions->first();
+        $cant = $accion->visitcount;
+        $cant++;
+        $accion->visitcount = $cant;
+        $accion->save();
+        return $cant;
+    }
+
+    public function contarfuncion($funcion)
+    {
+        $rutinga = '/sales-bills/'.$funcion;
+        $accions = CounterPage::where('pageroute',$rutinga)->get();
+        $accion = $accions->first();
+        $cant = $accion->visitcount;
+        $cant++;
+        $accion->visitcount = $cant;
+        $accion->save();
+        return $cant;
+
     }
 
     /**
@@ -42,9 +72,14 @@ class SalesBillsController extends Controller
      */
     public function create()
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
+        $cant = $this->contarfuncion('create');
         $clients = Client::all();
         $salesbill = new SalesBill;
-        return view('sales-bills.create', compact('clients', 'salesbill'));
+        return view('sales-bills.create', compact('clients', 'salesbill','cant'));
     }
 
     /**
@@ -56,14 +91,21 @@ class SalesBillsController extends Controller
      */
     public function store(Request $request)
     {
-        
+
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
-        
-        SalesBill::create($requestData);
-
-        Session::flash('flash_message', 'SalesBill added!');
-
-        return redirect('sales-bills');
+        $salesbill = new SalesBill;
+        $salesbill->salesdate = $requestData['salesdate'];
+        $salesbill->totalamount = $requestData['totalamount'];
+        $salesbill->confirmed = $requestData['confirmed'];
+        $salesbill->employee_id = $requestData['employee_id'];
+        $salesbill->client_id = $requestData['client_id'];
+        $salesbill->save();
+        $cant = $this->contarfuncion('show');
+        return view('sales-bills.show', compact('salesbill','cant'));
     }
 
     /**
@@ -75,9 +117,12 @@ class SalesBillsController extends Controller
      */
     public function show($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $salesbill = SalesBill::findOrFail($id);
-
-        return view('sales-bills.show', compact('salesbill'));
+        return view('sales-bills.show', compact('salesbill','show'));
     }
 
     /**
@@ -89,6 +134,10 @@ class SalesBillsController extends Controller
      */
     public function edit($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $clients = Client::all();
         $salesbill = SalesBill::findOrFail($id);
 
@@ -105,15 +154,17 @@ class SalesBillsController extends Controller
      */
     public function update($id, Request $request)
     {
-        
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }   
         $requestData = $request->all();
         
         $salesbill = SalesBill::findOrFail($id);
         $salesbill->update($requestData);
 
         Session::flash('flash_message', 'SalesBill updated!');
-
-        return redirect('sales-bills');
+        return redirect('sales-bills/index/indexedit');
     }
 
     /**
@@ -125,6 +176,10 @@ class SalesBillsController extends Controller
      */
     public function destroy($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $salesbill = SalesBill::findOrFail($id);
         $salebilldetails = $salesbill->salebilldetails;
         for ($i = 0; $i < count($salebilldetails); $i++) { 
@@ -136,10 +191,14 @@ class SalesBillsController extends Controller
 
         Session::flash('flash_message', 'SalesBill deleted!');
 
-        return redirect('sales-bills');
+        return Redirect::back();
     }
 
     public function statistics() {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $salesbills = SalesBill::all();
         $all = "";
         $array = array();

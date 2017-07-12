@@ -21,7 +21,7 @@
 @endif
 <input type="hidden" name="totalamount" value="0" class="form-control">
 <input type="hidden" name="employee_id" value="{{ session('person_id') }}" class="form-control">
-
+<input type="hidden" name="confirmed" value="false" class="form-control">
 <div class="form-group">
     <div class="col-md-offset-4 col-md-4">
         <button type="submit" class="btn btn-primary">{{ $submitButtonText }}</button>

@@ -90,6 +90,7 @@
     </div>
 
     <!-- Scripts -->
+
     <!--div class="navbar navbar-default navbar-fixed-bottom" height="10">
         <div class="container" style="height:10px">
               <p class="navbar-text pull-left">© 2014 - Site Built By Mr. M.
@@ -101,9 +102,13 @@
     </div-->
     <div class="footer">
         <div class="container">
-            <p class="navbar-text pull-left">© 2014 - Site Built By Mr. M.
-                <a href="http://tinyurl.com/tbvalid" target="_blank" >HTML 5 Validation</a>
-            </p>
+              <p class="navbar-text pull-left">Hinolux Soluciones funcionales sofisticadas
+                   
+              </p>
+
+                <p class="navbar-text  btn pull-right" >Visitas Pagina Actual: {{isset($cant)? $cant : 'No contabilizado'}}
+                   
+              </p>
         </div>
     </div>
     

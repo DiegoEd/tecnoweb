@@ -8,23 +8,14 @@
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>Codigo</th><th>Nombre</th><th>Ruta de Pagina</th><th>Cantidad de Visitas</th><th>Acciones</th>
+                                        <th>Codigo</th><th>Nombre</th><th>Ruta de Pagina</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($module->accions as $item)
                                     <tr>
                                         <td>{{ $item->id }}</td>
-                                        <td>{{ $item->name }}</td><td>{{ $item->pageroute }}</td><td>{{ $item->visitcount }}</td>
-                                        <td>
-                                            <a href="{{ url('/accions/' . $item->id) }}" title="View Accion"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ url('/accions/' . $item->id . '/edit') }}" title="Edit Accion"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-                                            <form method="POST" action="{{ url('/accions/'. $item->id) }}" style="display:inline">
-                                                <input type="hidden" name="_method" value="DELETE">
-                                                {!! csrf_field() !!}
-                                                <button type="submit" class="btn btn-danger btn-xs" title="Delete Product" onclick="return confirm('Confirm delete?')"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                                            </form>
-                                        </td>
+                                        <td>{{ $item->name }}</td><td>{{ $item->pageroute }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

@@ -8,6 +8,7 @@ use App\ProductCategory;
 use Illuminate\Support\Facades\Redirect;
 
 use App\Product;
+use App\CounterPage;
 use Illuminate\Http\Request;
 use Session;
 
@@ -20,8 +21,13 @@ class ProductsController extends Controller
      */
     public function index($accion,Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $keyword = $request->get('search');
         $perPage = 25;
+        $cant = $this->contarindex($accion);  
 
         if (!empty($keyword)) {
             $products = Product::where('name', 'LIKE', "%$keyword%")
@@ -32,7 +38,32 @@ class ProductsController extends Controller
             $products = Product::paginate($perPage);
         }
 
-        return view('products.'.$accion, compact('products'));
+        return view('products.'.$accion, compact('products','cant'));
+    }
+
+    public function contarindex($accion)
+    {
+        $cant = 0;
+        $accions = CounterPage::where('pageroute','/products/index/'.$accion)->get();
+        $accion = $accions->first();
+        $cant = $accion->visitcount;
+        $cant++;
+        $accion->visitcount = $cant;
+        $accion->save();
+        return $cant;
+    }
+
+    public function contarfuncion($funcion)
+    {
+        $rutinga = '/products/'.$funcion;
+        $accions = CounterPage::where('pageroute',$rutinga)->get();
+        $accion = $accions->first();
+        $cant = $accion->visitcount;
+        $cant++;
+        $accion->visitcount = $cant;
+        $accion->save();
+        return $cant;
+
     }
 
     /**
@@ -42,9 +73,14 @@ class ProductsController extends Controller
      */
     public function create()
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $productcategories = ProductCategory::all();
         $product = new Product;
-        return view('products.create', compact('productcategories','product'));
+        $cant = $this->contarfuncion('create');
+        return view('products.create', compact('productcategories','product','cant'));
     }
 
     /**
@@ -56,7 +92,10 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         
         Product::create($requestData);
@@ -75,6 +114,10 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $product = Product::findOrFail($id);
 
         return view('products.show', compact('product'));
@@ -89,10 +132,15 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $product = Product::findOrFail($id);
         $productcategories = ProductCategory::all();
         $selected='selected';
-        return view('products.edit', compact('product','productcategories','selected'));
+        $cant = $this->contarfuncion('edit');
+        return view('products.edit', compact('product','productcategories','selected','cant'));
     }
 
     /**
@@ -105,7 +153,10 @@ class ProductsController extends Controller
      */
     public function update($id, Request $request)
     {
-        
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         
         $product = Product::findOrFail($id);
@@ -118,12 +169,21 @@ class ProductsController extends Controller
 
     public function trash()
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $products = Product::intrash();
-        return view('products.trash', compact('products'));
+        $cant = $this->contarfuncion('trash');
+        return view('products.trash', compact('products','cant'));
     }
 
     public function restore($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $product = Product::withTrashed()->find($id);
         $product->restore();
         return redirect('products/trash');
@@ -138,6 +198,10 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         Product::destroy($id);
 
         Session::flash('flash_message', 'Product deleted!');

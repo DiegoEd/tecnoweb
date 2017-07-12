@@ -9,9 +9,6 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Roles</div>
                     <div class="panel-body">
-                        <a href="{{ url('/roles/create') }}" class="btn btn-success btn-sm" title="Add New Role">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
-                        </a>
 
                         {!! Form::open(['method' => 'GET', 'url' => '/roles', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}
                         <div class="input-group">
@@ -30,7 +27,7 @@
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>ID</th><th>Role</th><th>Description</th><th>Actions</th>
+                                        <th>Codigo</th><th>Rol</th><th>Descripcion</th><th>Accion</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -41,16 +38,6 @@
                                         <td>
                                             <a href="{{ url('/roles/' . $item->id) }}" title="View Role">
                                             <button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> Mirar</button>
-                                            </a>
-                                            <a href="{{ url('/roles/' . $item->id . '/edit') }}" title="Edit Role">
-                                            <button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</button></a>
-                                            <form method="POST" action="{{ url('/roles/'. $item->id) }}" style="display:inline">
-                                                <input type="hidden" name="_method" value="DELETE">
-                                                {!! csrf_field() !!}
-                                                <button type="submit" class="btn btn-danger btn-xs" title="Delete Product" onclick="return confirm('Confirm delete?')"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                                            </form>
-                                            <a href="{{ url('/roles/signup/' . $item->id) }}" title="View Role">
-                                            <button class="btn btn-info btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Asignar</button>
                                             </a>
                                         </td>
                                     </tr>

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 
 use App\Supplier;
+use App\CounterPage;
 use Illuminate\Http\Request;
 use Session;
 
@@ -19,9 +20,13 @@ class SuppliersController extends Controller
      */
     public function index($accion,Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $keyword = $request->get('search');
         $perPage = 25;
-
+        $cant = $this->contarindex($accion);  
         if (!empty($keyword)) {
             $suppliers = Supplier::where('name', 'LIKE', "%$keyword%")
 				->orWhere('email', 'LIKE', "%$keyword%")
@@ -32,7 +37,32 @@ class SuppliersController extends Controller
             $suppliers = Supplier::paginate($perPage);
         }
 
-        return view('suppliers.'.$accion, compact('suppliers'));
+        return view('suppliers.'.$accion, compact('suppliers','cant'));
+    }
+
+    public function contarindex($accion)
+    {
+        $cant = 0;
+        $accions = CounterPage::where('pageroute','/suppliers/index/'.$accion)->get();
+        $accion = $accions->first();
+        $cant = $accion->visitcount;
+        $cant++;
+        $accion->visitcount = $cant;
+        $accion->save();
+        return $cant;
+    }
+
+    public function contarfuncion($funcion)
+    {
+        $rutinga = '/suppliers/'.$funcion;
+        $accions = CounterPage::where('pageroute',$rutinga)->get();
+        $accion = $accions->first();
+        $cant = $accion->visitcount;
+        $cant++;
+        $accion->visitcount = $cant;
+        $accion->save();
+        return $cant;
+
     }
 
     /**
@@ -42,8 +72,13 @@ class SuppliersController extends Controller
      */
     public function create()
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $suppliers = new Supplier;
-        return view('suppliers.create', compact('suppliers','user'));
+        $cant = $this->contarfuncion('create');
+        return view('suppliers.create', compact('suppliers','user','cant'));
     }
 
     /**
@@ -58,6 +93,10 @@ class SuppliersController extends Controller
      */
     public function store(Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         //dd($requestData);
         Supplier::create($requestData);
@@ -77,6 +116,10 @@ class SuppliersController extends Controller
      */
     public function show($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $suppliers = Supplier::findOrFail($id);
         return view('suppliers.show', compact('suppliers','user'));
     }
@@ -90,8 +133,13 @@ class SuppliersController extends Controller
      */
     public function edit($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $suppliers = Supplier::findOrFail($id);
-        return view('suppliers.edit', compact('suppliers','user'));
+        $cant = $this->contarfuncion('edit');
+        return view('suppliers.edit', compact('suppliers','user','cant'));
     }
 
     /**
@@ -104,6 +152,10 @@ class SuppliersController extends Controller
      */
     public function update($id, Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         $suppliers = Supplier::findOrFail($id);
         $suppliers->update($requestData);
@@ -121,6 +173,10 @@ class SuppliersController extends Controller
      */
     public function destroy($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         Supplier::destroy($id);
 
         Session::flash('flash_message', 'Supplier deleted!');

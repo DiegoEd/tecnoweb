@@ -14,7 +14,6 @@
     </div>
 </div>
 <input type="hidden" name="module_id" value="{{$accion->module_id}}">
-<input type="hidden" name="visitcount" value="{{$accion->visitcount}}">
 <div class="form-group">
     <div class="col-md-offset-4 col-md-4">
         <button type="submit" class="btn btn-primary">{{ $submitButtonText }}</button>

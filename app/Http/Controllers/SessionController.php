@@ -11,6 +11,8 @@ use App\User;
 use App\Client;
 use App\Employee;
 use App\Customize;
+use Session;
+
 
 class SessionController extends Controller
 {
@@ -22,9 +24,9 @@ class SessionController extends Controller
     public function index(Request $request)
     {
         
-        if ($request->session()->has('id')) {
-
-            return redirect('clients');
+        if($this->islogged())
+        {
+            return redirect('main');
         }
         return view('session.index');
     }
@@ -99,7 +101,10 @@ class SessionController extends Controller
      */
     public function show($id)
     {
-        //
+               if(!$this->islogged())
+        {
+            return redirect('main');
+        }
     }
 
     /**
@@ -110,7 +115,10 @@ class SessionController extends Controller
      */
     public function edit($id)
     {
-        //
+               if(!$this->islogged())
+        {
+            return redirect('main');
+        }
     }
 
     /**
@@ -122,7 +130,10 @@ class SessionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+               if(!$this->islogged())
+        {
+            return redirect('main');
+        }
     }
 
     /**
@@ -133,7 +144,10 @@ class SessionController extends Controller
      */
     public function destroy()
     {
-
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
     }
 
     public function shutdown(Request $request) {

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 
 use App\Module;
 use App\Accion;
+use App\CounterPage;
 use Illuminate\Http\Request;
 use Session;
 use DB;
@@ -21,6 +22,10 @@ class ModulesController extends Controller
      */
     public function index(Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $keyword = $request->get('search');
         $perPage = 25;
 
@@ -31,14 +36,41 @@ class ModulesController extends Controller
         } else {
             $modules = Module::with('accions')->paginate($perPage);
         }
+        $cant = $this->contarfuncion('/modules');
 
-        return view('modules.index', compact('modules'));
+        return view('modules.index', compact('modules','cant'));
+    }
+
+    public function contarfuncion($funcion)
+    {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
+        $accions = CounterPage::where('pageroute',$funcion)->get();
+        $accion = $accions->first();
+        $cant = $accion->visitcount;
+        $cant++;
+        $accion->visitcount = $cant;
+        $accion->save();
+        return $cant;
+
     }
     public function generateview($id,Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $roless = $request->session()->get('roles');
-        $accions = Accion::whereIn('id', (($roless[0])[$id])[2] )->get();
-        return view('modules.generateview',compact('accions'));
+        $accions = Accion::whereIn('id', (($roless[0])[$id])[3] )->get();
+        $modules =  Module::where('id',(($roless[0])[$id])[0] )->get();
+        $module = $modules->first();
+        $cant = $module->visitcount;
+        $cant++;
+        $module->visitcount = $cant;
+        $module->save();
+        return view('modules.generateview',compact('accions','cant'));
     }
     /**
      * Show the form for creating a new resource.
@@ -47,6 +79,10 @@ class ModulesController extends Controller
      */
     public function create()
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $module = new Module;
         return view('modules.create',compact('module'));
     }
@@ -60,7 +96,10 @@ class ModulesController extends Controller
      */
     public function store(Request $request)
     {
-        
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         
         Module::create($requestData);
@@ -72,6 +111,10 @@ class ModulesController extends Controller
     ##funcion descontinuada
     public function signup($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $module = Module::findOrFail($id);
         $accions = Accion::all();
         return view('roles.signup', compact('accions','module'));
@@ -79,6 +122,10 @@ class ModulesController extends Controller
     ##funcion descontinuada
     public function commitaccions(Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         $role = Role::findOrFail($requestData['id']);
 
@@ -116,9 +163,13 @@ class ModulesController extends Controller
      */
     public function show($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $module = Module::findOrFail($id);
-
-        return view('modules.show', compact('module'));
+        $cant = $this->contarfuncion('/modules/show');
+        return view('modules.show', compact('module','cant'));
     }
 
     /**
@@ -130,6 +181,10 @@ class ModulesController extends Controller
      */
     public function edit($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $module = Module::findOrFail($id);
 
         return view('modules.edit', compact('module'));
@@ -145,7 +200,10 @@ class ModulesController extends Controller
      */
     public function update($id, Request $request)
     {
-        
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         
         $module = Module::findOrFail($id);
@@ -165,6 +223,10 @@ class ModulesController extends Controller
      */
     public function destroy($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $module = Module::findOrFail($id);
 
         foreach ($module->accions as $accion) {

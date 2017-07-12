@@ -2,7 +2,7 @@
 <div class="form-group {{ $errors->has('price') ? 'has-error' : ''}}">
     <label name="price" class="col-md-4 control-label">Precio</label>
     <div class="col-md-6">
-        <input type="number" name="price" id="price" value="{{ $purchasesbilldetail->price }}" class="form-control">
+        <input type="number" name="price" id="price" value="{{ $purchasesbilldetail->price }}" step="any" class="form-control">
         {!! $errors->first('price', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('amount') ? 'has-error' : ''}}">

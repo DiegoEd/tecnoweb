@@ -10,6 +10,7 @@ use App\Product;
 use App\PurchasesBill;
 use App\PurchasesBillDetail;
 use Illuminate\Http\Request;
+use App\CounterPage;
 use Session;
 
 class PurchasesBillDetailsController extends Controller
@@ -21,6 +22,10 @@ class PurchasesBillDetailsController extends Controller
      */
     public function index(Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $keyword = $request->get('search');
         $perPage = 25;
 
@@ -35,6 +40,17 @@ class PurchasesBillDetailsController extends Controller
         return view('purchases-bill-details.index', compact('purchasesbilldetails'));
     }
 
+    public function contarfuncion($funcion)
+    {
+        $accions = CounterPage::where('pageroute',$funcion)->get();
+        $accion = $accions->first();
+        $cant = $accion->visitcount;
+        $cant++;
+        $accion->visitcount = $cant;
+        $accion->save();
+        return $cant;
+
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -42,10 +58,15 @@ class PurchasesBillDetailsController extends Controller
      */
     public function create($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $purchasesbilldetail = new PurchasesBillDetail;
         $purchasesbilldetail->purchases_bill_id = $id;
         $products = Product::all();
-        return view('purchases-bill-details.create', compact('purchasesbilldetail', 'products'));
+        $cant = $this->contarfuncion('/purchases-bills-details/create');
+        return view('purchases-bill-details.create', compact('purchasesbilldetail', 'products','cant'));
     }
 
     /**
@@ -57,6 +78,10 @@ class PurchasesBillDetailsController extends Controller
      */
     public function store(Request $request)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         
         $requestData = $request->all();
         $product = Product::findOrFail($requestData['product_id']);
@@ -70,8 +95,8 @@ class PurchasesBillDetailsController extends Controller
         PurchasesBillDetail::create($requestData);
 
         Session::flash('flash_message', 'PurchasesBillDetail added!');
-
-        return view('purchases-bills.show', compact('purchasesbill'));
+        $cant = $this->contarfuncion('/purchases-bills/show');
+        return view('purchases-bills.show', compact('purchasesbill','cant'));
     }
 
     /**
@@ -83,6 +108,10 @@ class PurchasesBillDetailsController extends Controller
      */
     public function show($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $purchasesbilldetail = PurchasesBillDetail::findOrFail($id);
 
         return view('purchases-bill-details.show', compact('purchasesbilldetail'));
@@ -97,6 +126,10 @@ class PurchasesBillDetailsController extends Controller
      */
     public function edit($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $purchasesbilldetail = PurchasesBillDetail::findOrFail($id);
 
         return view('purchases-bill-details.edit', compact('purchasesbilldetail'));
@@ -112,7 +145,10 @@ class PurchasesBillDetailsController extends Controller
      */
     public function update($id, Request $request)
     {
-        
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         $requestData = $request->all();
         
         $purchasesbilldetail = PurchasesBillDetail::findOrFail($id);
@@ -132,6 +168,10 @@ class PurchasesBillDetailsController extends Controller
      */
     public function destroy($id)
     {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
         PurchasesBillDetail::destroy($id);
 
         Session::flash('flash_message', 'PurchasesBillDetail deleted!');
