@@ -13,6 +13,19 @@ class PurchasesBillDetail extends Model
      */
     protected $table = 'purchases_bill_details';
 
+    public function product() {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function purchasesbill() {
+        return $this->belongsTo(PurchasesBill::class);
+    }
+
+    public function isf($idprod)
+    {
+        return $this->product_id==$idprod?'selected ':' ';
+    }
+
     /**
     * The database primary key value.
     *
@@ -25,7 +38,7 @@ class PurchasesBillDetail extends Model
      *
      * @var array
      */
-    protected $fillable = ['price', 'amount'];
+    protected $fillable = ['price', 'amount', 'product_id', 'purchases_bill_id'];
 
     
 }

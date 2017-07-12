@@ -21,6 +21,10 @@ class PurchasesBill extends Model
         return $this->belongsTo(Supplier::class);
     }
 
+    public function purchasesbilldetails() {
+        return $this->hasMany(PurchasesBillDetail::class);
+    }
+
     public function isf($idclient)
     {
         return $this->client_id==$idclient?'selected ':' ';

@@ -24,6 +24,10 @@ class Product extends Model
         return $this->hasMany(SaleBillDetails::class);
     }
 
+    public function purchasebilldetails() {
+        return $this->hasMany(PurchaseBillDetails::class);
+    }
+
     public static function intrash()
     {
         return Product::withTrashed()->whereNotNull('deleted_at')->get();

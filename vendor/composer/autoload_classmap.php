@@ -6,8 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-<<<<<<< HEAD
-=======
     'App\\Accion' => $baseDir . '/app/Accion.php',
     'App\\AccionRole' => $baseDir . '/app/AccionRole.php',
     'App\\Client' => $baseDir . '/app/Client.php',
@@ -84,7 +82,6 @@ return array(
     'Collective\\Html\\HtmlBuilder' => $vendorDir . '/laravelcollective/html/src/HtmlBuilder.php',
     'Collective\\Html\\HtmlFacade' => $vendorDir . '/laravelcollective/html/src/HtmlFacade.php',
     'Collective\\Html\\HtmlServiceProvider' => $vendorDir . '/laravelcollective/html/src/HtmlServiceProvider.php',
->>>>>>> cd20063dc418ec3c97835ec86925d815d4b3a3f1
     'CreateAccionRoleTable' => $baseDir . '/database/migrations/2017_07_09_192608_create_accion_role_table.php',
     'CreateAccionsTable' => $baseDir . '/database/migrations/2017_07_09_192428_create_accions_table.php',
     'CreateClientsTable' => $baseDir . '/database/migrations/2017_07_09_152205_create_clients_table.php',
@@ -93,15 +90,11 @@ return array(
     'CreateModulesTable' => $baseDir . '/database/migrations/2017_07_09_192228_create_modules_table.php',
     'CreateProductCategoriesTable' => $baseDir . '/database/migrations/2017_07_08_134031_create_product_categories_table.php',
     'CreateProductsTable' => $baseDir . '/database/migrations/2017_07_08_135831_create_products_table.php',
-<<<<<<< HEAD
-    'CreateRolesTable' => $baseDir . '/database/migrations/2017_07_09_132555_create_roles_table.php',
-=======
     'CreatePurchasesBillDetailsTable' => $baseDir . '/database/migrations/2017_07_11_175322_create_purchases_bill_details_table.php',
     'CreatePurchasesBillsTable' => $baseDir . '/database/migrations/2017_07_11_175113_create_purchases_bills_table.php',
     'CreateRolesTable' => $baseDir . '/database/migrations/2017_07_09_132555_create_roles_table.php',
     'CreateSaleBillDetailsTable' => $baseDir . '/database/migrations/2017_07_11_003842_create_sale_bill_details_table.php',
     'CreateSalesBillsTable' => $baseDir . '/database/migrations/2017_07_11_003335_create_sales_bills_table.php',
->>>>>>> cd20063dc418ec3c97835ec86925d815d4b3a3f1
     'CreateSuppliersTable' => $baseDir . '/database/migrations/2017_07_08_024732_create_suppliers_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2017_07_09_145148_create_users_table.php',
     'CrudGeneratorTest' => $vendorDir . '/appzcoder/crud-generator/tests/CrudGeneratorTest.php',

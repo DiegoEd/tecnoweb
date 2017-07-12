@@ -16,7 +16,15 @@ class CreatePurchasesBillsTable extends Migration
             $table->increments('id');
             $table->date('purchasedate');
             $table->decimal('totalamount');
+            $table->integer('employee_id');
+            $table->integer('supplier_id');
             $table->timestamps();
+            $table->foreign('employee_id')->references('id')->on('employees')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->foreign('supplier_id')->references('id')->on('suppliers')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

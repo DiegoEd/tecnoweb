@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Product;
+use App\PurchasesBill;
 use App\PurchasesBillDetail;
 use Illuminate\Http\Request;
 use Session;
@@ -37,9 +39,12 @@ class PurchasesBillDetailsController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create($id)
     {
-        return view('purchases-bill-details.create');
+        $purchasesbilldetail = new PurchasesBillDetail;
+        $purchasesbilldetail->purchases_bill_id = $id;
+        $products = Product::all();
+        return view('purchases-bill-details.create', compact('purchasesbilldetail', 'products'));
     }
 
     /**
@@ -53,12 +58,19 @@ class PurchasesBillDetailsController extends Controller
     {
         
         $requestData = $request->all();
-        
+        $product = Product::findOrFail($requestData['product_id']);
+        $product->stock = $product->stock + $requestData['amount'];
+        $product->update();
+
+        $purchasesbill = PurchasesBill::findOrFail($requestData['purchases_bill_id']);
+        $purchasesbill->totalamount = $purchasesbill->totalamount + ($requestData['amount'] * $requestData['price']);
+        $purchasesbill->save();
+
         PurchasesBillDetail::create($requestData);
 
         Session::flash('flash_message', 'PurchasesBillDetail added!');
 
-        return redirect('purchases-bill-details');
+        return view('purchases-bills.show', compact('purchasesbill'));
     }
 
     /**

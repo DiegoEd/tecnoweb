@@ -7,7 +7,7 @@
     </div>
 </div>
 @if(count($clients)>0)
-    <div class="form-group {{ $errors->has('categories') ? 'has-error' : ''}}">
+    <div class="form-group {{ $errors->has('clients') ? 'has-error' : ''}}">
         <label name="clients" class="col-md-4 control-label">Cliente</label>
         <div class="col-md-6">
             <select name="client_id"  class="form-control" >
@@ -19,18 +19,8 @@
         </div>
     </div>
 @endif
-<div class="form-group {{ $errors->has('totalamount') ? 'has-error' : ''}}">
-    <div class="col-md-6">
-        <input type="hidden" name="totalamount" value="0" class="form-control">
-        {!! $errors->first('totalamount', '<p class="help-block">:message</p>') !!}
-    </div>
-</div>
-<div class="form-group {{ $errors->has('totalamount') ? 'has-error' : ''}}">
-    <div class="col-md-6">
-        <input type="hidden" name="employee_id" value="{{ session('person_id') }}" class="form-control">
-        {!! $errors->first('totalamount', '<p class="help-block">:message</p>') !!}
-    </div>
-</div>
+<input type="hidden" name="totalamount" value="0" class="form-control">
+<input type="hidden" name="employee_id" value="{{ session('person_id') }}" class="form-control">
 
 <div class="form-group">
     <div class="col-md-offset-4 col-md-4">

@@ -30,9 +30,13 @@ Route::patch('employees/restore/{id}', 'EmployeesController@restore');
 
 Route::get('accions/create/{id}', 'AccionsController@create');
 Route::get('sale-bill-details/create/{id}', 'SaleBillDetailsController@create');
+Route::get('purchases-bill-details/create/{id}', 'PurchasesBillDetailsController@create');
 Route::get('session/close', 'SessionController@shutdown');
 Route::get('roles/signup/{id}', 'RolesController@signup');
 Route::post('roles/commituser/', 'RolesController@commituser');
+Route::get('/main', function () {
+	return view('main');
+});
 
 
 Route::get('clients/index/{accion}', 'ClientsController@index');

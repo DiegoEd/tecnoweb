@@ -21,11 +21,11 @@
                             </ul>
                         @endif
 
-                        {!! Form::open(['url' => '/purchases-bill-details', 'class' => 'form-horizontal', 'files' => true]) !!}
+                        <form method="POST" action="{{ url('/purchases-bill-details') }}" class="form-horizontal">
 
-                        @include ('purchases-bill-details.form')
+                        @include ('purchases-bill-details.form', ['submitButtonText' => 'Registrar'])
 
-                        {!! Form::close() !!}
+                        </form>
 
                     </div>
                 </div>

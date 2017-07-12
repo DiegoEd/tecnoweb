@@ -16,7 +16,15 @@ class CreatePurchasesBillDetailsTable extends Migration
             $table->increments('id');
             $table->decimal('price');
             $table->integer('amount');
+            $table->integer('purchases_bill_id');
+            $table->integer('product_id');
             $table->timestamps();
+            $table->foreign('purchases_bill_id')->references('id')->on('purchases_bills')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->foreign('product_id')->references('id')->on('products')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

@@ -12,18 +12,11 @@
 
                         <a href="{{ url('/purchases-bills') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <a href="{{ url('/purchases-bills/' . $purchasesbill->id . '/edit') }}" title="Edit PurchasesBill"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-                        {!! Form::open([
-                            'method'=>'DELETE',
-                            'url' => ['purchasesbills', $purchasesbill->id],
-                            'style' => 'display:inline'
-                        ]) !!}
-                            {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
-                                    'type' => 'submit',
-                                    'class' => 'btn btn-danger btn-xs',
-                                    'title' => 'Delete PurchasesBill',
-                                    'onclick'=>'return confirm("Confirm delete?")'
-                            ))!!}
-                        {!! Form::close() !!}
+                        <form method="POST" action="{{ url('/purchases-bills/'. $purchasesbill->id) }}" style="display:inline">
+                            <input type="hidden" name="_method" value="DELETE">
+                            {!! csrf_field() !!}
+                            <button type="submit" class="btn btn-danger btn-xs" title="Delete Supplier" onclick="return confirm('Confirm delete?')"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+                        </form>
                         <br/>
                         <br/>
 
@@ -39,6 +32,7 @@
                         </div>
 
                     </div>
+                    @include('purchases-bill-details.index')
                 </div>
             </div>
         </div>

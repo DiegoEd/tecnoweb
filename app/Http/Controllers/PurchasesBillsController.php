@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Supplier;
+use App\Product;
 use App\PurchasesBill;
 use Illuminate\Http\Request;
 use Session;
@@ -39,7 +41,9 @@ class PurchasesBillsController extends Controller
      */
     public function create()
     {
-        return view('purchases-bills.create');
+        $suppliers = Supplier::all();
+        $purchasesbill = new PurchasesBill;
+        return view('purchases-bills.create', compact('suppliers', 'purchasesbill'));
     }
 
     /**
@@ -51,7 +55,6 @@ class PurchasesBillsController extends Controller
      */
     public function store(Request $request)
     {
-        
         $requestData = $request->all();
         
         PurchasesBill::create($requestData);
@@ -119,6 +122,13 @@ class PurchasesBillsController extends Controller
      */
     public function destroy($id)
     {
+        $purchasesbill = PurchasesBill::findOrFail($id);
+        $purchasesbilldetails = $purchasesbill->purchasesbilldetails;
+        for ($i = 0; $i < count($purchasesbilldetails); $i++) { 
+            $product = Product::findOrFail($purchasesbilldetails[$i]->product_id);
+            $product->stock = $product->stock - $purchasesbilldetails[$i]->amount;
+            $product->update();
+        }
         PurchasesBill::destroy($id);
 
         Session::flash('flash_message', 'PurchasesBill deleted!');
