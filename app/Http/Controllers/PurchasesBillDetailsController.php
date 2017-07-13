@@ -22,6 +22,7 @@ class PurchasesBillDetailsController extends Controller
      */
     public function index(Request $request)
     {
+        $idind = $this->idindex($accion);
         if(!$this->islogged())
         {
             return redirect('main');

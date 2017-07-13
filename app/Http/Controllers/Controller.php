@@ -23,14 +23,26 @@ abstract class Controller extends BaseController
 
     public function tienepermiso($idaccion,$idmodulo)
     {
-    	$roless = session('roles');
-    	$accions =(Accion::whereIn('id', (($roless[0])[$idmodulo])[3] )->get(['id']))->toArray();
-        foreach ($accions as $clave => $valor)
-        {
-            if($idaccion == $valor['id'])
+        try {
+        	$roless = session('roles');
+            if(count($roless[0])==0)
             {
-                return true;
+                return false;
             }
+            if(!array_key_exists($idmodulo,$roless[0]))
+            {
+                return false;
+            }
+        	$accions =(Accion::whereIn('id', (($roless[0])[$idmodulo])[3] )->get(['id']))->toArray();
+            foreach ($accions as $clave => $valor)
+            {
+                if($idaccion == $valor['id'])
+                {
+                    return true;
+                }
+            }
+        } catch (Exception $e) {
+            return false;
         }
         return false;
     }

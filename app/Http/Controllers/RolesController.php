@@ -24,7 +24,8 @@ class RolesController extends Controller
      */
     public function index($accion,Request $request)
     {
-        if(!$this->islogged())
+        $idind = $this->idindex($accion);
+        if(!$this->islogged() || !$this->tienepermiso($idind,8))
         {
             return redirect('main');
         }
@@ -40,6 +41,18 @@ class RolesController extends Controller
         }
         $cant = $this->contarfuncion('/roles/index/'.$accion);  
         return view('roles.'.$accion, compact('roles','cant'));
+    }
+
+    public function idindex($accion)
+    {
+        if($accion == 'index'){
+            return 33;
+        }elseif($accion == 'indexedit'){
+            return 34;
+        }elseif($accion == 'indexdelete'){
+            return 35;
+        }
+        return 23424;
     }
     public function contarfuncion($funcion)
     {
@@ -60,7 +73,7 @@ class RolesController extends Controller
      */
     public function create()
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(32,8))
         {
             return redirect('main');
         }
@@ -79,7 +92,7 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(32,8))
         {
             return redirect('main');
         }
@@ -114,7 +127,7 @@ class RolesController extends Controller
      */
     public function update($id, Request $request)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(34,8))
         {
             return redirect('main');
         }
@@ -149,7 +162,7 @@ class RolesController extends Controller
 
     public function commituser(Request $request)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(36,8))
         {
             return redirect('main');
         }
@@ -192,6 +205,10 @@ class RolesController extends Controller
      */
     public function show($id)
     {
+        if(!$this->islogged() || !$this->tienepermiso(33,8))
+        {
+            return redirect('main');
+        }
         $role = Role::findOrFail($id);
         $accions = $role->accions;
         $cant = $this->contarfuncion('/roles/show');
@@ -207,6 +224,10 @@ class RolesController extends Controller
      */
     public function edit($id)
     {
+        if(!$this->islogged() || !$this->tienepermiso(34,8))
+        {
+            return redirect('main');
+        }
         $role = Role::findOrFail($id);
         $modules = Module::with('accions')->get();
         $cant = $this->contarfuncion('/roles/edit');
@@ -215,6 +236,10 @@ class RolesController extends Controller
 
     public function signup($id)
     {
+        if(!$this->islogged() || !$this->tienepermiso(36,8))
+        {
+            return redirect('main');
+        }
         $role = Role::findOrFail($id);
         $usersNull = User::where('role_id',null)->get();
         $usersMine = User::where('role_id',$id)->get();
@@ -234,6 +259,10 @@ class RolesController extends Controller
      */
     public function destroy($id)
     {
+        if(!$this->islogged() || !$this->tienepermiso(35,8))
+        {
+            return redirect('main');
+        }
         DB::table('accion_role')->where('role_id',$id)->delete();
         Role::destroy($id);
 

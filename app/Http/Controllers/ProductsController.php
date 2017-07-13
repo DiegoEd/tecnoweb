@@ -21,7 +21,8 @@ class ProductsController extends Controller
      */
     public function index($accion,Request $request)
     {
-        if(!$this->islogged())
+        $idind = $this->idindex($accion);
+        if(!$this->islogged() || !$this->tienepermiso($idind,3))
         {
             return redirect('main');
         }
@@ -40,6 +41,19 @@ class ProductsController extends Controller
 
         return view('products.'.$accion, compact('products','cant'));
     }
+
+    public function idindex($accion)
+    {
+        if($accion == 'index'){
+            return 13;
+        }elseif($accion == 'indexedit'){
+            return 14;
+        }elseif($accion == 'indexdelete'){
+            return 15;
+        }
+        return 23424;
+    }
+      
 
     public function contarindex($accion)
     {
@@ -73,7 +87,7 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(11,3))
         {
             return redirect('main');
         }
@@ -92,7 +106,8 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(11,3))
+
         {
             return redirect('main');
         }
@@ -114,7 +129,7 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(13,3))
         {
             return redirect('main');
         }
@@ -132,7 +147,7 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(14,3))
         {
             return redirect('main');
         }
@@ -153,7 +168,7 @@ class ProductsController extends Controller
      */
     public function update($id, Request $request)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(14,3))
         {
             return redirect('main');
         }
@@ -169,7 +184,7 @@ class ProductsController extends Controller
 
     public function trash()
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(12,3))
         {
             return redirect('main');
         }
@@ -180,7 +195,7 @@ class ProductsController extends Controller
 
     public function restore($id)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(12,3))
         {
             return redirect('main');
         }
@@ -198,7 +213,7 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(15,3))
         {
             return redirect('main');
         }

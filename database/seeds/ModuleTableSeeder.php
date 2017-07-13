@@ -6,6 +6,10 @@ use App\Accion;
 use App\Role;
 use App\AccionRole;
 use App\CounterPage;
+use App\User;
+
+use App\Client;
+use App\Employee;
 
 
 class ModuleTableSeeder extends Seeder
@@ -470,11 +474,36 @@ class ModuleTableSeeder extends Seeder
 		        $counterpage->pageroute ='/customizes/edit';
 		        $counterpage->save();
 
+		        ##Estadisticas de ventas
+		       	$estventa = new Accion;
+		        $estventa->name= 'Estadisticas venta';
+		        $counterpage = new CounterPage;
+		        $counterpage ->visitcount = 0;
+		        $counterpage->pageroute ='/sales-bills/statistics';
+		        $counterpage->save();		        
+		        $estventa->pageroute ='/sales-bills/statistics';
+		        $estventa->module_id = $gventas->id;
+		        $estventa->save();
+
+		        ## Contador de buscador
+		        $counterpage = new CounterPage;
+		        $counterpage ->visitcount = 0;
+		        $counterpage->pageroute ='/modules/search';
+		        $counterpage->save();
+
+		        ##Contador del main
+
+		        $counterpage = new CounterPage;
+		        $counterpage ->visitcount = 0;
+		        $counterpage->pageroute ='/main';
+		        $counterpage->save();
+
+
 
 
 
 		
-
+		#rol de administrador
 
 		$adm = new Role;
 		$adm->role = 'Administrador';
@@ -601,7 +630,54 @@ class ModuleTableSeeder extends Seeder
 		$comprae->accion_id = $ecompra->id;
 		$comprae->role_id = $adm->id;
 		$comprae->save();
+		$loginm = new AccionRole;
+		$loginm->accion_id = $mlogin->id;
+		$loginm->role_id = $adm->id;
+		$loginm->save();
+		$rolec = new AccionRole;
+		$rolec->accion_id = $crole->id;
+		$rolec->role_id = $adm->id;
+		$rolec->save();
+		$rolem = new AccionRole;
+		$rolem->accion_id = $mrole->id;
+		$rolem->role_id = $adm->id;
+		$rolem->save();
+		$rolemo = new AccionRole;
+		$rolemo->accion_id = $morole->id;
+		$rolemo->role_id = $adm->id;
+		$rolemo->save();
+		$rolee = new AccionRole;
+		$rolee->accion_id = $erole->id;
+		$rolee->role_id = $adm->id;
+		$rolee->save();
+		$rolea = new AccionRole;
+		$rolea->accion_id = $arole->id;
+		$rolea->role_id = $adm->id;
+		$rolea->save();
+		$ventaes = new AccionRole;
+		$ventaes->accion_id = $estventa->id;
+		$ventaes->role_id = $adm->id;
+		$ventaes->save();
 
+		##Creando un el administrador root
+		$user = new User;
+		$user->username = 'root';
+		$user->password = 'root';
+		$user->email = 'root@hinolux.com';
+		$user->role_id = $adm->id;
+		$user->save();
+
+		$employee = new Employee;
+		$employee->name = 'hinolux';
+		$employee->lastname = 'Srl';
+		$employee->sex = 'Masculino';
+		$employee->age = 1;
+		$employee->career = 'owner';
+		$employee->user_id = $user->id;
+		$employee->save(); 
+
+
+		#Rol de ventas
 		$venta = new Role;
 		$venta->role = 'Ventas';
 		$venta->description = 'Personal encargado del área de ventas de la empresa';

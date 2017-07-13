@@ -22,7 +22,8 @@ class PurchasesBillsController extends Controller
      */
     public function index($accion,Request $request)
     {
-        if(!$this->islogged())
+        $idind = $this->idindex($accion);
+        if(!$this->islogged() || !$this->tienepermiso($idind,7))
         {
             return redirect('main');
         }
@@ -38,6 +39,16 @@ class PurchasesBillsController extends Controller
             $purchasesbills = PurchasesBill::paginate($perPage);
         }
         return view('purchases-bills.'.$accion, compact('purchasesbills','cant'));
+    }
+
+    public function idindex($accion)
+    {
+        if($accion == 'index'){
+            return 29;
+        }elseif($accion == 'indexdelete'){
+            return 30;
+        }
+        return 23424;
     }
 
     public function contarindex($accion)
@@ -72,7 +83,7 @@ class PurchasesBillsController extends Controller
      */
     public function create()
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(28,7))
         {
             return redirect('main');
         }
@@ -91,7 +102,7 @@ class PurchasesBillsController extends Controller
      */
     public function store(Request $request)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(28,7))
         {
             return redirect('main');
         }
@@ -118,7 +129,7 @@ class PurchasesBillsController extends Controller
      */
     public function show($id)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(29,7))
         {
             return redirect('main');
         }
@@ -177,7 +188,7 @@ class PurchasesBillsController extends Controller
      */
     public function destroy($id)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(30,7))
         {
             return redirect('main');
         }

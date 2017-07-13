@@ -22,7 +22,8 @@ class SalesBillsController extends Controller
      */
     public function index($accion, Request $request)
     {
-        if(!$this->islogged())
+        $idind = $this->idindex($accion);
+        if(!$this->islogged() || !$this->tienepermiso($idind,6))
         {
             return redirect('main');
         }
@@ -46,6 +47,16 @@ class SalesBillsController extends Controller
         }
 
         return view('sales-bills.'.$accion, compact('salesbills'));
+    }
+
+    public function idindex($accion)
+    {
+        if($accion == 'index'){
+            return 26;
+        }elseif($accion == 'indexdelete'){
+            return 27;
+        }
+        return 23424;
     }
 
     public function contarindex($accion)
@@ -80,7 +91,7 @@ class SalesBillsController extends Controller
      */
     public function create()
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(25,6))
         {
             return redirect('main');
         }
@@ -100,7 +111,7 @@ class SalesBillsController extends Controller
     public function store(Request $request)
     {
 
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(25,6))
         {
             return redirect('main');
         }
@@ -125,7 +136,7 @@ class SalesBillsController extends Controller
      */
     public function show($id)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(26,6))
         {
             return redirect('main');
         }
@@ -184,7 +195,7 @@ class SalesBillsController extends Controller
      */
     public function destroy($id)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(27,6))
         {
             return redirect('main');
         }
