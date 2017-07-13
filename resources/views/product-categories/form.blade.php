@@ -2,7 +2,7 @@
 <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
     <label name="name" class="col-md-4 control-label">Nombre</label>
     <div class="col-md-6">
-    	<input type="text" name="name" value="{{ $productcategory->name }}" class="form-control">
+    	<input type="text" name="name" value="{{ $productcategory->name }}" class="form-control" pattern="^[a-zA-Záéíóú ]+$">
         {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
     </div>
 </div>

@@ -20,12 +20,20 @@ class SalesBillsController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index($accion,Request $request)
+    public function index($accion, Request $request)
     {
         if(!$this->islogged())
         {
             return redirect('main');
         }
+
+        $salesbillstodelete = SalesBill::all();
+        for ($i = 0; $i < count($salesbillstodelete); $i++) {
+            if ($salesbillstodelete[$i]->confirmed == false) {
+                $this->destroy($salesbillstodelete[$i]->id);
+            }
+        }
+
         $keyword = $request->get('search');
         $perPage = 25;
 
@@ -191,7 +199,7 @@ class SalesBillsController extends Controller
 
         Session::flash('flash_message', 'SalesBill deleted!');
 
-        return Redirect::back();
+        return redirect('sales-bills/index/indexdelete');
     }
 
     public function statistics() {
@@ -217,5 +225,17 @@ class SalesBillsController extends Controller
             }
         }
         return view('sales-bills.statistics', compact('all'));
+    }
+
+    public function confirm($id) {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
+        $salesbill = SalesBill::findOrFail($id);
+        $salesbill->confirmed = true;;
+        $salesbill->update();
+
+        return redirect('sales-bills/index/index');
     }
 }

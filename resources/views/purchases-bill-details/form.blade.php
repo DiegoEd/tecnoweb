@@ -2,13 +2,13 @@
 <div class="form-group {{ $errors->has('price') ? 'has-error' : ''}}">
     <label name="price" class="col-md-4 control-label">Precio</label>
     <div class="col-md-6">
-        <input type="number" name="price" id="price" value="{{ $purchasesbilldetail->price }}" step="any" class="form-control">
+        <input type="number" name="price" id="price" value="{{ $purchasesbilldetail->price }}" step="any" class="form-control" pattern="^[0-9.]+$">
         {!! $errors->first('price', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('amount') ? 'has-error' : ''}}">
     <label name="amount" class="col-md-4 control-label">Cantidad</label>
     <div class="col-md-6">
-        <input type="number" name="amount" value="{{ $purchasesbilldetail->amount }}" class="form-control">
+        <input type="number" name="amount" value="{{ $purchasesbilldetail->amount }}" class="form-control" pattern="^[0-9]+$">
         {!! $errors->first('amount', '<p class="help-block">:message</p>') !!}
     </div>
 </div>

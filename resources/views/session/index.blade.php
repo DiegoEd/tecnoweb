@@ -19,13 +19,13 @@
 						<div class="form-group">
 						    <label name="name" class="col-md-4 control-label">Email</label>
 						    <div class="col-md-6">
-						        <input type="text" name="email" class="form-control">
+						        <input type="text" name="email" class="form-control" pattern="^[a-zA-Z0-9@._-]+$">
 						    </div>
 						</div>
 						<div class="form-group">
 						     <label name="name" class="col-md-4 control-label">Password</label>
 						    <div class="col-md-6">
-						        <input type="password" name="password" class="form-control">
+						        <input type="password" name="password" class="form-control" pattern="^[a-zA-Z0-9]+$">
 						    </div>
 						</div>
 						<div class="form-group">

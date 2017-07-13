@@ -2,7 +2,7 @@
 <div class="form-group {{ $errors->has('purchasedate') ? 'has-error' : ''}}">
     <label name="purchasedate" class="col-md-4 control-label">Fecha de Compra</label>
     <div class="col-md-6">
-        {!! Form::date('purchasedate', null, ['class' => 'form-control']) !!}
+        <input type="date" name="purchasedate" value="{{ $purchasesbill->purchasedate }}" class="form-control">
         {!! $errors->first('purchasedate', '<p class="help-block">:message</p>') !!}
     </div>
 </div>

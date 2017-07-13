@@ -10,7 +10,7 @@
                     <div class="panel-heading">Venta {{ $salesbill->id }}</div>
                     <div class="panel-body">
 
-                        <a href="{{ url('/sales-bills') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Confirmar</button></a>
+                        <a href="{{ url('/sales-bills/confirm/'. $salesbill->id) }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Confirmar</button></a>
                         <form method="POST" action="{{ url('/sales-bills/'. $salesbill->id) }}" style="display:inline">
                             <input type="hidden" name="_method" value="DELETE">
                             {!! csrf_field() !!}

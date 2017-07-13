@@ -24,6 +24,8 @@
                             <input type="hidden" name="_method" value="PATCH">
 
                         @include ('sale-bill-details.form', ['submitButtonText' => 'Update'])
+                            <input type="hidden" name="previous_price" value="{{ $salebilldetail->price }}">
+                            <input type="hidden" name="previous_amount" value="{{ $salebilldetail->amount }}">
 
                         </form>
 

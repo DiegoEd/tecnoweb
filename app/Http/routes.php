@@ -62,6 +62,7 @@ Route::get('employees/indexdelete/{accion}', 'EmployeesController@index');
 
 Route::get('sales-bills/index/{accion}', 'SalesBillsController@index');
 Route::get('sales-bills/indexdelete/{accion}', 'SalesBillsController@index');
+Route::get('sales-bills/confirm/{id}', 'SalesBillsController@confirm');
 
 Route::get('purchases-bills/index/{accion}', 'PurchasesBillsController@index');
 Route::get('purchases-bills/indexdelete/{accion}', 'PurchasesBillsController@index');

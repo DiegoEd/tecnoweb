@@ -43,7 +43,7 @@
       margin-bottom:80px;
     }
 
-    .footer{
+    .main-footer{
         position: absolute;
         bottom: 0;
         left: 0;
@@ -100,7 +100,7 @@
               <a href="https://www.facebook.com/Hinolux-SRL-259362990924047/" class="navbar-btn btn-danger btn pull-right">Únete a nuestra página de Facebook</a>
         </div>
     </div-->
-    <div class="footer">
+    <div class="main-footer">
         <div class="container">
               <p class="navbar-text pull-left">Hinolux Soluciones funcionales sofisticadas
                    

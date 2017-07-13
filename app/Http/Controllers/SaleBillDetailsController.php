@@ -157,6 +157,7 @@ class SaleBillDetailsController extends Controller
         }
         $requestData = $request->all();
         $salebilldetail = SaleBillDetail::findOrFail($id);
+
         $salebilldetail->update($requestData);
 
         Session::flash('flash_message', 'SaleBillDetail updated!');

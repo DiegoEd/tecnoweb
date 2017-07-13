@@ -115,7 +115,7 @@ class SessionController extends Controller
      */
     public function edit($id)
     {
-               if(!$this->islogged())
+        if(!$this->islogged())
         {
             return redirect('main');
         }
@@ -130,7 +130,7 @@ class SessionController extends Controller
      */
     public function update(Request $request, $id)
     {
-               if(!$this->islogged())
+        if(!$this->islogged())
         {
             return redirect('main');
         }
