@@ -50,7 +50,7 @@ class SessionController extends Controller
     public function store(Request $request)
     {
         $requestData = $request->all();
-        $users = User::where('email', 'LIKE', $requestData['email'])->where('password', 'LIKE', $requestData['password'])->get();
+        $users = User::where('username', 'LIKE', $requestData['username'])->where('password', 'LIKE', $requestData['password'])->get();
         if (count($users) > 0) {
             $user = $users->first();
             $customizes = Customize::where('user_id', '=', $user->id);

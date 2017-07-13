@@ -17,9 +17,9 @@
 					<form method="POST" action="{{ url('/session') }}" class="form-horizontal">
 						{!! csrf_field() !!}
 						<div class="form-group">
-						    <label name="name" class="col-md-4 control-label">Email</label>
+						    <label name="username" class="col-md-4 control-label">Username</label>
 						    <div class="col-md-6">
-						        <input type="text" name="email" class="form-control" pattern="^[a-zA-Z0-9@._-]+$">
+						        <input type="text" name="username" class="form-control" pattern="^[a-zA-Z0-9@._-]+$">
 						    </div>
 						</div>
 						<div class="form-group">

@@ -22,7 +22,6 @@ class PurchasesBillDetailsController extends Controller
      */
     public function index(Request $request)
     {
-        $idind = $this->idindex($accion);
         if(!$this->islogged())
         {
             return redirect('main');
@@ -132,8 +131,9 @@ class PurchasesBillDetailsController extends Controller
             return redirect('main');
         }
         $purchasesbilldetail = PurchasesBillDetail::findOrFail($id);
+        $products = Product::all();
 
-        return view('purchases-bill-details.edit', compact('purchasesbilldetail'));
+        return view('purchases-bill-details.edit', compact('purchasesbilldetail', 'products'));
     }
 
     /**
@@ -151,13 +151,32 @@ class PurchasesBillDetailsController extends Controller
             return redirect('main');
         }
         $requestData = $request->all();
+
+        $purchasesbill = PurchasesBill::findOrFail($requestData['purchases_bill_id']);
+        if ($requestData['amount'] > $requestData['previous_amount']) {
+            $diferencia = $requestData['amount'] - $requestData['previous_amount'];
+            $purchasesbill->totalamount = $purchasesbill->totalamount - ($requestData['previous_amount'] * $requestData['price']);
+            $purchasesbill->totalamount = $purchasesbill->totalamount + ($requestData['amount'] * $requestData['price']);
+            $product = Product::findOrFail($requestData['product_id']);
+            $product->stock = $product->stock + $diferencia;
+            $purchasesbill->update();
+            $product->update();
+        } else if ($requestData['amount'] < $requestData['previous_amount']) {
+            $diferencia = $requestData['previous_amount'] - $requestData['amount'];
+            $purchasesbill->totalamount = $purchasesbill->totalamount - ($requestData['previous_amount'] * $requestData['price']);
+            $purchasesbill->totalamount = $purchasesbill->totalamount + ($requestData['amount'] * $requestData['price']);
+            $product = Product::findOrFail($requestData['product_id']);
+            $product->stock = $product->stock - $diferencia;
+            $purchasesbill->update();
+            $product->update();
+        }
         
         $purchasesbilldetail = PurchasesBillDetail::findOrFail($id);
         $purchasesbilldetail->update($requestData);
 
         Session::flash('flash_message', 'PurchasesBillDetail updated!');
 
-        return redirect('purchases-bill-details');
+        return view('purchases-bills.show', compact('purchasesbill'));
     }
 
     /**
@@ -173,10 +192,22 @@ class PurchasesBillDetailsController extends Controller
         {
             return redirect('main');
         }
+
+        $purchasesbilldetail = PurchasesBillDetail::findOrFail($id);
+        $purchasesbill = PurchasesBill::findOrFail($purchasesbilldetail->purchases_bill_id);
+        $product = Product::findOrFail($purchasesbilldetail->product_id);
+
+        $purchasesbill->totalamount = $purchasesbill->totalamount - ($purchasesbilldetail->price * $purchasesbilldetail->amount);
+
+        $product->stock = $product->stock - $purchasesbilldetail->amount;
+
+        $purchasesbilldetail->update();
+        $product->update();
+
         PurchasesBillDetail::destroy($id);
 
         Session::flash('flash_message', 'PurchasesBillDetail deleted!');
 
-        return redirect('purchases-bill-details');
+        return view('purchases-bills.show', compact('purchasesbill'));
     }
 }

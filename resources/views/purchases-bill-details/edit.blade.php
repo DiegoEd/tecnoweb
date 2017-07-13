@@ -21,16 +21,13 @@
                             </ul>
                         @endif
 
-                        {!! Form::model($purchasesbilldetail, [
-                            'method' => 'PATCH',
-                            'url' => ['/purchases-bill-details', $purchasesbilldetail->id],
-                            'class' => 'form-horizontal',
-                            'files' => true
-                        ]) !!}
+                        <form method="POST" action="{{ url('/purchases-bill-details/'. $purchasesbilldetail->id) }}" class="form-horizontal">
+                            <input type="hidden" name="_method" value="PATCH">
 
                         @include ('purchases-bill-details.form', ['submitButtonText' => 'Update'])
+                            <input type="hidden" name="previous_amount" value="{{ $purchasesbilldetail->amount }}">
 
-                        {!! Form::close() !!}
+                        </form>
 
                     </div>
                 </div>

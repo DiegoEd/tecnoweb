@@ -156,12 +156,33 @@ class SaleBillDetailsController extends Controller
             return redirect('main');
         }
         $requestData = $request->all();
+
+        $salesbill = SalesBill::findOrFail($requestData['sales_bill_id']);
+        $product = Product::findOrFail($requestData['product_id']);
+        if ($requestData['amount'] > $product->stock) {
+            return redirect()->back()->withErrors(array('error' => 'El Stock no abastece la venta: '. $product->stock. ' disponible'));
+        }
+        if ($requestData['amount'] > $requestData['previous_amount']) {
+            $diferencia = $requestData['amount'] - $requestData['previous_amount'];
+            $salesbill->totalamount = $salesbill->totalamount - ($requestData['previous_amount'] * $requestData['price']);
+            $salesbill->totalamount = $salesbill->totalamount + ($requestData['amount'] * $requestData['price']);
+            $product->stock = $product->stock - $diferencia;
+            $salesbill->update();
+            $product->update();
+        } else if ($requestData['amount'] < $requestData['previous_amount']) {
+            $diferencia = $requestData['previous_amount'] - $requestData['amount'];
+            $salesbill->totalamount = $salesbill->totalamount - ($requestData['previous_amount'] * $requestData['price']);
+            $salesbill->totalamount = $salesbill->totalamount + ($requestData['amount'] * $requestData['price']);
+            $product->stock = $product->stock + $diferencia;
+            $salesbill->update();
+            $product->update();
+        }
+
         $salebilldetail = SaleBillDetail::findOrFail($id);
 
         $salebilldetail->update($requestData);
 
         Session::flash('flash_message', 'SaleBillDetail updated!');
-        $salesbill = SalesBill::findOrFail($requestData['sales_bill_id']);
         return view('sales-bills.show', compact('salesbill'));
     }
 
@@ -178,10 +199,22 @@ class SaleBillDetailsController extends Controller
         {
             return redirect('main');
         }
+
+        $salebilldetail = SaleBillDetail::findOrFail($id);
+        $salesbill = SalesBill::findOrFail($salebilldetail->sales_bill_id);
+        $product = Product::findOrFail($salebilldetail->product_id);
+
+        $salesbill->totalamount = $salesbill->totalamount - ($salebilldetail->price * $salebilldetail->amount);
+
+        $product->stock = $product->stock + $salebilldetail->amount;
+
+        $salebilldetail->update();
+        $product->update();
+
         SaleBillDetail::destroy($id);
 
         Session::flash('flash_message', 'SaleBillDetail deleted!');
 
-        return redirect('sale-bill-details');
+        return view('sales-bills.show', compact('salesbill'));
     }
 }

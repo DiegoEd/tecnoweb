@@ -23,7 +23,7 @@ class PurchasesBillDetail extends Model
 
     public function isf($idprod)
     {
-        return $this->product_id==$idprod?'selected ':' ';
+        return $this->product_id==$idprod?'selected ':'disabled';
     }
 
     /**

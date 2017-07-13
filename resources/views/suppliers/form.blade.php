@@ -23,7 +23,7 @@
 <div class="form-group {{ $errors->has('address') ? 'has-error' : ''}}">
     <label name="address" class="col-md-4 control-label">Direccion</label>
     <div class="col-md-6">
-        <input type="text" name="address" value="{{ $suppliers->address }}" class="form-control" pattern="^[a-zA-Záéíóú#° ]+$">
+        <input type="text" name="address" value="{{ $suppliers->address }}" class="form-control" pattern="^[a-zA-Z0-9áéíóú#°. ]+$">
         {!! $errors->first('address', '<p class="help-block">:message</p>') !!}
     </div>
 </div>

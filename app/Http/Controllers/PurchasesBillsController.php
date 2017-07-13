@@ -27,6 +27,14 @@ class PurchasesBillsController extends Controller
         {
             return redirect('main');
         }
+
+        $purchasesbillstodelete = PurchasesBill::all();
+        for ($i = 0; $i < count($purchasesbillstodelete); $i++) {
+            if ($purchasesbillstodelete[$i]->confirmed == false) {
+                $this->destroy($purchasesbillstodelete[$i]->id);
+            }
+        }
+
         $keyword = $request->get('search');
         $perPage = 25;
         $cant = $this->contarindex($accion); 
@@ -203,6 +211,43 @@ class PurchasesBillsController extends Controller
 
         Session::flash('flash_message', 'PurchasesBill deleted!');
 
-        return Redirect::back();
+        return redirect('purchases-bills/index/indexdelete');
+    }
+
+    public function statistics() {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
+        $purchasesbills = PurchasesBill::all();
+        $all = "";
+        $array = array();
+        for ($i = 0; $i < count($purchasesbills); $i++) {
+            if (!in_array($purchasesbills[$i]->purchasedate, $array)) {               
+                $purchases = $purchasesbills[$i]->purchasedate;
+                $array[] = $purchases;
+                $cantidad = $purchasesbills[$i]->totalamount;
+                for ($j =$i + 1; $j < count($purchasesbills); $j++) { 
+                    $aux = $purchasesbills[$j]->purchasedate;
+                    if ($purchases === $aux) {
+                        $cantidad = $cantidad + $purchasesbills[$j]->totalamount;
+                    }
+                }
+                $all .= "{x: '". $purchasesbills[$i]->purchasedate. "', y: ". $cantidad. "}," ;
+            }
+        }
+        return view('purchases-bills.statistics', compact('all'));
+    }
+
+    public function confirm($id) {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
+        $purchasesbill = PurchasesBill::findOrFail($id);
+        $purchasesbill->confirmed = true;
+        $purchasesbill->update();
+
+        return redirect('purchases-bills/index/index');
     }
 }

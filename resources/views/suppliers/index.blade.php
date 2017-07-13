@@ -10,22 +10,6 @@
                     <div class="panel-heading">Proveedores</div>
                     <div class="panel-body">
 
-
-
-                        {!! Form::open(['method' => 'GET', 'url' => '/suppliers', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="search" placeholder="Search...">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                        </div>
-                        {!! Form::close() !!}
-
-                        <br/>
-                        <br/>
-
                         <div class="table-responsive">
                             <table class="table table-borderless">
                                 <thead>

@@ -37,6 +37,7 @@ Route::post('roles/commituser/', 'RolesController@commituser');
 Route::get('/main','ModulesController@main'); 
 
 Route::get('sales-bills/statistics', 'SalesBillsController@statistics');
+Route::get('purchases-bills/statistics', 'PurchasesBillsController@statistics');
 
 
 Route::get('clients/index/{accion}', 'ClientsController@index');
@@ -65,6 +66,7 @@ Route::get('sales-bills/confirm/{id}', 'SalesBillsController@confirm');
 
 Route::get('purchases-bills/index/{accion}', 'PurchasesBillsController@index');
 Route::get('purchases-bills/indexdelete/{accion}', 'PurchasesBillsController@index');
+Route::get('purchases-bills/confirm/{id}', 'PurchasesBillsController@confirm');
 
 Route::get('roles/index/{accion}', 'RolesController@index');
 Route::get('roles/indexedit/{accion}', 'RolesController@index');
