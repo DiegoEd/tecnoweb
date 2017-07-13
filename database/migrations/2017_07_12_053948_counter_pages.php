@@ -15,7 +15,6 @@ class CounterPages extends Migration
         Schema::create('counter_pages', function(Blueprint $table) {
             $table->increments('id');
             $table->string('pageroute');
-            $table->integer('accid')->unsigned();
             $table->bigInteger('visitcount'); 
             $table->timestamps();
         });

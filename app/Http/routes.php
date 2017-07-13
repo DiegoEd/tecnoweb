@@ -34,9 +34,8 @@ Route::get('purchases-bill-details/create/{id}', 'PurchasesBillDetailsController
 Route::get('session/close', 'SessionController@shutdown');
 Route::get('roles/signup/{id}', 'RolesController@signup');
 Route::post('roles/commituser/', 'RolesController@commituser');
-Route::get('/main', function () {
-	return view('main');
-});
+Route::get('/main','ModulesController@main'); 
+
 Route::get('sales-bills/statistics', 'SalesBillsController@statistics');
 
 
@@ -70,6 +69,7 @@ Route::get('roles/index/{accion}', 'RolesController@index');
 Route::get('roles/indexedit/{accion}', 'RolesController@index');
 Route::get('roles/indexdelete/{accion}', 'RolesController@index');
 Route::get('roles/index/{accion}', 'RolesController@index');
+Route::get('modules/search', 'ModulesController@search');
 
 ##acciones descontinuadas
 /*Route::get('modules/signup/{id}', 'ModulesController@signup');

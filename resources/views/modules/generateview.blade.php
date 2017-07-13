@@ -7,6 +7,7 @@
                     <div class="panel-heading">Modulo</div>
                         <div class="panel-body">
                             <div class="table-responsive">
+                                <h2>{{isset($resultado) && $resultado !='ok'? $resultado : ' '}}</h2>
                                 <table class="table table-borderless">
                                     <thead>
                                         <tr>

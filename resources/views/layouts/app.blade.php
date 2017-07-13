@@ -78,6 +78,16 @@
                             <li><a href="{{ url('/session') }}">Iniciar sesión</a></li>
                             <li><a href="{{ url('/register') }}">Register</a></li>
                         @else
+                            {!! Form::open(['method' => 'GET', 'url' => '/modules/search', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="search" placeholder="Buscar Accion...">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="submit">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            {!! Form::close() !!}
                             <li><a href="{{ url('/customizes') }}">Personalización</a></li>
                             <li><a href="{{ url('/session/close') }}">Cerrar sesión</a></li>
                         @endif

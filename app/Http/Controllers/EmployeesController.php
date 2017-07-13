@@ -19,9 +19,13 @@ class EmployeesController extends Controller
      *
      * @return \Illuminate\View\View
      */
+    ##
+    ##index puede ser: index , indexedit , indexdelete
+    
     public function index($accion,Request $request)
     {
-        if(!$this->islogged())
+        $idind = $this->idindex($accion);
+        if(!$this->islogged() || !$this->tienepermiso($idind,2))
         {
             return redirect('main');
         }
@@ -40,6 +44,18 @@ class EmployeesController extends Controller
             $employees = Employee::paginate($perPage);
         }
         return view('employees.'.$accion, compact('employees','cant'));
+    }
+
+    public function idindex($accion)
+    {
+        if($accion == 'index'){
+            return 8;
+        }elseif($accion == 'indexedit'){
+            return 9;
+        }elseif($accion == 'indexdelete'){
+            return 10;
+        }
+        return 23424;
     }
 
     public function contarindex($accion)
@@ -70,7 +86,7 @@ class EmployeesController extends Controller
 
     public function trash()
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(7,2))
         {
             return redirect('main');
         }
@@ -81,7 +97,7 @@ class EmployeesController extends Controller
 
     public function restore($id)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(7,2))
         {
             return redirect('main');
         }
@@ -98,7 +114,7 @@ class EmployeesController extends Controller
      */
     public function create()
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(6,2))
         {
             return redirect('main');
         }
@@ -130,7 +146,7 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(6,2))
         {
             return redirect('main');
         }
@@ -167,7 +183,7 @@ class EmployeesController extends Controller
      */
     public function show($id)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(8,2))
         {
             return redirect('main');
         }
@@ -187,7 +203,7 @@ class EmployeesController extends Controller
     public function edit($id)
     {
 
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(9,2))
         {
             return redirect('main');
         }
@@ -208,7 +224,7 @@ class EmployeesController extends Controller
      */
     public function update($id, Request $request)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(9,2))
         {
             return redirect('main');
         }
@@ -236,7 +252,7 @@ class EmployeesController extends Controller
      */
     public function destroy($id)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(10,2))
         {
             return redirect('main');
         }

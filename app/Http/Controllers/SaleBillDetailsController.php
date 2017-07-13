@@ -61,7 +61,7 @@ class SaleBillDetailsController extends Controller
      */
     public function create($id)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(26,6))
         {
             return redirect('main');
         }
@@ -81,7 +81,7 @@ class SaleBillDetailsController extends Controller
      */
     public function store(Request $request)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(26,6))
         {
             return redirect('main');
         }
@@ -114,7 +114,7 @@ class SaleBillDetailsController extends Controller
      */
     public function show($id)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(266,6))
         {
             return redirect('main');
         }
@@ -132,7 +132,7 @@ class SaleBillDetailsController extends Controller
      */
     public function edit($id)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(26,6))
         {
             return redirect('main');
         }
@@ -151,7 +151,7 @@ class SaleBillDetailsController extends Controller
      */
     public function update($id, Request $request)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(26,6))
         {
             return redirect('main');
         }
@@ -173,7 +173,7 @@ class SaleBillDetailsController extends Controller
      */
     public function destroy($id)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(26,6))
         {
             return redirect('main');
         }

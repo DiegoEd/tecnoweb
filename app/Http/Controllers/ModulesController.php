@@ -40,6 +40,61 @@ class ModulesController extends Controller
 
         return view('modules.index', compact('modules','cant'));
     }
+    public function main()
+    {
+
+        $cant = $this->contarfuncion('/main');
+        return view('main',compact('cant'));
+    }
+
+    public function search(Request $request)
+    {
+        if(!$this->islogged())
+        {
+            return redirect('main');
+        }
+        $keyword = $request->get('search');
+        $resultado = 'ok';
+        if (empty($keyword)) {
+            $resultado = 'No ingreso ninguna accion a buscar';
+        }
+        $accions = Accion::where('name', 'LIKE', "%$keyword%")->get();
+        $cant = $this->contarfuncion('/modules/search');
+        if($accions->isEmpty())
+        {
+            $resultado = 'Ninguna accion se parece a lo que esta buscando';
+            return view('modules.generateview',compact('accions','cant','resultado'));
+        }
+
+        $roless = $request->session()->get('roles');
+        $roles = $roless[0];
+        $result = collect();
+        foreach ($accions as $accion) {
+            if($this->amiowner($accion,$roles))
+            {
+                $result->push($accion);
+            }
+        }
+        if($result->isEmpty())
+        {
+            $resultado = 'No tiene permiso a ninguna ocurrencia';
+            $accions = collect();
+            return view('modules.generateview',compact('accions','cant','resultado'));
+        }
+        $accions = $result;
+        return view('modules.generateview',compact('accions','cant','resultado'));
+    }
+    public function amiowner($accion,$roles)
+    {
+        foreach ($roles as $key => $value) {
+           $accionsarray = $value[3];
+           if(in_array($accion->id,$accionsarray))
+           {
+            return true;
+           }
+        }
+        return false;
+    }
 
     public function contarfuncion($funcion)
     {

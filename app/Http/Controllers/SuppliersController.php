@@ -20,7 +20,8 @@ class SuppliersController extends Controller
      */
     public function index($accion,Request $request)
     {
-        if(!$this->islogged())
+        $idind = $this->idindex($accion);
+        if(!$this->islogged() || !$this->tienepermiso($idind,5))
         {
             return redirect('main');
         }
@@ -39,6 +40,20 @@ class SuppliersController extends Controller
 
         return view('suppliers.'.$accion, compact('suppliers','cant'));
     }
+    public function idindex($accion)
+    {
+        if($accion == 'index'){
+            return 22;
+        }elseif($accion == 'indexedit'){
+            return 23;
+        }elseif($accion == 'indexdelete'){
+            return 24;
+        }
+        return 23424;
+    }
+
+
+
 
     public function contarindex($accion)
     {
@@ -72,7 +87,7 @@ class SuppliersController extends Controller
      */
     public function create()
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(21,5))
         {
             return redirect('main');
         }
@@ -93,7 +108,7 @@ class SuppliersController extends Controller
      */
     public function store(Request $request)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(21,5))
         {
             return redirect('main');
         }
@@ -116,7 +131,7 @@ class SuppliersController extends Controller
      */
     public function show($id)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(22,5))
         {
             return redirect('main');
         }
@@ -133,7 +148,7 @@ class SuppliersController extends Controller
      */
     public function edit($id)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(23,5))
         {
             return redirect('main');
         }
@@ -152,7 +167,7 @@ class SuppliersController extends Controller
      */
     public function update($id, Request $request)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(23,5))
         {
             return redirect('main');
         }
@@ -173,7 +188,7 @@ class SuppliersController extends Controller
      */
     public function destroy($id)
     {
-        if(!$this->islogged())
+        if(!$this->islogged() || !$this->tienepermiso(24,5))
         {
             return redirect('main');
         }
