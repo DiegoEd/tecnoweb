@@ -1,3 +1,7 @@
+## Proyecto Hinolux
+Página web desarrollada con el framework Laravel 5.1 para el registro de compra y venta de muebles y enseres para la empresa Hinolux SRL.
+Proyecto designado para la materia Tecnología Web.
+
 ## Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
